@@ -1,5 +1,6 @@
 package people;
 //hello world
+//Zdarova blyat
 public class Employee extends Person{
     private String office;
     private double salary;
