@@ -37,8 +37,6 @@ Till {
 }
 Timetable {
     Integer ID
-
-
 }
 Invoice {
     ArrayList<Invoice>
@@ -46,48 +44,35 @@ Invoice {
 Product {
 	String description
 	double price
-	
 }
 LogIn {
-    Integer ID
-
+    String ID
 }
 Person {
-    Integer ID
-}
-Staff {
-    createBooking() - date: LocalDate, time: LocalTime, numOfPpl: int
-    createReservation() - name: String, date: LocalDate, time: LocalTime, phoneNum: int, numOfPpl: int
-    checkTableAvailablity()
-Staff extends Person {
-    Integer ID
-
+    String ID
 	String name
 	String email
-	String id
 }
 Customer extends Person {
-    Integer ID
+	// id starts with 1
 
     makeResrvation()
     orderFood()
     payForFood();
-Customer {
     cancelReservation()
     checkAvailability()
     payBill()
     tip()
-// id starts with 1
 }
-Staff {
-// id starts with 2
+Staff extends Person {
+	// id starts with 2
+
+    createBooking() - date: LocalDate, time: LocalTime, numOfPpl: int
+    createReservation() - name: String, date: LocalDate, time: LocalTime, phoneNum: int, numOfPpl: int
+    checkTableAvailablity()
 }
 Owner extends Person {
-    Integer ID
-    Double Profit
-
-Owner {
-// id starts with 3
+	// id starts with 3
 }
 abstract CVSUtil {
 	write()
