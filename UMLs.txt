@@ -64,7 +64,7 @@ Staff extends Person {
 
 	String name
 	String email
-
+	String id
 }
 Customer extends Person {
     Integer ID
@@ -86,10 +86,7 @@ Owner extends Person {
     Integer ID
     Double Profit
 
-}
 Owner {
-
-
 // id starts with 3
 }
 abstract CVSUtil {
