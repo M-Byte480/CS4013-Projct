@@ -37,6 +37,7 @@ Timetable {
 }
 Invoice {
 
+
 }
 Product {
 	String description
@@ -50,12 +51,20 @@ Person {
 
 }
 Staff {
+    createBooking() - date: LocalDate, time: LocalTime, numOfPpl: int
+    createReservation() - name: String, date: LocalDate, time: LocalTime, phoneNum: int, numOfPpl: int
+    checkTableAvailablity()
 
 }
 Customer {
+    cancelReservation()
+    checkAvailability()
+    payBill()
+    tip()
 
 }
 Owner {
+
 
 }
 abstract CVSUtil {
