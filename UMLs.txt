@@ -47,16 +47,18 @@ LogIn {
 
 }
 Person {
-
-}
-Staff {
-
+	String name
+	String email
+	String id
 }
 Customer {
-
+// id starts with 1
+}
+Staff {
+// id starts with 2
 }
 Owner {
-
+// id starts with 3
 }
 abstract CVSUtil {
 	write()
