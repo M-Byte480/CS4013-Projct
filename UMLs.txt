@@ -55,12 +55,16 @@ LogIn {
 Person {
     Integer ID
 }
+Staff {
+    createBooking() - date: LocalDate, time: LocalTime, numOfPpl: int
+    createReservation() - name: String, date: LocalDate, time: LocalTime, phoneNum: int, numOfPpl: int
+    checkTableAvailablity()
 Staff extends Person {
     Integer ID
 
 	String name
 	String email
-	String id
+
 }
 Customer extends Person {
     Integer ID
@@ -69,6 +73,10 @@ Customer extends Person {
     orderFood()
     payForFood();
 Customer {
+    cancelReservation()
+    checkAvailability()
+    payBill()
+    tip()
 // id starts with 1
 }
 Staff {
@@ -78,7 +86,10 @@ Owner extends Person {
     Integer ID
     Double Profit
 
+}
 Owner {
+
+
 // id starts with 3
 }
 abstract CVSUtil {
