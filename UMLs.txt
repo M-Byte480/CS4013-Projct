@@ -30,13 +30,18 @@ Menu {
 	
 }
 Till {
-
+    Double coins
+    Double coinset
+    Double bill
+    ArrayList<Transactions>
 }
 Timetable {
+    Integer ID
+
 
 }
 Invoice {
-
+    ArrayList<Invoice>
 }
 Product {
 	String description
@@ -44,18 +49,26 @@ Product {
 	
 }
 LogIn {
+    Integer ID
 
 }
 Person {
+    Integer ID
+}
+Staff extends Person {
+    Integer ID
 
 }
-Staff {
+Customer extends Person {
+    Integer ID
 
+    makeResrvation()
+    orderFood()
+    payForFood();
 }
-Customer {
-
-}
-Owner {
+Owner extends Person {
+    Integer ID
+    Double Profit
 
 }
 abstract CVSUtil {
