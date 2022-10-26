@@ -1,11 +1,10 @@
 package people;
 
-public class Staff extends Employee {
-    private String title;
+public class Staff extends Person {
 
-    public Staff(String name, String address, String phoneNumber, String email, String office, double salary, String title){
-        super(name, phoneNumber, address, email, office, salary);
-        this.title = title;
+    public Staff(Person person){
+        super(person);
+        this.id = "2" + ;
     }
 
     @Override

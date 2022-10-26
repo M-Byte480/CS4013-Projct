@@ -1,19 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Created repo and added files from previous assignment">
+    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Added a comment to test">
+      <change afterPath="$PROJECT_DIR$/data/staff.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Restaurant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Yum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/reservation/Invoice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/reservation/Reservation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/reservation/Timetable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/till/Login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/till/Menu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/till/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/till/Table.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/till/Till.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UMLs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/UMLs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/people/Employee.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/people/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/people/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Staff.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="main" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="milanNow" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -27,14 +52,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Programming/Java/Semester3/CS4013/Labs&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Programming\Java\Semester3\javaProject\src\people" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Programming\Java\Semester3\javaProject\CS4013-Projct\src" />
+      <recent name="C:\Programming\Java\Semester3\javaProject\CS4013-Projct\data" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -47,6 +77,8 @@
       <updated>1666457004373</updated>
       <workItem from="1666457006517" duration="968000" />
       <workItem from="1666530946641" duration="24000" />
+      <workItem from="1666797959440" duration="350000" />
+      <workItem from="1666798366195" duration="2512000" />
     </task>
     <task id="LOCAL-00001" summary="Created repo and added files from previous assignment">
       <created>1666457189083</created>
@@ -71,7 +103,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created repo and added files from previous assignment" />
