@@ -18,7 +18,7 @@ Reservation {
 	writeToCSV()
 }
 Table {
-	int id
+	Integer id
 	int seats
 	Reservation booking
 	
@@ -27,10 +27,17 @@ Table {
 	deleteProduct()
 }
 Menu {
-	
+    ArrayList<Product>
 }
-Till {
+// Helper Class:
+LogIn {
+    String ID
+    String PW
+    // Allows access to function for different people.
+}
 
+Till {
+    ArrayList<Money> MoneyStored
 }
 Timetable {
 
@@ -43,22 +50,26 @@ Product {
 	double price
 	
 }
-LogIn {
 
-}
 Person {
-
+    String name
+    String email
+    String PhoneNumber
+    String ID
 }
 Staff {
-
+// Naming convention 2
+    ArrayList<Integer>
 }
 Customer {
-
+ // Naming convention 1
 }
 Owner {
-
+// Naming Convention 3
+    Static float profits;
 }
 abstract CVSUtil {
 	write()
 	read()
 }
+
