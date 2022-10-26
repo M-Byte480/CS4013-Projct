@@ -13,7 +13,7 @@ Restaraunt extends Yum {
 Reservation {
 	DateTime datetime
 	Table table
-	
+
 	Reservation()
 	writeToCSV()
 }
@@ -27,26 +27,27 @@ Table {
 	deleteProduct()
 }
 Menu {
-	
+	Collection<Product> products
 }
 Till {
-    Double coins
-    Double coinset
-    Double bill
-    ArrayList<Transactions>
-}
-Timetable {
-    Integer ID
+	double money
+    ArrayList<Transaction>
 }
 Invoice {
-    ArrayList<Invoice>
+	Table table
+	Reservation reservation
+	Menu menu
+	Staff server
 }
 Product {
 	String description
 	double price
+	String[] alergies
 }
 LogIn {
     String ID
+
+	staffLevel() returns int // returns first number of ID
 }
 Person {
     String ID
@@ -54,25 +55,18 @@ Person {
 	String email
 }
 Customer extends Person {
-	// id starts with 1
+	// id starts with 0
+	int loyalty
 
-    makeResrvation()
-    orderFood()
-    payForFood();
-    cancelReservation()
-    checkAvailability()
-    payBill()
-    tip()
+	increaseLoyalty()
 }
 Staff extends Person {
 	// id starts with 2
-
-    createBooking() - date: LocalDate, time: LocalTime, numOfPpl: int
-    createReservation() - name: String, date: LocalDate, time: LocalTime, phoneNum: int, numOfPpl: int
-    checkTableAvailablity()
+	promoteCustomer(Customer)
 }
 Owner extends Person {
 	// id starts with 3
+	promoteStaff(Staff)
 }
 abstract CVSUtil {
 	write()
