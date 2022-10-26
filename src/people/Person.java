@@ -21,6 +21,9 @@ public class Person {
         this.id.uniqueIdGenerator(id);
     }
 
+    public Person() {
+    }
+
     public void uniqueIdGenerator(String id){
         boolean exist = false;
         String randomID = new String();
@@ -46,5 +49,45 @@ public class Person {
                 "address = '" + address + "'\n" +
                 "phoneNumber = '" + phoneNumber + "'\n" +
                 "email = '" + email + "'\n";
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }

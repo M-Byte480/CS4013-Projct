@@ -1,7 +1,7 @@
 Yum {
 	double overallProfit
 }
-Restaraunt extends Yum {
+Restaurant extends Yum {
 	Collection Reservation
 	Collection Table
 	Menu menu

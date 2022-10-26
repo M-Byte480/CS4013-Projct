@@ -3,9 +3,10 @@ package people;
 public class Staff extends Person {
 
     public Staff(Person person){
-        super(person);
-        this.id = "2" + ;
+        super();
+        this.id = "2" + un ;
     }
+
 
     @Override
     public String toString() {
