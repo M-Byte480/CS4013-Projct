@@ -30,13 +30,18 @@ Menu {
 	
 }
 Till {
-
+    Double coins
+    Double coinset
+    Double bill
+    ArrayList<Transactions>
 }
 Timetable {
+    Integer ID
+
 
 }
 Invoice {
-
+    ArrayList<Invoice>
 }
 Product {
 	String description
@@ -44,19 +49,35 @@ Product {
 	
 }
 LogIn {
+    Integer ID
 
 }
 Person {
+    Integer ID
+}
+Staff extends Person {
+    Integer ID
+
 	String name
 	String email
 	String id
 }
+Customer extends Person {
+    Integer ID
+
+    makeResrvation()
+    orderFood()
+    payForFood();
 Customer {
 // id starts with 1
 }
 Staff {
 // id starts with 2
 }
+Owner extends Person {
+    Integer ID
+    Double Profit
+
 Owner {
 // id starts with 3
 }
