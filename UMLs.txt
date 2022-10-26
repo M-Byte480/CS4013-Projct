@@ -1,0 +1,64 @@
+Yum {
+	double overallProfit
+}
+Restaraunt extends Yum {
+	Collection Reservation
+	Collection Table
+	Menu menu
+	double profit
+	Person loggedIn
+
+	createInvoice()
+}
+Reservation {
+	DateTime datetime
+	Table table
+	
+	Reservation()
+	writeToCSV()
+}
+Table {
+	int id
+	int seats
+	Reservation booking
+	
+	addProducts()
+	closeTable()
+	deleteProduct()
+}
+Menu {
+	
+}
+Till {
+
+}
+Timetable {
+
+}
+Invoice {
+
+}
+Product {
+	String description
+	double price
+	
+}
+LogIn {
+
+}
+Person {
+
+}
+Staff {
+
+}
+Customer {
+
+}
+Owner {
+
+}
+abstract CVSUtil {
+	write()
+	read()
+}
