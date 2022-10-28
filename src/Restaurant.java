@@ -5,7 +5,7 @@ import people.*;
 import java.util.ArrayList;
 
 
-public class Restaurant extends Yum{
+public class Restaurant extends Yum {
     private ArrayList<Reservation> allReservations;
     private ArrayList<Table> allTables;
 
@@ -13,5 +13,4 @@ public class Restaurant extends Yum{
     private double profit;
 
     // createInvoice();
-
 }
