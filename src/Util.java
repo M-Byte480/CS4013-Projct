@@ -142,9 +142,7 @@ public class Util {
         for (int i = 1; i < values.size() - 1; i++) {
             if (values.get(i)[index].equals(value)) {
                 everything.append(i).append(") ");
-                for (int j = 0; j < dataFieldValues.length; j++) {
-                    everything.append(values.get(i)[j]).append(" ");
-                }
+                everything.append(String.join(", ", values.get(i)));
                 everything.append('\n');
             }
         }
@@ -192,9 +190,7 @@ public class Util {
 
             if(incorrect){
                 everything.append(line).append(") ");
-                for (int element : indexes) {
-                    everything.append(values.get(line)[element]).append(" ");
-                }
+                everything.append(String.join(", ", values.get(line)));
                 everything.append("\n");
             }
             incorrect = true;
