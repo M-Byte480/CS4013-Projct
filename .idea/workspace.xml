@@ -1,24 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Added a comment to test">
-      <change afterPath="$PROJECT_DIR$/data/staff.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Restaurant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Yum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/reservation/Invoice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/reservation/Reservation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/reservation/Timetable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/till/Login.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/till/Menu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/till/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/till/Table.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/till/Till.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="hello.txt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UMLs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/UMLs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/people/Employee.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/people/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/people/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Staff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +40,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Programming/Java/Semester3/CS4013/Labs&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Programming/Java/CS4141/Assignment2021Part1.java&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -63,9 +48,25 @@
       <recent name="C:\Programming\Java\Semester3\javaProject\src\people" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Programming\Java\Semester3\javaProject\CS4013-Projct\src\people" />
       <recent name="C:\Programming\Java\Semester3\javaProject\CS4013-Projct\src" />
       <recent name="C:\Programming\Java\Semester3\javaProject\CS4013-Projct\data" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Util" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Util" />
+      <module name="javaProject" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Util" />
+        <item itemvalue="Application.Util" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -79,6 +80,13 @@
       <workItem from="1666530946641" duration="24000" />
       <workItem from="1666797959440" duration="350000" />
       <workItem from="1666798366195" duration="2512000" />
+      <workItem from="1666840043692" duration="33000" />
+      <workItem from="1666884809344" duration="1149000" />
+      <workItem from="1666952534076" duration="186000" />
+      <workItem from="1666965962973" duration="5000" />
+      <workItem from="1666969472170" duration="8879000" />
+      <workItem from="1666981681230" duration="1413000" />
+      <workItem from="1667060408249" duration="5760000" />
     </task>
     <task id="LOCAL-00001" summary="Created repo and added files from previous assignment">
       <created>1666457189083</created>
@@ -87,7 +95,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666457189083</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="hello.txt">
+      <created>1667066865805</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1667066865805</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,6 +121,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created repo and added files from previous assignment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created repo and added files from previous assignment" />
+    <MESSAGE value="Created Foundation Classes" />
+    <MESSAGE value="hello.txt" />
+    <option name="LAST_COMMIT_MESSAGE" value="hello.txt" />
   </component>
 </project>
