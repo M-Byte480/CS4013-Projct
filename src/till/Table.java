@@ -19,11 +19,13 @@ public class Table {
 
     //adding product to "order"
     public void addProduct(Product pick){
+
         productsOnTable.add(pick) ;
     }
 
     //deleting product from "order"
     public void deleteProduct(Product delete){
+
         productsOnTable.add(delete);
     }
 
@@ -32,6 +34,7 @@ public class Table {
     public void billTable(){
 
 
+        closeTable();
     }
 
     public void closeTable(){

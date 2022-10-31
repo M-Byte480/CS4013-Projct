@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Created repo and added files from previous assignment">
+    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Making bones of Menu, Product, Restaurant and Table">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Restaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Restaurant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/till/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/till/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/till/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/till/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Table.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,6 +64,8 @@
       <workItem from="1666530946641" duration="24000" />
       <workItem from="1666797959440" duration="350000" />
       <workItem from="1666798366195" duration="2512000" />
+      <workItem from="1667213387104" duration="429000" />
+      <workItem from="1667221263943" duration="574000" />
     </task>
     <task id="LOCAL-00001" summary="Created repo and added files from previous assignment">
       <created>1666457189083</created>
@@ -76,7 +74,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666457189083</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Making bones of Menu, Product, Restaurant and Table">
+      <created>1666981654014</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1666981654014</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -95,6 +100,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created repo and added files from previous assignment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created repo and added files from previous assignment" />
+    <MESSAGE value="Making bones of Menu, Product, Restaurant and Table" />
+    <option name="LAST_COMMIT_MESSAGE" value="Making bones of Menu, Product, Restaurant and Table" />
   </component>
 </project>
