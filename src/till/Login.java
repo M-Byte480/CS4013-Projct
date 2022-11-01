@@ -1,7 +1,7 @@
 package till;
 
 import people.Person;
-import people.Staff;
+import people.*;
 
 
 public class Login {
@@ -9,7 +9,7 @@ public class Login {
 
     public Login(String id, String password) {
         String tillID = Integer.toString(Person.getUniqueID());
-        String tillPassword = getPassword();
+        String tillPassword = Person.getPassword();
 
         if (!id.equals(tillID) || !password.equals(tillPassword)) {
             System.out.println("Invalid Credentials");
@@ -19,6 +19,7 @@ public class Login {
             System.out.println("Valid Credentials");
         }
     }
+
 
     Login(String ID) {
         this.ID = ID;
