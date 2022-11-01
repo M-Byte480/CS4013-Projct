@@ -2,10 +2,10 @@ package till;
 
 public class Till {
 
-    private static double startOfEachDay = 200;
+    private  double startOfEachDay = 200;
 
-    Till(double amount) {
-        this.startOfEachDay = amount;
+
+    Till() {
     }
 
     public double getStartOfEachDay() {
@@ -18,4 +18,10 @@ public class Till {
         return dailyProfit;
     }
 
+    public double cashPaid(double moneyMadeFromSale, double cashPaid) {
+        double change;
+        change = cashPaid - moneyMadeFromSale;
+        return change;
+
+    }
 }

@@ -11,6 +11,8 @@ public class Table {
 
     private ArrayList<Product> productsOnTable;
 
+    private Till till ;
+
     Table(int id, int seats, Reservation booking) {
         this.id = id;
         this.seats = seats;
@@ -33,21 +35,23 @@ public class Table {
     //calculate price
     public void billTable(char type) {
         switch (type) {
-
-
             case 1:
                 type = 'C';
                 closeTable();
-                Till.
+                Invoice.sendInvoice();
+                SendLog();
+                till =  new Till().sale(); //invoice amount
 
 
-              break;
+                break;
 
 
             case 2:
                 type = 'D';
                 closeTable();
-
+                Invoice.sendInvoice();
+                SendLog();
+                till =  new Till().sale(); //invoice amount
 
                 break;
 
@@ -55,7 +59,10 @@ public class Table {
             case 3:
                 type = 'X';
                 closeTable();
-
+                Invoice.sendInvoice();
+                SendLog();
+                till =  new Till().sale(); //invoice amount
+                till = new Till().cashPaid(); //invoice amount + amount paid in cash
 
                 break;
         }
