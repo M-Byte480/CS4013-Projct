@@ -1,6 +1,6 @@
 package till;
 
-import reservation.Reservation;
+import reservation.*;
 
 import java.util.ArrayList;
 
@@ -11,40 +11,65 @@ public class Table {
 
     private ArrayList<Product> productsOnTable;
 
-    Table(int id,int seats,Reservation booking){
+    Table(int id, int seats, Reservation booking) {
         this.id = id;
         this.seats = seats;
-        this.booking =  booking;
+        this.booking = booking;
     }
 
     //adding product to "order"
-    public void addProduct(Product pick){
+    public void addProduct(Product pick) {
 
-        productsOnTable.add(pick) ;
+        productsOnTable.add(pick);
     }
 
     //deleting product from "order"
-    public void deleteProduct(Product delete){
+    public void deleteProduct(Product delete) {
 
         productsOnTable.add(delete);
     }
 
     //closing table
     //calculate price
-    public void billTable(){
+    public void billTable(char type) {
+        switch (type) {
 
 
-        closeTable();
+            case 1:
+                type = 'C';
+                closeTable();
+                Till.
+
+
+              break;
+
+
+            case 2:
+                type = 'D';
+                closeTable();
+
+
+                break;
+
+
+            case 3:
+                type = 'X';
+                closeTable();
+
+
+                break;
+        }
     }
 
-    public void closeTable(){
+
+    public void closeTable() {
 
 
     }
 
     //closing/deleting booking
     //check if table is vacant
-    public void deleteTable(Table table){
+    public void deleteTable(Table table) {
 
     }
 }
