@@ -1,7 +1,7 @@
-Yum {
+restaurant.Yum {
 	double overallProfit
 }
-Restaraunt extends Yum {
+Restaraunt extends restaurant.Yum {
 	Collection Reservation
 	Collection Table
 	Menu menu

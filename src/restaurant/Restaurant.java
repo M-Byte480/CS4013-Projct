@@ -1,6 +1,7 @@
+package restaurant;
+
 import reservation.*;
 import till.*;
-import people.*;
 
 import java.util.ArrayList;
 

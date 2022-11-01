@@ -1,11 +1,13 @@
 package till;
 
+import restaurant.*;
 import reservation.*;
 
 import java.util.ArrayList;
+import java.io.*;
 
 public class Table {
-    private int id;
+    private int tableNumber;
     private int seats;
     private Reservation booking;
 
@@ -13,8 +15,8 @@ public class Table {
 
     private Till till ;
 
-    Table(int id, int seats, Reservation booking) {
-        this.id = id;
+    public Table(int tableNumber, int seats, Reservation booking) {
+        this.tableNumber = tableNumber;
         this.seats = seats;
         this.booking = booking;
     }
@@ -33,13 +35,13 @@ public class Table {
 
     //closing table
     //calculate price
-    public void billTable(char type) {
+    public void billTable(char type) throws FileNotFoundException {
         switch (type) {
             case 1:
                 type = 'C';
                 closeTable();
                 Invoice.sendInvoice();
-                SendLog();
+                sendLog();
                 till =  new Till().sale(); //invoice amount
                 //Steve -
 
@@ -69,7 +71,13 @@ public class Table {
         }
     }
 
+    private void sendLog(String whatHappened) throws IOException {
+        Util writeToLog = new Util(new File("src/data/log.csv"));
 
+        writeToLog.addDataToFile(whatHappened);
+
+        writeToLog.close();
+    }
     public void closeTable() {
 
 

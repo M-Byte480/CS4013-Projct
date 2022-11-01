@@ -1,7 +1,6 @@
-// Milan: Last edit 28/10
+package restaurant;// Milan: Last edit 28/10
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -16,7 +15,7 @@ public class Util {
      * @param file File you want to read from
      * @throws FileNotFoundException Throws error if its not found
      */
-    private Util(File file) throws FileNotFoundException {
+    public Util(File file) throws FileNotFoundException {
         scanner = new Scanner(file);
         this.file = file;
         this.values = new ArrayList<>();
@@ -86,7 +85,7 @@ public class Util {
     }
 
     /**
-     * Close Util
+     * Close restaurant.Util
      */
     public void close() {
         this.scanner.close();
@@ -121,7 +120,7 @@ public class Util {
     }
 
     /**
-     * Get every line where
+     * Get every line where dataField = value;
      * @param value
      * @param dataField
      * @return
