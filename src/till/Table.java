@@ -41,6 +41,7 @@ public class Table {
                 Invoice.sendInvoice();
                 SendLog();
                 till =  new Till().sale(); //invoice amount
+                //Steve -
 
 
                 break;

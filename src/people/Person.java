@@ -12,7 +12,11 @@ public class Person {
     private String id;
     private static ArrayList<Person> people;
     private static int uniqueID;
+    private static String password;
 
+    public Person() {
+
+    }
 
     public Person(String name, String address, String phoneNumber, String email, String id){
         this.address = address;
@@ -21,6 +25,11 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.id = uniqueIdGenerator(id);
     }
+
+    public static String getPassword() {
+        return password;
+    }
+
 
     public String uniqueIdGenerator(String id){
         uniqueID++;
@@ -113,4 +122,6 @@ public class Person {
     public static void setUniqueID(int uniqueID) {
         Person.uniqueID = uniqueID;
     }
+
+
 }

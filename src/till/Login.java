@@ -1,7 +1,25 @@
 package till;
 
+import people.Person;
+import people.*;
+
+
 public class Login {
     private String ID;
+
+    public Login(String id, String password) {
+        String tillID = Integer.toString(Person.getUniqueID());
+        String tillPassword = Person.getPassword();
+
+        if (!id.equals(tillID) || !password.equals(tillPassword)) {
+            System.out.println("Invalid Credentials");
+        } else if (!id.equals(tillID) && !password.equals(tillPassword)) {
+            System.out.println("Invalid Credentials");
+        } else if (id.equals(tillID) && password.equals(tillPassword)){
+            System.out.println("Valid Credentials");
+        }
+    }
+
 
     Login(String ID) {
         this.ID = ID;

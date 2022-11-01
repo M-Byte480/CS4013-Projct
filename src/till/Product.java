@@ -23,4 +23,8 @@ public class Product {
     public ArrayList<Product> getProductsList() {
         return productsList;
     }
+
+    public double getCost() {
+        return cost;
+    }
 }
