@@ -13,6 +13,9 @@ public class Person {
     private static ArrayList<Person> people;
     private static int uniqueID;
 
+    public Person() {
+
+    }
 
     public Person(String name, String address, String phoneNumber, String email, String id){
         this.address = address;
@@ -21,6 +24,8 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.id = uniqueIdGenerator(id);
     }
+
+
 
     public String uniqueIdGenerator(String id){
         uniqueID++;

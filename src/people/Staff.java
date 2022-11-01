@@ -9,20 +9,26 @@ public class Staff extends Person {
         super(name, address, phoneNumber, email, "2");
     }
 
+    public Staff() {
+    }
+
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 
     public String getDiscount(){
         return this.discount;
     }
+
     public void setDiscount(String discount){
         this.discount = discount;
     }
 
-    public void getStaffMembers(){
-
-    }
+    public void getStaffMembers(){}
 
 
     @Override

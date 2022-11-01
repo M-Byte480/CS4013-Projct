@@ -2,6 +2,7 @@ package people;
 
 public class Customer extends Person {
    int loyalty;
+   int freqOfVisits;
 
     /*
     Needed to add set methods to access private data fields in Person class
@@ -19,6 +20,7 @@ public class Customer extends Person {
 Added for template
  */
   public void increaseLoyalty(){
+
   }
 
 
