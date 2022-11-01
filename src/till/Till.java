@@ -1,20 +1,27 @@
 package till;
 
-import java.util.ArrayList;
-
 public class Till {
-    int costOfMeal;
-    private ArrayList<Money> moneyStored = new ArrayList<Money>();
+
+    private  double startOfEachDay = 200;
 
 
-
-    public void addValueToTill(ArrayList<Product> productsList){
-
-
-
-
+    Till() {
     }
 
+    public double getStartOfEachDay() {
+        return startOfEachDay;
+    }
 
+    public double sale(double moneyMadeFromSale) {
+        double dailyProfit = startOfEachDay;
+        dailyProfit += moneyMadeFromSale;
+        return dailyProfit;
+    }
 
+    public double cashPaid(double moneyMadeFromSale, double cashPaid) {
+        double change;
+        change = cashPaid - moneyMadeFromSale;
+        return change;
+
+    }
 }

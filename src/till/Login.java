@@ -3,12 +3,11 @@ package till;
 import people.Person;
 import people.Staff;
 
-public class Login extends Staff{
 
-
+public class Login {
+    private String ID;
 
     public Login(String id, String password) {
-        super();
         String tillID = Integer.toString(Person.getUniqueID());
         String tillPassword = getPassword();
 
@@ -21,7 +20,30 @@ public class Login extends Staff{
         }
     }
 
+    Login(String ID) {
+        this.ID = ID;
+    }
+
+    public void billTable( String ID) {
+        switch (ID) {
+
+            case "customer":
+                ID.startsWith("1");
 
 
+                break;
 
+            case "Employee":
+                ID.startsWith("2");
+
+                break;
+
+            case "Owner":
+                ID.startsWith("3");
+
+                break;
+
+
+        }
+    }
 }
