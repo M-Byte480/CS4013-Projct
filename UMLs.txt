@@ -1,7 +1,7 @@
-Yum {
+restaurant.Yum {
 	double overallProfit
 }
-Restaraunt extends Yum {
+Restaraunt extends restaurant.Yum {
 	Collection Reservation
 	Collection Table
 	Menu menu
@@ -13,12 +13,12 @@ Restaraunt extends Yum {
 Reservation {
 	DateTime datetime
 	Table table
-
+	
 	Reservation()
 	writeToCSV()
 }
 Table {
-	int id
+	Integer id
 	int seats
 	Reservation booking
 	
@@ -27,48 +27,49 @@ Table {
 	deleteProduct()
 }
 Menu {
-	Collection<Product> products
+    ArrayList<Product>
 }
+// Helper Class:
+LogIn {
+    String ID
+    String PW
+    // Allows access to function for different people.
+}
+
 Till {
-	double money
-    ArrayList<Transaction>
+    ArrayList<Money> MoneyStored
+}
+Timetable {
+
 }
 Invoice {
-	Table table
-	Reservation reservation
-	Menu menu
-	Staff server
+
 }
 Product {
 	String description
 	double price
-	String[] alergies
+	
 }
-LogIn {
-    String ID
 
-	staffLevel() returns int // returns first number of ID
-}
 Person {
+    String name
+    String email
+    String PhoneNumber
     String ID
-	String name
-	String email
 }
-Customer extends Person {
-	// id starts with 0
-	int loyalty
-
-	increaseLoyalty()
+Staff {
+// Naming convention 2
+    ArrayList<Integer>
 }
-Staff extends Person {
-	// id starts with 2
-	promoteCustomer(Customer)
+Customer {
+ // Naming convention 1
 }
-Owner extends Person {
-	// id starts with 3
-	promoteStaff(Staff)
+Owner {
+// Naming Convention 3
+    Static float profits;
 }
 abstract CVSUtil {
 	write()
 	read()
 }
+

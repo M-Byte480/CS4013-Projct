@@ -1,7 +1,8 @@
-// Milan: Last edit 28/10
+package restaurant;// Milan: Last edit 28/10
 
 import java.io.*;
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class Util {
      * @param file File you want to read from
      * @throws FileNotFoundException Throws error if its not found
      */
-    private Util(File file) throws FileNotFoundException {
+    public Util(File file) throws FileNotFoundException {
         scanner = new Scanner(file);
         this.file = file;
         this.values = new ArrayList<>();
@@ -86,7 +87,7 @@ public class Util {
     }
 
     /**
-     * Close Util
+     * Close restaurant.Util
      */
     public void close() {
         this.scanner.close();
@@ -121,7 +122,7 @@ public class Util {
     }
 
     /**
-     * Get every line where
+     * Get every line where dataField = value;
      * @param value
      * @param dataField
      * @return
@@ -224,8 +225,32 @@ public class Util {
         return everything.toString();
     }
 
+    public String[] getAllArray(String dataField) {
+        ArrayList<String> everything = new ArrayList<>();
+        String[] dataFieldValues = values.get(0).clone();
+        int index = -1;
+        for (int i = 0; i < dataFieldValues.length; i++) {
+            if (dataFieldValues[i].equals(dataField)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            System.out.println("Failed to find the Data Field");
+            return null;
+        }
+        for (int i = 1; i < values.size() - 1; i++) {
+            everything.add(values.get(i)[index]);
+        }
+
+        return everything.toArray(new String[0]);
+    }
+
     public int count(String value, String datafield){
         return get(value, datafield).split(value).length - 1;
+    }
+
+    public static String getTimeNow(){
+        return (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
     }
 
     public static void main(String[] args) throws IOException {

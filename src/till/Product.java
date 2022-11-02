@@ -11,7 +11,7 @@ public class Product {
 
     private ArrayList<Product> productsList;
 
-    Product(String description, ArrayList<String> allergies, double cost) {
+    public Product(String description, ArrayList<String> allergies, double cost) {
         this.description = description;
         this.allergies = allergies;
         this.cost = cost;
@@ -22,5 +22,9 @@ public class Product {
 
     public ArrayList<Product> getProductsList() {
         return productsList;
+    }
+
+    public double getCost() {
+        return cost;
     }
 }

@@ -20,6 +20,10 @@ public class Till {
 
     public double cashPaid(double moneyMadeFromSale, double cashPaid) {
         double change;
+        if (cashPaid < moneyMadeFromSale){
+            double extraToPay = moneyMadeFromSale - cashPaid;
+            System.out.println("You owe an extra " + extraToPay + " euro");
+        }
         change = cashPaid - moneyMadeFromSale;
         return change;
 
