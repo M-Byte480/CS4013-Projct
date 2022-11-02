@@ -15,10 +15,9 @@ public class Table {
 
     private Till till ;
 
-    public Table(int tableNumber, int seats, Reservation booking) {
+    public Table(int tableNumber, int seats) {
         this.tableNumber = tableNumber;
         this.seats = seats;
-        this.booking = booking;
     }
 
     //adding product to "order"

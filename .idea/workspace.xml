@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Making bones of Menu, Product, Restaurant and Table">
+    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Did more work than Tadhg">
+      <change afterPath="$PROJECT_DIR$/src/reservation/LineItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/till/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/invoices.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/invoices.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/tables.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/tables.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reservation/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/reservation/Invoice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/Util.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/till/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Table.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/till/Till.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Till.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +23,7 @@
     </option>
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="main" />
+    <option name="BRANCH" value="milanNow" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -39,12 +42,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Programming/Java/Semester3/CS4013/Labs&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Programming/Java/Semester3/CS4013/Labs",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Programming\Java\Semester3\javaProject\src\people" />
@@ -101,7 +107,21 @@
       <option name="project" value="LOCAL" />
       <updated>1667296218930</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added CSV files">
+      <created>1667336484410</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1667336484410</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Did more work than Tadhg">
+      <created>1667338970062</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1667338970062</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,6 +141,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created repo and added files from previous assignment" />
     <MESSAGE value="Making bones of Menu, Product, Restaurant and Table" />
-    <option name="LAST_COMMIT_MESSAGE" value="Making bones of Menu, Product, Restaurant and Table" />
+    <MESSAGE value="Added CSV files" />
+    <MESSAGE value="Did more work than Tadhg" />
+    <option name="LAST_COMMIT_MESSAGE" value="Did more work than Tadhg" />
   </component>
 </project>
