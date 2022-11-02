@@ -2,11 +2,8 @@ package reservation;
 
 import till.Product;
 
-import javax.sound.sampled.Line;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class LineItem {
     private String id;
@@ -22,7 +19,7 @@ public class LineItem {
     }
 
     // Move this block of code to table and invoke it through the table of products
-    public static ArrayList<LineItem> convert(ArrayList<Product> products){
+    public static ArrayList<LineItem> convertToLineItems(ArrayList<Product> products){
         ArrayList<LineItem> items = new ArrayList<>();
         HashMap<Product, Integer> occurences = new HashMap<>();
         Integer count = 0;

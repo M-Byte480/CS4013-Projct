@@ -1,12 +1,2 @@
 firstName,lastName,age,county
-Stephen,Fitzpatrick,21,Mayo
-how,is,it,going
-Stephen,Fitzpatrick,21,Mayo
-Stephen,Fitzpatrick,21,Mayo
-how,is,it,going
-Stephen,Fitzpatrick,21,Mayo
-Stephen,Fitzpatrick,21,Mayo
-Stephen,Fitzpatrick,21,Mayo
-Stephen,Fitzpatrick,21,Mayo
-how,is,it,going
-how,is,it,going
+

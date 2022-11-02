@@ -1,8 +1,8 @@
 package people;
 
 public class Customer extends Person {
-   int loyalty;
-   int freqOfVisits;
+    int loyalty;
+    int freqOfVisits;
 
     /*
     Needed to add set methods to access private data fields in Person class
@@ -16,15 +16,15 @@ public class Customer extends Person {
         this.loyalty = loyalty;
     }
 
-/*
-Added for template
- */
-  public void increaseLoyalty(){
+    /*
+    Added for template
+     */
+    public void increaseLoyalty() {
 
-  }
+    }
 
 
-    public String toString(){
+    public String toString() {
         return super.toString();
     }
 

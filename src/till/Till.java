@@ -5,7 +5,7 @@ public class Till {
     private  double startOfEachDay = 200;
 
 
-    Till() {
+    public Till() {
     }
 
     public double getStartOfEachDay() {
