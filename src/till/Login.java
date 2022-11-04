@@ -5,10 +5,15 @@ import people.*;
 
 
 public class Login {
-    String tillID;
-    String tillPassword;
+    private String tillID;
+    private String tillPassword;
     private String ID;
 
+    /**
+     * Constructor to create a login object with a specified ID and password
+     * @param id
+     * @param password
+     */
     Login(String id, String password) {
          this.tillID = Integer.toString(Person.getUniqueID());
          this.tillPassword = Person.getPassword();
@@ -24,13 +29,24 @@ public class Login {
             }
         }
 
+    /**
+     * Gives access to private tillID variable
+     * @return  tillID
+     */
     public String getTillID(){
         return tillID;
     }
 
+
+    /**
+     * Gives access to private tillPassword variable
+     * @return tillPassword
+     */
     public String getTillPassword(){
         return tillPassword;
     }
+
+
 
     Login(String ID) {
         this.ID = ID;
