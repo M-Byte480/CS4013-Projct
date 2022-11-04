@@ -1,0 +1,62 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -2,13 +2,10 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Did more work than Tadhg">
+-      <change afterPath="$PROJECT_DIR$/src/reservation/LineItem.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/data/invoices.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/invoices.csv" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/data/tables.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/tables.csv" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/reservation/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/reservation/Invoice.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/restaurant/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/Util.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/till/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Menu.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/till/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Table.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/till/Till.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Till.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -42,15 +39,15 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "WebServerToolWindowFactoryState": "false",
+-    "last_opened_file_path": "C:/Programming/Java/Semester3/CS4013/Labs",
+-    "project.structure.last.edited": "SDKs",
+-    "project.structure.proportion": "0.0",
+-    "project.structure.side.proportion": "0.0"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Programming/Java/Semester3/CS4013/Labs&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="C:\Programming\Java\Semester3\javaProject\src\people" />
+@@ -78,6 +75,13 @@
+       <workItem from="1667293370639" duration="6244000" />
+       <workItem from="1667304119389" duration="553000" />
+       <workItem from="1667326244214" duration="1450000" />
++      <workItem from="1667392104002" duration="2000" />
++      <workItem from="1667392616111" duration="277000" />
++      <workItem from="1667394148596" duration="594000" />
++      <workItem from="1667470496867" duration="22000" />
++      <workItem from="1667472875859" duration="361000" />
++      <workItem from="1667560046143" duration="63000" />
++      <workItem from="1667582022882" duration="496000" />
+     </task>
+     <task id="LOCAL-00001" summary="Created repo and added files from previous assignment">
+       <created>1666457189083</created>

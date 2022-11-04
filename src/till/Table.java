@@ -13,17 +13,23 @@ public class Table {
 
     private ArrayList<Product> productsOnTable;
 
-    private Till till ;
+
+    private Till till;
 
     public Table(int tableNumber, int seats) {
         this.tableNumber = tableNumber;
         this.seats = seats;
     }
 
+    public void setBooking(Table table) {
+        booking.setStatus = true;
+    }
+
     //adding product to "order"
     public void addProduct(Product pick) {
 
         productsOnTable.add(pick);
+
     }
 
     //deleting product from "order"
@@ -34,15 +40,14 @@ public class Table {
 
     //closing table
     //calculate price
-    public void billTable(char type) throws FileNotFoundException {
+    public void billTable(char type) throws IOException {
         switch (type) {
             case 1:
                 type = 'C';
                 closeTable();
+                sendLog("Paid with Credit");
                 Invoice.sendInvoice();
-                sendLog();
-                till =  new Till().sale(); //invoice amount
-                //Steve -
+                till = new Till().sale(); //invoice amount
 
 
                 break;
@@ -51,9 +56,9 @@ public class Table {
             case 2:
                 type = 'D';
                 closeTable();
+                sendLog("Paid with Debit");
                 Invoice.sendInvoice();
-                SendLog();
-                till =  new Till().sale(); //invoice amount
+                till = new Till().sale(); //invoice amount
 
                 break;
 
@@ -62,8 +67,8 @@ public class Table {
                 type = 'X';
                 closeTable();
                 Invoice.sendInvoice();
-                SendLog();
-                till =  new Till().sale(); //invoice amount
+                sendLog("Paid with cash");
+                till = new Till().sale(); //invoice amount
                 till = new Till().cashPaid(); //invoice amount + amount paid in cash
 
                 break;
@@ -77,6 +82,7 @@ public class Table {
 
         writeToLog.close();
     }
+
     public void closeTable() {
 
 
@@ -85,6 +91,7 @@ public class Table {
     //closing/deleting booking
     //check if table is vacant
     public void deleteTable(Table table) {
+        productsOnTable.remove(table);
 
     }
 }

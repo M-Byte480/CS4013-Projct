@@ -1,0 +1,78 @@
+Index: src/till/Table.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package till;\r\n\r\nimport restaurant.*;\r\nimport reservation.*;\r\n\r\nimport java.util.ArrayList;\r\nimport java.io.*;\r\n\r\npublic class Table {\r\n    private int tableNumber;\r\n    private int seats;\r\n    private Reservation booking;\r\n\r\n    private ArrayList<Product> productsOnTable;\r\n\r\n    private Till till ;\r\n\r\n    public Table(int tableNumber, int seats, Reservation booking) {\r\n        this.tableNumber = tableNumber;\r\n        this.seats = seats;\r\n        this.booking = booking;\r\n    }\r\n\r\n    //adding product to \"order\"\r\n    public void addProduct(Product pick) {\r\n\r\n        productsOnTable.add(pick);\r\n    }\r\n\r\n    //deleting product from \"order\"\r\n    public void deleteProduct(Product delete) {\r\n\r\n        productsOnTable.add(delete);\r\n    }\r\n\r\n    //closing table\r\n    //calculate price\r\n    public void billTable(char type) throws FileNotFoundException {\r\n        switch (type) {\r\n            case 1:\r\n                type = 'C';\r\n                closeTable();\r\n                Invoice.sendInvoice();\r\n                sendLog();\r\n                till =  new Till().sale(); //invoice amount\r\n                //Steve -\r\n\r\n\r\n                break;\r\n\r\n\r\n            case 2:\r\n                type = 'D';\r\n                closeTable();\r\n                Invoice.sendInvoice();\r\n                SendLog();\r\n                till =  new Till().sale(); //invoice amount\r\n\r\n                break;\r\n\r\n\r\n            case 3:\r\n                type = 'X';\r\n                closeTable();\r\n                Invoice.sendInvoice();\r\n                SendLog();\r\n                till =  new Till().sale(); //invoice amount\r\n                till = new Till().cashPaid(); //invoice amount + amount paid in cash\r\n\r\n                break;\r\n        }\r\n    }\r\n\r\n    private void sendLog(String whatHappened) throws IOException {\r\n        Util writeToLog = new Util(new File(\"src/data/log.csv\"));\r\n\r\n        writeToLog.addDataToFile(whatHappened);\r\n\r\n        writeToLog.close();\r\n    }\r\n    public void closeTable() {\r\n\r\n\r\n    }\r\n\r\n    //closing/deleting booking\r\n    //check if table is vacant\r\n    public void deleteTable(Table table) {\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/till/Table.java b/src/till/Table.java
+--- a/src/till/Table.java	(revision 5d9df82c6218c24bd910bac60523561e04be833d)
++++ b/src/till/Table.java	(date 1667340130884)
+@@ -15,10 +15,10 @@
+ 
+     private Till till ;
+ 
+-    public Table(int tableNumber, int seats, Reservation booking) {
++    public Table(int tableNumber, int seats) {
+         this.tableNumber = tableNumber;
+         this.seats = seats;
+-        this.booking = booking;
++
+     }
+ 
+     //adding product to "order"
+@@ -53,7 +53,7 @@
+                 type = 'D';
+                 closeTable();
+                 Invoice.sendInvoice();
+-                SendLog();
++                sendLog();
+                 till =  new Till().sale(); //invoice amount
+ 
+                 break;
+@@ -62,8 +62,7 @@
+             case 3:
+                 type = 'X';
+                 closeTable();
+-                Invoice.sendInvoice();
+-                SendLog();
++                sendLog();
+                 till =  new Till().sale(); //invoice amount
+                 till = new Till().cashPaid(); //invoice amount + amount paid in cash
+ 
+@@ -86,6 +85,8 @@
+     //closing/deleting booking
+     //check if table is vacant
+     public void deleteTable(Table table) {
+-
+-    }
+-}
++            this.tableNumber = 0;
++            this.seats = 0;
++        }
++    }
++
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"66b27ec0-3eaa-4f9d-989f-b08f34540980\" name=\"Changes\" comment=\"Making bones of Menu, Product, Restaurant and Table\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/till/Login.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/till/Login.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/till/Table.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/till/Table.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/till/Till.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/till/Till.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Merge.Settings\">\r\n    <option name=\"BRANCH\" value=\"main\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"milanNow\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2GUxXSbqsGx8GLblmCNe10oWZkh\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Programming/Java/Semester3/CS4013/Labs&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Programming\\Java\\Semester3\\javaProject\\src\\people\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Programming\\Java\\Semester3\\javaProject\\CS4013-Projct\\src\" />\r\n      <recent name=\"C:\\Programming\\Java\\Semester3\\javaProject\\CS4013-Projct\\data\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"66b27ec0-3eaa-4f9d-989f-b08f34540980\" name=\"Changes\" comment=\"\" />\r\n      <created>1666457004373</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1666457004373</updated>\r\n      <workItem from=\"1666457006517\" duration=\"968000\" />\r\n      <workItem from=\"1666530946641\" duration=\"24000\" />\r\n      <workItem from=\"1666797959440\" duration=\"350000\" />\r\n      <workItem from=\"1666798366195\" duration=\"2512000\" />\r\n      <workItem from=\"1667213387104\" duration=\"429000\" />\r\n      <workItem from=\"1667221263943\" duration=\"1339000\" />\r\n      <workItem from=\"1667289084121\" duration=\"7000\" />\r\n      <workItem from=\"1667293370639\" duration=\"6244000\" />\r\n      <workItem from=\"1667304119389\" duration=\"553000\" />\r\n      <workItem from=\"1667326244214\" duration=\"1450000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Created repo and added files from previous assignment\">\r\n      <created>1666457189083</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1666457189083</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Making bones of Menu, Product, Restaurant and Table\">\r\n      <created>1666981654014</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1666981654014</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Making bones of Menu, Product, Restaurant and Table\">\r\n      <created>1667234288432</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1667234288432</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Making bones of Menu, Product, Restaurant and Table\">\r\n      <created>1667296218930</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1667296218930</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"5\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Created repo and added files from previous assignment\" />\r\n    <MESSAGE value=\"Making bones of Menu, Product, Restaurant and Table\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Making bones of Menu, Product, Restaurant and Table\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 5d9df82c6218c24bd910bac60523561e04be833d)
++++ b/.idea/workspace.xml	(date 1667339948104)
+@@ -1,11 +1,10 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Making bones of Menu, Product, Restaurant and Table">
++    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="csv files">
++      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_28_10_2022_17_16__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_28_10_2022_17_16__Changes_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/till/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Login.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/till/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Table.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/till/Till.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Till.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,0 +1,75 @@
+Index: src/till/Table.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package till;\r\n\r\nimport reservation.*;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class Table {\r\n    private int id;\r\n    private int seats;\r\n    private Reservation booking;\r\n\r\n    private ArrayList<Product> productsOnTable;\r\n\r\n    private Till till ;\r\n\r\n    Table(int id, int seats, Reservation booking) {\r\n        this.id = id;\r\n        this.seats = seats;\r\n        this.booking = booking;\r\n    }\r\n\r\n    //adding product to \"order\"\r\n    public void addProduct(Product pick) {\r\n\r\n        productsOnTable.add(pick);\r\n    }\r\n\r\n    //deleting product from \"order\"\r\n    public void deleteProduct(Product delete) {\r\n\r\n        productsOnTable.add(delete);\r\n    }\r\n\r\n    //closing table\r\n    //calculate price\r\n    public void billTable(char type) {\r\n        switch (type) {\r\n            case 1:\r\n                type = 'C';\r\n                closeTable();\r\n                Invoice.sendInvoice();\r\n                SendLog();\r\n                till =  new Till().sale(); //invoice amount\r\n\r\n\r\n                break;\r\n\r\n\r\n            case 2:\r\n                type = 'D';\r\n                closeTable();\r\n                Invoice.sendInvoice();\r\n                SendLog();\r\n                till =  new Till().sale(); //invoice amount\r\n\r\n                break;\r\n\r\n\r\n            case 3:\r\n                type = 'X';\r\n                closeTable();\r\n                Invoice.sendInvoice();\r\n                SendLog();\r\n                till =  new Till().sale(); //invoice amount\r\n                till = new Till().cashPaid(); //invoice amount + amount paid in cash\r\n\r\n                break;\r\n        }\r\n    }\r\n\r\n\r\n    public void closeTable() {\r\n\r\n\r\n    }\r\n\r\n    //closing/deleting booking\r\n    //check if table is vacant\r\n    public void deleteTable(Table table) {\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/till/Table.java b/src/till/Table.java
+--- a/src/till/Table.java	(revision 4ae7d460703084f536b9ad6155cc08cdb804c187)
++++ b/src/till/Table.java	(date 1667338952781)
+@@ -1,11 +1,12 @@
+ package till;
+ 
++import people.Staff;
+ import reservation.*;
+ 
+ import java.util.ArrayList;
+ 
+ public class Table {
+-    private int id;
++    private int number;
+     private int seats;
+     private Reservation booking;
+ 
+@@ -13,8 +14,11 @@
+ 
+     private Till till ;
+ 
+-    Table(int id, int seats, Reservation booking) {
+-        this.id = id;
++    private Staff server ;
++
++
++    Table(int number, int seats, Reservation booking) {
++        this.number = number;
+         this.seats = seats;
+         this.booking = booking;
+     }
+Index: src/till/Product.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package till;\r\nimport java.util.ArrayList;\r\n\r\n\r\n//Breny\r\n//Adding product parameters and storing products in a product array list\r\npublic class Product {\r\n    private String description;\r\n    private ArrayList<String> allergies;\r\n    private double cost;\r\n\r\n    private ArrayList<Product> productsList;\r\n\r\n    Product(String description, ArrayList<String> allergies, double cost) {\r\n        this.description = description;\r\n        this.allergies = allergies;\r\n        this.cost = cost;\r\n\r\n\r\n        productsList.add(this);\r\n    }\r\n\r\n    public ArrayList<Product> getProductsList() {\r\n        return productsList;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/till/Product.java b/src/till/Product.java
+--- a/src/till/Product.java	(revision 4ae7d460703084f536b9ad6155cc08cdb804c187)
++++ b/src/till/Product.java	(date 1667336989998)
+@@ -15,8 +15,6 @@
+         this.description = description;
+         this.allergies = allergies;
+         this.cost = cost;
+-
+-
+         productsList.add(this);
+     }
+ 
+Index: src/till/Menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package till;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class Menu {\r\n    private ArrayList<Product> products;\r\n\r\n    Menu(ArrayList<Product> products){\r\n        this.products = products ;\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/till/Menu.java b/src/till/Menu.java
+--- a/src/till/Menu.java	(revision 4ae7d460703084f536b9ad6155cc08cdb804c187)
++++ b/src/till/Menu.java	(date 1667337627479)
+@@ -6,6 +6,7 @@
+     private ArrayList<Product> products;
+ 
+     Menu(ArrayList<Product> products){
++
+         this.products = products ;
+     }
+ 
