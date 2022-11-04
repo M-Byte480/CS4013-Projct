@@ -5,7 +5,6 @@ import till.*;
 import restaurant.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -68,7 +67,7 @@ public class Invoice {
         ArrayList<LineItem> items = new ArrayList<>();
         StringBuilder toReturn = new StringBuilder();
         toReturn.append(customer.getAddress()).append("\n").append(customer).append("\n");
-        for (LineItem l : LineItem.convert(products)) {
+        for (LineItem l : LineItem.convertToLineItems(products)) {
             toReturn.append(l.toString()).append("=".repeat(48));
         }
         return toReturn.toString();

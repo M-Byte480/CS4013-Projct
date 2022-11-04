@@ -262,4 +262,8 @@ public class Util {
         hello.save();
         hello.close();
     }
+
+    public ArrayList<String[]> getValues() {
+        return values;
+    }
 }

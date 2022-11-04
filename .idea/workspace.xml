@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Did more work than Tadhg">
-      <change afterPath="$PROJECT_DIR$/src/reservation/LineItem.java" afterDir="false" />
+    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Added invoices and LineItem">
+      <change afterPath="$PROJECT_DIR$/src/gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/invoices.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/invoices.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/tables.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/tables.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hello.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Hello.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/people/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/reservation/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/reservation/Invoice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reservation/LineItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/reservation/LineItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/restaurant/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/till/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/till/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/till/Till.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Till.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -42,15 +47,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Programming/Java/Semester3/CS4013/Labs",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Programming/Java/Semester3/javaProject/CS4013-Projct&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Programming\Java\Semester3\javaProject\src\people" />
@@ -59,6 +64,26 @@
       <recent name="C:\Programming\Java\Semester3\javaProject\CS4013-Projct\src" />
       <recent name="C:\Programming\Java\Semester3\javaProject\CS4013-Projct\data" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Util" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="restaurant.Util" />
+      <module name="javaProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="restaurant.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Util" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -78,6 +103,8 @@
       <workItem from="1667293370639" duration="6244000" />
       <workItem from="1667304119389" duration="553000" />
       <workItem from="1667326244214" duration="1450000" />
+      <workItem from="1667378473363" duration="2909000" />
+      <workItem from="1667387616018" duration="4485000" />
     </task>
     <task id="LOCAL-00001" summary="Created repo and added files from previous assignment">
       <created>1666457189083</created>
@@ -121,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667338970062</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added invoices and LineItem">
+      <created>1667350842099</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1667350842099</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,6 +177,7 @@
     <MESSAGE value="Making bones of Menu, Product, Restaurant and Table" />
     <MESSAGE value="Added CSV files" />
     <MESSAGE value="Did more work than Tadhg" />
-    <option name="LAST_COMMIT_MESSAGE" value="Did more work than Tadhg" />
+    <MESSAGE value="Added invoices and LineItem" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added invoices and LineItem" />
   </component>
 </project>
