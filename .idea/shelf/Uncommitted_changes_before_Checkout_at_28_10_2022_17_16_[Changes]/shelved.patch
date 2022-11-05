@@ -1,0 +1,11 @@
+Index: src/till/Product.java
+===================================================================
+diff --git a/src/till/Product.java b/src/till/Product.java
+--- a/src/till/Product.java	
++++ b/src/till/Product.java	
+@@ -7,5 +7,4 @@
+     private ArrayList<String> allergies;
+     private double cost;
+ 
+-
+ }

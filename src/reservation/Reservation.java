@@ -1,7 +1,5 @@
 package reservation;
 
-import people.Staff;
-
 public class Reservation {
-
+    //make status of booking ( boolean ) - Breny x
 }

@@ -1,0 +1,27 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -2,10 +2,7 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Making bones of Menu, Product, Restaurant and Table">
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/till/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Login.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/till/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Table.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/till/Till.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Till.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -72,6 +69,7 @@
+       <workItem from="1667293370639" duration="6244000" />
+       <workItem from="1667304119389" duration="553000" />
+       <workItem from="1667326244214" duration="1450000" />
++      <workItem from="1667379671271" duration="12000" />
+     </task>
+     <task id="LOCAL-00001" summary="Created repo and added files from previous assignment">
+       <created>1666457189083</created>
