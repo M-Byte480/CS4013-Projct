@@ -1,6 +1,7 @@
+package restaurant;
+
 import reservation.*;
 import till.*;
-import people.*;
 
 import java.util.ArrayList;
 
@@ -13,5 +14,4 @@ public class Restaurant extends Yum {
     private double profit;
 
     // createInvoice();
-
 }

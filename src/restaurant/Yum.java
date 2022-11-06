@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/Yum.java
 import java.util.ArrayList;
+=======
+package restaurant;
+>>>>>>> main:src/restaurant/Yum.java
 
 public class Yum {
     private double overallProfit;
