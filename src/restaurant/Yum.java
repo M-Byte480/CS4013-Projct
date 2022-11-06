@@ -1,8 +1,6 @@
-<<<<<<< HEAD:src/Yum.java
-import java.util.ArrayList;
-=======
 package restaurant;
->>>>>>> main:src/restaurant/Yum.java
+
+import java.util.ArrayList;
 
 public class Yum {
     private double overallProfit;
@@ -12,6 +10,7 @@ public class Yum {
         overallProfit = 0;
         restaurants = new ArrayList<>();
     }
+    
     public void addRestaurant() {
         restaurants.add(new Restaurant());
     }
