@@ -1,0 +1,193 @@
+Index: src/till/Table.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/till/Table.java b/src/till/Table.java
+--- a/src/till/Table.java	
++++ b/src/till/Table.java	
+@@ -12,8 +12,8 @@
+     private Reservation booking;
+ 
+     private ArrayList<Product> productsOnTable;
++private static Till till = new Till();
+ 
+-    private Till till ;
+ 
+     public Table(int tableNumber, int seats) {
+         this.tableNumber = tableNumber;
+@@ -34,49 +34,65 @@
+ 
+     //closing table
+     //calculate price
+-    public void billTable(char type) throws FileNotFoundException {
++    public void billTable(char type) throws IOException {
+         switch (type) {
++
++            //pay using credit card
+             case 1:
+                 type = 'C';
+                 closeTable();
+-                Invoice.sendInvoice();
+-                sendLog();
+-                till =  new Till().sale(); //invoice amount
+-                //Steve -
+-
+-
++                sendLog("CREDIT CARD PAID");
++                depostiToTill(till) ; //invoice amount
+                 break;
+ 
+ 
++            //pay using debit card
+             case 2:
+                 type = 'D';
+                 closeTable();
+-                Invoice.sendInvoice();
+-                SendLog();
+-                till =  new Till().sale(); //invoice amount
++                Reservation paid = new Reservation();
++                sendLog("DEBIT CARD PAID");
++                depostiToTill(till) ;
+ 
+                 break;
+ 
+-
++                //pay using cash
+             case 3:
+                 type = 'X';
+                 closeTable();
+-                Invoice.sendInvoice();
+-                SendLog();
+-                till =  new Till().sale(); //invoice amount
+-                till = new Till().cashPaid(); //invoice amount + amount paid in cash
+-
++                sendLog("CASH PAID");
++                depostiToTill(till) ;  //invoice amount
++                ; //invoice amount + amount paid in cash
+                 break;
+         }
+     }
++    public void depostiToTill(Till till){
++        till.sale(this.getTotalOfFoodOrdered());
++    }
++
++
++
++
++
++    public double getTotalOfFoodOrdered(){
++        double sum = 0;
++        for (Product food: productsOnTable) {
++            sum += food.getCost();
++        }
++        return sum ;
++    }
++
++
++
+ 
+     private void sendLog(String whatHappened) throws IOException {
+         Util writeToLog = new Util(new File("src/data/log.csv"));
+-
+         writeToLog.addDataToFile(whatHappened);
+-
+         writeToLog.close();
+     }
++
++
++
+     public void closeTable() {
+ 
+ 
+Index: src/till/Menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/till/Menu.java b/src/till/Menu.java
+--- a/src/till/Menu.java	
++++ b/src/till/Menu.java	
+@@ -7,6 +7,8 @@
+     private ArrayList<Product> products;
+     private Scanner in;
+ 
++    private Till till1 = new Till();
++
+     public Menu(){
+         this.in = new Scanner(System.in);
+     }
+Index: src/restaurant/Util.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/restaurant/Util.java b/src/restaurant/Util.java
+--- a/src/restaurant/Util.java	
++++ b/src/restaurant/Util.java	
+@@ -1,5 +1,8 @@
+ package restaurant;// Milan: Last edit 28/10
+ 
++
++
++
+ import java.io.*;
+ import java.text.SimpleDateFormat;
+ import java.util.Date;
+Index: src/till/Till.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/till/Till.java b/src/till/Till.java
+--- a/src/till/Till.java	
++++ b/src/till/Till.java	
+@@ -2,30 +2,35 @@
+ 
+ public class Till {
+ 
+-    private  double startOfEachDay = 200;
++    private double startOfEachDay = 200;
++    private double moneyInTill;
+ 
+-
+-    Till() {
++    public Till() {
++        this.moneyInTill = startOfEachDay;
+     }
+ 
+     public double getStartOfEachDay() {
+         return startOfEachDay;
+     }
+ 
+-    public double sale(double moneyMadeFromSale) {
+-        double dailyProfit = startOfEachDay;
+-        dailyProfit += moneyMadeFromSale;
+-        return dailyProfit;
++    public double profitReturn() {
++        return moneyInTill;
+     }
+ 
+     public double cashPaid(double moneyMadeFromSale, double cashPaid) {
+-        double change;
+-        if (cashPaid < moneyMadeFromSale){
+-            double extraToPay = moneyMadeFromSale - cashPaid;
+-            System.out.println("You owe an extra " + extraToPay + " euro");
+-        }
+-        change = cashPaid - moneyMadeFromSale;
++        double change = 0;
++        if (cashPaid >= moneyMadeFromSale) {
++//            double extraToPay = moneyMadeFromSale - cashPaid;
++//            System.out.println("You owe an extra " + extraToPay + " euro");
++            change = cashPaid - moneyMadeFromSale;
++            this.add(moneyMadeFromSale);
++        }
++
+         return change;
+ 
++    }
++
++    public void add(double amount) {
++        this.moneyInTill += amount;
+     }
+ }

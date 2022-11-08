@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Did more work than Tadhg">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_28_10_2022_17_16__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_28_10_2022_17_16__Changes_.xml" afterDir="false" />
     <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Added invoices and LineItem">
       <change afterPath="$PROJECT_DIR$/src/gui.java" afterDir="false" />
+    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Made structure of Menu and Till">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Hello.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Hello.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/people/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Customer.java" afterDir="false" />
