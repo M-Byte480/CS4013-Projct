@@ -28,7 +28,7 @@ public class Staff extends Person {
         this.discount = discount;
     }
 
-    public void getStaffMembers(){}
+
 
 
     @Override
