@@ -67,7 +67,7 @@ public class Invoice {
         ArrayList<LineItem> items = new ArrayList<>();
         StringBuilder toReturn = new StringBuilder();
         toReturn.append(customer.getAddress()).append("\n").append(customer).append("\n");
-        for (LineItem l : LineItem.convertToLineItems(products)) {
+        for (LineItem l : Table.convertToLineItems(products)) {
             toReturn.append(l.toString()).append("=".repeat(48));
         }
         return toReturn.toString();
