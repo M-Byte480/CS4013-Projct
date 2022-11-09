@@ -1,7 +1,10 @@
 package restaurant;// Milan: Last edit 28/10
 
+import till.Product;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -266,5 +269,10 @@ public class Util {
 //*/
     public ArrayList<String[]> getValues() {
         return values;
+    }
+
+    // To be added to fix invoices to csv
+    public void addDataToFile(String[] strings, String address, String contact, LocalDateTime time, ArrayList<Product> products, double total) {
+
     }
 }

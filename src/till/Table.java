@@ -1,20 +1,18 @@
 package till;
 
-import restaurant.*;
-import reservation.*;
+import reservation.Invoice;
+import reservation.LineItem;
+import reservation.Reservation;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.io.*;
 import java.util.HashMap;
 
 public class Table {
     private int tableNumber;
     private int seats;
     private Reservation booking;
-
     private ArrayList<Product> productsOnTable;
-
-
     private Till till;
 
     public Table(int tableNumber, int seats) {
@@ -22,9 +20,6 @@ public class Table {
         this.seats = seats;
     }
 
-    public void setBooking(Table table) {
-        booking.setStatus = true;
-    }
 
     //adding product to "order"
     public void addProduct(Product pick) {
@@ -47,9 +42,9 @@ public class Table {
         for (Product p : products) {
             count = occurences.get(p.getName());
             if(count == null){
-                occurences.put(p.getName(), 1);
+                occurences.put(p, 1);
             }else{
-                occurences.replace(p.name, count + 1);
+                occurences.replace(p, count + 1);
             }
         }
 
@@ -63,9 +58,11 @@ public class Table {
 
 
 
-    public void closeTable() {
-
-
+    public void closeTable() throws IOException {
+        Invoice invoice = new Invoice(this.booking);
+        invoice.sendInvoice();
+        this.booking = null;
+        this.productsOnTable = null;
     }
 
     //closing/deleting booking
@@ -73,6 +70,11 @@ public class Table {
     public void deleteTable(Table table) {
         productsOnTable.remove(table);
 
+    }
+
+    public void getMenu(Table t) throws IOException {
+        Menu menu = new Menu();
+        menu.run(t);
     }
 
     public ArrayList<Product> getProducts() {

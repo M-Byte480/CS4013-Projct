@@ -16,23 +16,41 @@ public class Invoice {
     private double total;
     private static int uniqueID;
 
-    public Invoice(Reservation reservation, Customer customer) throws IOException {
+    /**
+     * Creates an invoice Object
+     *
+     * @param reservation
+     * @throws IOException
+     */
+    public Invoice(Reservation reservation) throws IOException {
         this.reservation = reservation;                     // collects details of reservation
-        this.customer = customer;                               // contains details of the person who booked
+        this.customer = reservation.getTable().getCustomer();                               // contains details of the person who booked
         this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
         this.total = products.getSum();
         uniqueID++;
         sendInvoice();
     }
 
+    /**
+     * Sets the uniqueID state
+     * @param uniqueID
+     */
     public static void setUniqueID(int uniqueID) {
         Invoice.uniqueID = uniqueID;
     }
 
+    /**
+     * Gets the ID state
+     * @return uniqueID current state
+     */
     public static int getUniqueID() {
         return uniqueID;
     }
 
+    /**
+     * Gets the latest uniqueID in the file and then it sets the uniqueID state from last usage
+     * @throws IOException
+     */
     public static void getLatestID() throws IOException {
         if(getUniqueID() == 0){
             setUniqueID(1);
@@ -44,6 +62,11 @@ public class Invoice {
         invoiceReader.close();
     }
 
+    /**
+     * Adds the invoice to invoice.csv file using the structure:
+     * name, address, contactDetail, reservationTime, products, netTotal
+     * @throws IOException
+     */
     public void sendInvoice() throws IOException {
         Util writeToLog = new Util(new File("src/data/log.csv"));           // Create a writer to logs
         Util writeToInvoices = new Util(new File("src/data/invoices.csv")); // Create a writer to invoices
@@ -56,13 +79,17 @@ public class Invoice {
         }
         // Write to the files
         writeToLog.addDataToFile(new String[] {Util.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
-        writeToInvoices.addDataToFile(customer.getName(), customer.getAddress(), contact, reservation.getTime(),reservation.getProducts(),total);
+        writeToInvoices.addDataToFile(new String[]{customer.getName()}, customer.getAddress(), contact, reservation.getTime(),reservation.getTable().getProducts(),total);
 
         // End the utils
         writeToInvoices.close();
         writeToLog.close();
     }
 
+    /**
+     * Formats the CSV file into a readable state in terminal
+     * @return
+     */
     public String format(){
         ArrayList<LineItem> items = new ArrayList<>();
         StringBuilder toReturn = new StringBuilder();
