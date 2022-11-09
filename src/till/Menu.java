@@ -60,6 +60,11 @@ public class Menu {
 
     }
 
+<<<<<<< HEAD
+=======
+    // This code was taken from Micheal
+    private Object getChoice(Object[] choices) {
+>>>>>>> Tadhg's-Special-Branch
 
         }
     }
