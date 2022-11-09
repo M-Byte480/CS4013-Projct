@@ -16,7 +16,7 @@ public class Menu {
 
     }
 
-    // This code was taken from
+    // This code was taken from Micheal
     private Object getChoice(Object[] choices) {
 
         while (true) {
