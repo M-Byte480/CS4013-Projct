@@ -6,7 +6,9 @@ import java.util.Scanner;
 
 public class Menu {
     private ArrayList<Product> products;
+
     private Scanner in;
+
     private Till till1 = new Till();
 
     public Menu() {
@@ -23,6 +25,7 @@ public class Menu {
             if (command.equals("S")) {
                 for (Product p : Product.productsOfRestaurant)
                     System.out.println(p);
+
 
                 //show all products available
                 //select a product using a input

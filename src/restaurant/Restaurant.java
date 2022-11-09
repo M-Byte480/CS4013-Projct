@@ -26,8 +26,15 @@ public class Restaurant extends Yum {
     public ArrayList<Reservation> getReservations() {
         return reservations;
     }
-    public void addReservation(Reservation reservation) {
+    public boolean addReservation(Reservation reservation) {
+        boolean isBooked = false;
+        for (Reservation res : reservations) {
+            if (res.overlaps(reservation)) isBooked = true;
+        }
+        
+        if (isBooked) return false;
         this.reservations.add(reservation);
+        return true;
     }
     public void removeReservation(Reservation reservation) {
         this.reservations.remove(reservation);
