@@ -94,8 +94,6 @@ public class Reservation {
 
 	public boolean overlaps(Reservation res) {
 		if (!table.equals(res.table)) return false;
-		// else if (time.isAfter(res.time) && time.isBefore(res.time.plus(res.length))) return true;
-		// else if (time.plus(length).isAfter(res.time) && time.plus(length).isBefore(res.time.plus(res.length))) return true;
 		else if (time.isAfter(res.time) && time.isBefore(res.time.plus(res.length))) return true;
 		else if (res.time.isAfter(time) && res.time.isBefore(time.plus(length))) return true;
 		else return false;
