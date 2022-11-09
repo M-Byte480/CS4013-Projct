@@ -55,7 +55,7 @@ public class Invoice {
             contact = customer.getPhoneNumber();
         }
         // Write to the files
-        writeToLog.addDataToFile(new String[] {Util.getTimeNow(), reservation.getStaff(), "Sent away invoice"});
+        writeToLog.addDataToFile(new String[] {Util.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
         writeToInvoices.addDataToFile(customer.getName(), customer.getAddress(), contact, reservation.getTime(),reservation.getProducts(),total);
 
         // End the utils

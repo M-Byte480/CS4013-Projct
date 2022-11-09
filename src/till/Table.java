@@ -39,42 +39,7 @@ public class Table {
         productsOnTable.add(delete);
     }
 
-    //closing table
-    //calculate price
-    public void billTable(char type) throws IOException {
-        switch (type) {
-            case 1:
-                type = 'C';
-                closeTable();
-                sendLog("Paid with Credit");
-                Invoice.sendInvoice();
-                till = new Till().sale(); //invoice amount
 
-
-                break;
-
-
-            case 2:
-                type = 'D';
-                closeTable();
-                sendLog("Paid with Debit");
-                Invoice.sendInvoice();
-                till = new Till().sale(); //invoice amount
-
-                break;
-
-
-            case 3:
-                type = 'X';
-                closeTable();
-                Invoice.sendInvoice();
-                sendLog("Paid with cash");
-                till = new Till().sale(); //invoice amount
-                till = new Till().cashPaid(); //invoice amount + amount paid in cash
-
-                break;
-        }
-    }
     public static ArrayList<LineItem> convertToLineItems(ArrayList<Product> products){
         ArrayList<LineItem> items = new ArrayList<>();
         HashMap<Product, Integer> occurences = new HashMap<>();
@@ -96,13 +61,7 @@ public class Table {
         return items;
     }
 
-    private void sendLog(String whatHappened) throws IOException {
-        Util writeToLog = new Util(new File("src/data/log.csv"));
 
-        writeToLog.addDataToFile(whatHappened);
-
-        writeToLog.close();
-    }
 
     public void closeTable() {
 
