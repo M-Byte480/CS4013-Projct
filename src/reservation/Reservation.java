@@ -92,6 +92,12 @@ public class Reservation {
 		this.length = length;
 	}
 
+	/**
+	 * Checks to see if a reservation overlaps with another one. Checks table and then time. 
+	 * Will return true if it overlaps else false.
+	 * @param res
+	 * @return boolean
+	 */
 	public boolean overlaps(Reservation res) {
 		if (!table.equals(res.table)) return false;
 		else if (time.isAfter(res.time) && time.isBefore(res.time.plus(res.length))) return true;
