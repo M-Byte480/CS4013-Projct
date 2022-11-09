@@ -3,10 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Did more work than Tadhg">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_28_10_2022_17_16__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_28_10_2022_17_16__Changes_.xml" afterDir="false" />
+    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Added invoices and LineItem">
+      <change afterPath="$PROJECT_DIR$/src/gui.java" afterDir="false" />
+    <list default="true" id="66b27ec0-3eaa-4f9d-989f-b08f34540980" name="Changes" comment="Made structure of Menu and Till">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reservation/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/reservation/Reservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/till/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/till/Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hello.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Hello.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/people/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reservation/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/reservation/Invoice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reservation/LineItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/reservation/LineItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restaurant/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/restaurant/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/till/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/till/Till.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/till/Till.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Breny" />
+        <entry key="$PROJECT_DIR$" value="milanNow" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

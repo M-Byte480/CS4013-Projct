@@ -1,10 +1,5 @@
 package reservation;
 
-import till.Product;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class LineItem {
     private String id;
     private int quantity;

@@ -253,6 +253,7 @@ public class Util {
         return (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
     }
 
+/*
     public static void main(String[] args) throws IOException {
         Util hello = new Util(new File("Hello.txt"));
         hello.read();
@@ -262,7 +263,7 @@ public class Util {
         hello.save();
         hello.close();
     }
-
+//*/
     public ArrayList<String[]> getValues() {
         return values;
     }
