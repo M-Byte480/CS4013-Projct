@@ -2,11 +2,12 @@ package people;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import restaurant.*;
+import people.Customer;
+
 
 
 public class Customer extends Person {
@@ -78,18 +79,29 @@ public class Customer extends Person {
         return custDetails;
     }
 
-    public void addCustomerToPeople(Customer customer) throws IOException {
-        Util fileWriter = new Util(new File("/src/data/people.csv"));
-        fileWriter.addDataToFile(customerDetailsToStringArr());
+
+
+    public void addCustomerToPeople() throws IOException {
+        Customer customer = this;
+        Util fileWriter = new Util(new File("src/data/people.csv"));
+        System.out.println("Writting");
+        fileWriter.addDataToFile(new String [] {customer.getName(), customer.getAddress(), customer.getPhoneNumber(), customer.getEmail(), customer.getId(), Double.toString(loyalty)});
+        System.out.println("Written");
+        fileWriter.close();
     }
-    public void addCustomer(Customer customer) throws IOException {
-        Util fileWriter = new Util(new File("/src/data/people.csv"));
-        fileWriter.addDataToFile(customerDetails());
+    public void addCustomer() throws IOException {
+        Customer customer = this;
+        Util fileWriter = new Util(new File("src/data/people.csv"));
+        System.out.println("Sucessfully written");
+        fileWriter.addDataToFile(customer.customerDetails());
+        fileWriter.close();
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+
+    public static void main(String[] args) throws IOException {
 
         Customer cust = new Customer("Steve", "Limerick" , "0879204163", "21263213@studentmail.ul.ie","21263213", 0.87 );
+        cust.addCustomerToPeople();
         System.out.println(cust);
 
 

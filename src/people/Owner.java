@@ -24,8 +24,5 @@ private static double profit;
     public void promoteStaff(Staff person){
     }
 
-    public static void main(String[] args) {
-
-    }
 
 }

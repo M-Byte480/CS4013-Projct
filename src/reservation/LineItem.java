@@ -19,26 +19,26 @@ public class LineItem {
     }
 
     // Move this block of code to table and invoke it through the table of products
-    public static ArrayList<LineItem> convertToLineItems(ArrayList<Product> products){
-        ArrayList<LineItem> items = new ArrayList<>();
-        HashMap<Product, Integer> occurences = new HashMap<>();
-        Integer count = 0;
-        for (Product p : products) {
-            count = occurences.get(p.name);
-            if(count == null){
-                occurences.put(p.name, 1);
-            }else{
-                occurences.replace(p.name, count + 1);
-            }
-        }
-
-        for (HashMap.Entry<Product, Integer> item :
-                occurences.entrySet()) {
-            items.add(new LineItem(item.getKey().getName(), item.getValue(), item.getKey().getCost()));
-        }
-
-        return items;
-    }
+//    public static ArrayList<LineItem> convertToLineItems(ArrayList<Product> products){
+//        ArrayList<LineItem> items = new ArrayList<>();
+//        HashMap<Product, Integer> occurences = new HashMap<>();
+//        Integer count = 0;
+//        for (Product p : products) {
+//            count = occurences.get(p.name);
+//            if(count == null){
+//                occurences.put(p.name, 1);
+//            }else{
+//                occurences.replace(p.name, count + 1);
+//            }
+//        }
+//
+//        for (HashMap.Entry<Product, Integer> item :
+//                occurences.entrySet()) {
+//            items.add(new LineItem(item.getKey().getName(), item.getValue(), item.getKey().getCost()));
+//        }
+//
+//        return items;
+//    }
 
     public void increaseQuantity(LineItem item){
         quantity++;

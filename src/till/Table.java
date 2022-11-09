@@ -5,6 +5,7 @@ import reservation.*;
 
 import java.util.ArrayList;
 import java.io.*;
+import java.util.HashMap;
 
 public class Table {
     private int tableNumber;
@@ -74,6 +75,26 @@ public class Table {
                 break;
         }
     }
+    public static ArrayList<LineItem> convertToLineItems(ArrayList<Product> products){
+        ArrayList<LineItem> items = new ArrayList<>();
+        HashMap<Product, Integer> occurences = new HashMap<>();
+        Integer count = 0;
+        for (Product p : products) {
+            count = occurences.get(p.getName());
+            if(count == null){
+                occurences.put(p.getName(), 1);
+            }else{
+                occurences.replace(p.name, count + 1);
+            }
+        }
+
+        for (HashMap.Entry<Product, Integer> item :
+                occurences.entrySet()) {
+            items.add(new LineItem(item.getKey().getName(), item.getValue(), item.getKey().getCost()));
+        }
+
+        return items;
+    }
 
     private void sendLog(String whatHappened) throws IOException {
         Util writeToLog = new Util(new File("src/data/log.csv"));
@@ -93,5 +114,9 @@ public class Table {
     public void deleteTable(Table table) {
         productsOnTable.remove(table);
 
+    }
+
+    public ArrayList<Product> getProducts() {
+        return productsOnTable;
     }
 }

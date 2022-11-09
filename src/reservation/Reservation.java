@@ -81,5 +81,6 @@ public class Reservation {
 	public void setLength(LocalDateTime length) {
 		this.length = length;
 	}
-    //make status of booking ( boolean ) - Breny x
+
+
 }

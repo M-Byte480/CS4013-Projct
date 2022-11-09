@@ -5,20 +5,47 @@ import people.*;
 
 
 public class Login {
+    private String tillID;
+    private String tillPassword;
     private String ID;
 
-    public Login(String id, String password) {
-        String tillID = Integer.toString(Person.getUniqueID());
-        String tillPassword = Person.getPassword();
-
-        if (!id.equals(tillID) || !password.equals(tillPassword)) {
-            System.out.println("Invalid Credentials");
-        } else if (!id.equals(tillID) && !password.equals(tillPassword)) {
-            System.out.println("Invalid Credentials");
-        } else if (id.equals(tillID) && password.equals(tillPassword)){
-            System.out.println("Valid Credentials");
-        }
+    /**
+     * Constructor to create a login object with a specified ID and password
+     * @param id
+     * @param password
+     */
+    Login(String id, String password) {
+         this.tillID = Integer.toString(Person.getUniqueID());
+         this.tillPassword = Person.getPassword();
     }
+
+        public void logIn(String id, String password) {
+            if (!id.equals(tillID) || !password.equals(tillPassword)){
+                System.out.println("Invalid Credentials");
+            } else if (!id.equals(tillID) && !password.equals(tillPassword)) {
+                System.out.println("Invalid Credentials");
+            } else if (id.equals(tillID) && password.equals(tillPassword)) {
+                System.out.println("Valid Credentials");
+            }
+        }
+
+    /**
+     * Gives access to private tillID variable
+     * @return  tillID
+     */
+    public String getTillID(){
+        return tillID;
+    }
+
+
+    /**
+     * Gives access to private tillPassword variable
+     * @return tillPassword
+     */
+    public String getTillPassword(){
+        return tillPassword;
+    }
+
 
 
     Login(String ID) {
@@ -46,5 +73,10 @@ public class Login {
 
 
         }
+    }  public static void main(String[] args) {
+        Login login = new Login("12345", "hello");
+        System.out.println(login.getTillID());
     }
 }
+
+
