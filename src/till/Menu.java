@@ -60,17 +60,7 @@ public class Menu {
 
     }
 
-    private Object getChoice(Object[] choices) {
-        while (true) {
-            char c = 'A';
-            for (Object choice : choices) {
-                System.out.println(c + ") " + choice);
-                c++;
-            }
-            String input = in.nextLine();
-            int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.length)
-                return choices[n];
+
         }
     }
 }

@@ -2,6 +2,7 @@ package people;
 
 public class Owner extends Person{
 
+private static double profit;
     /**
      * Constructor to make an Owner object
      * @param id
