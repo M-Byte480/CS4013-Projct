@@ -5,50 +5,26 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Person {
-    private String address;
     private String name;
     private String phoneNumber;
     private String email;
     private String id;
     private static ArrayList<Person> people;
-<<<<<<< HEAD
     private static int num = 0;
-=======
     private static int uniqueID;
     private static String password;
->>>>>>> 6ccdd289414e669e2d7c7032178b3ec76ab81dd6
 
     public Person() {
 
     }
 
-    public Person(String name, String address, String phoneNumber, String email, String id){
-        this.address = address;
+    public Person(String name, String phoneNumber, String email, String id){
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.id = uniqueIdGenerator(id);
     }
 
-<<<<<<< HEAD
-    private String uniqueIdGenerator(String id) {
-        return id + String.format("%09d", num+1);
-        // boolean exist = false;
-        // String randomID = new String();
-
-        // outter:
-        // while(!exist) {
-        //     randomID = ((Double) Math.random()).toString().substring(2);
-        //     randomID = id + randomID;
-        //     for (int i = 0; i < people.size(); i++) {
-        //         if(people.get(i).getID().equals(randomID)){
-        //             continue outter;
-        //         }
-        //     }
-        //     exist = true;
-        // }
-        // this.id = randomID;
-=======
     public static String getPassword() {
         return password;
     }
@@ -79,25 +55,19 @@ public class Person {
             }
         }
         return null;
->>>>>>> 6ccdd289414e669e2d7c7032178b3ec76ab81dd6
     }
 
     @Override
     public String toString() {
          return "Person: \n" +
                  "name = '" + name + "'\n" +
-                "address = '" + address + "'\n" +
                 "phoneNumber = '" + phoneNumber + "'\n" +
                 "email = '" + email + "'\n";
     }
 
-    public String getAddress() {
-        return address;
-    }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+
+
 
     public String getName() {
         return name;
@@ -150,7 +120,4 @@ public class Person {
 
 }
 
-    public Object getName() {
-    return name;
-    }
-    }
+

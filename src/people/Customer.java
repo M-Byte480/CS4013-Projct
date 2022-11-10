@@ -26,10 +26,9 @@ public class Customer extends Person {
      * @param email
      * @param loyalty
      */
-    public Customer(String name, String address, String phoneNumber, String email, String id, double loyalty) {
+    public Customer(String name, String phoneNumber, String email, String id, double loyalty) {
         super();
         setId(id);
-        setAddress(address);
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
@@ -56,20 +55,18 @@ public class Customer extends Person {
     public String toString(){
         return "Customer: \n" +
                 "name = '" + getName() + "'\n" +
-                "address = '" + getAddress() + "'\n" +
                 "phoneNumber = '" + getPhoneNumber() + "'\n" +
                 "email = '" + getEmail() + "'\n" +
                 "id = '" + getId() + "'\n" +
                 "loyalty = '" + loyalty + "'\n";
     }
     public String customerDetails(){
-        String out = getName() + "," + getAddress() + "," + getPhoneNumber() + "," + getEmail() + "," + getId() + "," + loyalty;
+        String out = getName()  + "," + getPhoneNumber() + "," + getEmail() + "," + getId() + "," + loyalty;
         return out;
     }
     public String[] customerDetailsToStringArr(){
         ArrayList<String> cust = new ArrayList();
         cust.add(getName());
-        cust.add(getAddress());
         cust.add(getPhoneNumber());
         cust.add(getEmail());
         cust.add(getId());
@@ -87,7 +84,7 @@ public class Customer extends Person {
         Customer customer = this;
         Util fileWriter = new Util(new File("src/data/people.csv"));
         System.out.println("Writting");
-        fileWriter.addDataToFile(new String [] {customer.getName(), customer.getAddress(), customer.getPhoneNumber(), customer.getEmail(), customer.getId(), Double.toString(loyalty)});
+        fileWriter.addDataToFile(new String [] {customer.getName(), customer.getPhoneNumber(), customer.getEmail(), customer.getId(), Double.toString(loyalty)});
         System.out.println("Written");
         fileWriter.close();
     }
@@ -100,17 +97,5 @@ public class Customer extends Person {
     }
 
 
-    public static void main(String[] args) throws IOException {
 
-        Customer cust = new Customer("Steve", "Limerick" , "0879204163", "21263213@studentmail.ul.ie","21263213", 0.87 );
-        cust.addCustomerToPeople();
-        System.out.println(cust);
-
-
-
-    }
-
-    public String getPhoneNumber() {
-        return
-    }
 }

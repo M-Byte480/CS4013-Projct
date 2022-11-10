@@ -1,5 +1,7 @@
 package restaurant;
 
+import people.Customer;
+import people.Person;
 import till.Login;
 
 import java.sql.PreparedStatement;
@@ -33,25 +35,18 @@ public class Driver {
 
                 if (!restaraunt.getLogin(id, password)) {
                     System.out.println("Invalid credentials");
-                    continue;
                 } else {
-                    loginSuccesful();
+                    loginSuccesful(id);
                 }
 
 
             } else if (command.equals("S")) {
                 signUp();
-                continue;
 
-
-            } else if (command.equals("S")) {
-                System.out.println("Date");
-                String line = in.nextLine();
-                AppointmentDate day = new AppointmentDate(line);
-                for (Appointment appt : calendar.getAppointmentsForDay(day))
-                    System.out.println(appt.format());
             } else if (command.equals("Q")) {
-                more = false;
+                Util.save();
+                System.out.println("Shutting Down");
+                System.exit(0);
             }
         }
     }
@@ -71,8 +66,16 @@ public class Driver {
         }
     }
 
-    public void loginSuccesful() {
-
+    public void loginSuccesful(String id) {
+        char type = id.charAt(0);
+        Integer integer = Integer.parseInt(String.valueOf(type));
+        if(integer == 9 ) {
+            loginOwner();
+        }else if (integer == 5 ) {
+            loginStaff();
+        }else {
+            loginCustomer();
+        }
     }
 
     public void signUp() {
@@ -82,15 +85,21 @@ public class Driver {
         String email = in.nextLine().toLowerCase();
         System.out.println("Enter Phone Number");
         String phoneNumber = in.nextLine();
+        Customer bob = new Customer(name,phoneNumber,email,"1",0);
 
-
-
-
+        restaurant.addPerson(bob);
+        System.out.println("Your User ID : ");
+        System.out.println(bob.getId());
         System.out.println("Enter A New Password : ");
         String password = in.nextLine();
 
-        retaurant.addLogins()
+        retaurant.addLogins();
         System.out.println("Sign Up Complete");
+
+    }
+
+    public void loginOwner() {
+
     }
 
     @Override
@@ -100,4 +109,4 @@ public class Driver {
                 '}';
     }
 }
-}
+
