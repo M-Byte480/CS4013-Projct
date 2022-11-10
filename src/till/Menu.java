@@ -51,9 +51,18 @@ public class Menu {
                 //remove all from table
                 //remove booking
             } else if (command.equals("Q")) {
+                productOnTable.set(null);
+                Table.bookingStatus();
 
 
             }
+    }
+
+
+    // This code was taken from Micheal
+    private Object getChoice(Object[] choices) {
+
+
         }
     }
 }

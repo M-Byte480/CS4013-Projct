@@ -21,8 +21,9 @@ public class Table {
     }
 
 
+
     //adding product to "order"
-    public void addProduct(Product pick) {
+    public void addProduct(Table x, Product pick) {
 
         productsOnTable.add(pick);
 
@@ -37,6 +38,38 @@ public class Table {
     // Converts table to lineItem arrayList for invoices
     // Milan
     public static ArrayList<LineItem> convertToLineItems(ArrayList<Product> products){
+
+
+
+    public double getTotal(){
+        double sum = 0;
+        for (Product p : productsOnTable) {
+            sum += p.getCost();
+
+        }
+        return sum ;
+    }
+
+    public void closeTable() {
+        this.booking = null;
+
+    }
+
+    //closing/deleting booking
+    //check if table is vacant
+    public void deleteTable(Table table) {
+        productsOnTable.remove(table);
+
+    }
+
+    public ArrayList<Product> getProducts() {
+        return productsOnTable;
+    }
+
+    public String getStaff() {
+        return getStaff();
+    }
+    public static ArrayList<LineItem> convertToLineItems(ArrayList<Product> products) {
         ArrayList<LineItem> items = new ArrayList<>();
         HashMap<Product, Integer> occurences = new HashMap<>();
         Integer count = 0;
@@ -45,6 +78,11 @@ public class Table {
             if(count == null){
                 occurences.put(p, 1);
             }else{
+                occurences.replace(p, count + 1);
+            count = occurences.get(p.getName());
+            if (count == null) {
+                occurences.put(p, 1);
+            } else {
                 occurences.replace(p, count + 1);
             }
         }
@@ -71,6 +109,11 @@ public class Table {
     public void deleteTable(Table table) {
         productsOnTable.remove(table);
 
+    public String returnForawrdSlaah (){
+        for (Product p : productsOnTable) {
+            St
+            p.toString();
+        }
     }
 
     public void getMenu(Table t) throws IOException {

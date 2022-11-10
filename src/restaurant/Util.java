@@ -272,4 +272,10 @@ public class Util {
     }
 
 
+
+    public static void bootUp(){
+        //make new res, tables, staff, menu
+
+        Restaurant restaurant = new Restaurant(reservations, tables, staff, menu);
+    }
 }

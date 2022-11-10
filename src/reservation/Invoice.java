@@ -24,9 +24,9 @@ public class Invoice {
      */
     public Invoice(Reservation reservation) throws IOException {
         this.reservation = reservation;                     // collects details of reservation
-        this.customer = reservation.getTable().getCustomer();                               // contains details of the person who booked
+        this.customer = reservation.getCust();                               // contains details of the person who booked
         this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
-        this.total = products.getSum();
+        this.total = reservation.getTable().getTotal();
         uniqueID++;
         sendInvoice();
     }
