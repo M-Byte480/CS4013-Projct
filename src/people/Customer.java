@@ -36,6 +36,8 @@ public class Customer extends Person {
         this.loyalty = loyalty;
     }
 
+
+
     /**
      * Method to increase loyalty value of customer depending on freq of visits
      */
@@ -106,5 +108,9 @@ public class Customer extends Person {
 
 
 
+    }
+
+    public String getPhoneNumber() {
+        return
     }
 }

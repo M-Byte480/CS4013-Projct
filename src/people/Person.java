@@ -149,3 +149,8 @@ public class Person {
 
 
 }
+
+    public Object getName() {
+    return name;
+    }
+    }
