@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class Reservation {
 	private Table table;
-	private Staff staff;
 	private Customer cust;
 	
 	private LocalDateTime time;
@@ -19,13 +18,11 @@ public class Reservation {
 	/**
 	 * Makes a Reservation object.
 	 * @param table
-	 * @param staff
 	 * @param time
 	 * @param length
 	 */
-	public Reservation(Table table, Staff staff, LocalDateTime time, TemporalAmount length) {
+	public Reservation(Table table, LocalDateTime time, TemporalAmount length) {
 		this.table = table;
-		this.staff = staff;
 		this.time = time;
 		this.length = length;
 	}
@@ -42,13 +39,6 @@ public class Reservation {
 	}
 	public void setCust(Customer cust) {
 		this.cust = cust;
-	}
-	/**
-	 * Gets the staff member who made the reservation.
-	 * @return staff
-	 */
-	public Staff getStaff() {
-		return staff;
 	}
 	/**
 	 * Gets the time the reservation is made for.
@@ -71,13 +61,6 @@ public class Reservation {
 	 */
 	public void setTable(Table table) {
 		this.table = table;
-	}
-	/**
-	 * Changes the staff member the reservation is under.
-	 * @param staff
-	 */
-	public void setStaff(Staff staff) {
-		this.staff = staff;
 	}
 	/**
 	 * Changes the time the reservation is for.
