@@ -22,7 +22,9 @@ public class Menu {
         boolean more = true;
 
         while (more) {
+
 //javaFX will overdo this
+
             System.out.println("S : Show Products, A : Add A Product To Menu, R : Remove A Product, F : Finish, Q : GTFO");
             String command = in.nextLine().toUpperCase();
             if (command.equals("S")) {
@@ -52,7 +54,7 @@ public class Menu {
                 //remove all from table
                 //remove booking
             } else if (command.equals("Q")) {
-                productOnTable.removeAll(Product);
+                productOnTable.set(null);
                 Table.bookingStatus();
 
             }
@@ -60,11 +62,10 @@ public class Menu {
 
     }
 
-<<<<<<< HEAD
-=======
+
     // This code was taken from Micheal
     private Object getChoice(Object[] choices) {
->>>>>>> Tadhg's-Special-Branch
+
 
         }
     }

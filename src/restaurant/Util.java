@@ -267,4 +267,10 @@ public class Util {
     public ArrayList<String[]> getValues() {
         return values;
     }
+
+    public static void bootUp(){
+        //make new res, tables, staff, menu
+
+        Restaurant restaurant = new Restaurant(reservations, tables, staff, menu);
+    }
 }

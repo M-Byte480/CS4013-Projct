@@ -1,6 +1,7 @@
 package restaurant;
 
 import reservation.Reservation;
+import till.Login;
 import till.Menu;
 import till.Table;
 import people.Staff;
@@ -14,6 +15,7 @@ public class Restaurant extends Yum {
     private ArrayList<Staff> staff;
     private Menu menu;
     private double profit;
+    private ArrayList<Login> logins = new ArrayList<>();
 
 
     public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Staff> staff, Menu menu) {

@@ -2,9 +2,11 @@ package reservation;
 
 import people.Customer;
 import people.Staff;
+import till.Product;
 import till.Table;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAmount;
+import java.util.ArrayList;
 
 public class Reservation {
 	private Table table;
@@ -103,5 +105,13 @@ public class Reservation {
 		else if (time.isAfter(res.time) && time.isBefore(res.time.plus(res.length))) return true;
 		else if (res.time.isAfter(time) && res.time.isBefore(time.plus(length))) return true;
 		else return false;
+	}
+
+	public Object getProducts() {
+		ArrayList<Product> reservationProducts = new ArrayList<Product>();
+		for (Product p : table.getProducts()) {
+			reservationProducts.add(p);
+		}
+		return reservationProducts;
 	}
 }
