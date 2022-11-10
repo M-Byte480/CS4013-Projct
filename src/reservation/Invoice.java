@@ -43,13 +43,27 @@ public class Invoice {
         setUniqueID(Integer.parseInt(allID[allID.length - 1]));
         invoiceReader.close();
     }
+    public String[] customerDetailsToStringArr () {
+
+        String contact = customer.getPhoneNumber();
+        ArrayList<String> invoice = new ArrayList();
+        invoice.add(customer.getName());
+        invoice.add(contact);
+        invoice.add(reservation.getTime());
+        invoice.add(Util.getTimeNow());
+        invoice.add(reservation.getProducts());
+        String[] custDetails = new String[6];
+        for (int i = 0; i < custDetails.length; i++) {
+            custDetails[i] = invoice.get(i);
+        }
+        return custDetails;
+    }
 
     public void sendInvoice() throws IOException {
         Util writeToLog = new Util(new File("src/data/log.csv"));           // Create a writer to logs
         Util writeToInvoices = new Util(new File("src/data/invoices.csv")); // Create a writer to invoices
 
-        String contact =  customer.getPhoneNumber();                                                      // Check preferences of contact
-
+        String contact = customer.getPhoneNumber();// Check preferences of contact
 
         // Write to the files
         writeToLog.addDataToFile(new String[] {Util.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
