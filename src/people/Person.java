@@ -1,8 +1,6 @@
 package people;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Person {
     private String name;

@@ -1,10 +1,13 @@
 package restaurant;// Milan: Last edit 28/10
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Util {
     private File file;
@@ -253,17 +256,6 @@ public class Util {
         return (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
     }
 
-/*
-    public static void main(String[] args) throws IOException {
-        Util hello = new Util(new File("Hello.txt"));
-        hello.read();
-        System.out.println(hello.get("Stephen", "firstName"));
-        System.out.println(hello.count("Stephen", "firstName"));
-        System.out.println(hello.getCombinations( new String[] {"Stephen","Fitzpatrick"}, new String[] {"firstName","lastName"}));
-        hello.save();
-        hello.close();
-    }
-//*/
     public ArrayList<String[]> getValues() {
         return values;
     }

@@ -38,7 +38,7 @@ public class Product {
         readProducts.close();
     }
 
-    public ArrayList<Product> getProductsList() {
+    public static ArrayList<Product> getProducts() {
         return productsOfRestaurant;
     }
 

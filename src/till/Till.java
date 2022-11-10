@@ -7,9 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Till {
-
     private  double startOfEachDay = 200;
-
 
     public Till() {
     }
