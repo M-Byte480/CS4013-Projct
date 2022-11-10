@@ -34,13 +34,14 @@ public class Table {
         productsOnTable.add(delete);
     }
 
-
+    // Converts table to lineItem arrayList for invoices
+    // Milan
     public static ArrayList<LineItem> convertToLineItems(ArrayList<Product> products){
         ArrayList<LineItem> items = new ArrayList<>();
         HashMap<Product, Integer> occurences = new HashMap<>();
         Integer count = 0;
         for (Product p : products) {
-            count = occurences.get(p.getName());
+            count = occurences.get(p);
             if(count == null){
                 occurences.put(p, 1);
             }else{

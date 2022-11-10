@@ -1,13 +1,13 @@
 package restaurant;// Milan: Last edit 28/10
 
-import till.Product;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Util {
     private File file;
@@ -271,8 +271,5 @@ public class Util {
         return values;
     }
 
-    // To be added to fix invoices to csv
-    public void addDataToFile(String[] strings, String address, String contact, LocalDateTime time, ArrayList<Product> products, double total) {
 
-    }
 }

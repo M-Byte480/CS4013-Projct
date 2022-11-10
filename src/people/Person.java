@@ -3,7 +3,6 @@ package people;
 import java.util.ArrayList;
 
 public class Person {
-    private String address;
     private String name;
     private String phoneNumber;
     private String email;
@@ -17,8 +16,7 @@ public class Person {
 
     }
 
-    public Person(String name, String address, String phoneNumber, String email, String id){
-        this.address = address;
+    public Person(String name, String phoneNumber, String email, String id){
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -61,17 +59,8 @@ public class Person {
     public String toString() {
          return "Person: \n" +
                  "name = '" + name + "'\n" +
-                "address = '" + address + "'\n" +
                 "phoneNumber = '" + phoneNumber + "'\n" +
                 "email = '" + email + "'\n";
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getName() {

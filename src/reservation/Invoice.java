@@ -71,15 +71,9 @@ public class Invoice {
         Util writeToLog = new Util(new File("src/data/log.csv"));           // Create a writer to logs
         Util writeToInvoices = new Util(new File("src/data/invoices.csv")); // Create a writer to invoices
 
-        String contact = null;                                                      // Check preferences of contact
-        if(customer.getPhoneNumber() == null){
-            contact = customer.getAddress();
-        }else{
-            contact = customer.getPhoneNumber();
-        }
         // Write to the files
         writeToLog.addDataToFile(new String[] {Util.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
-        writeToInvoices.addDataToFile(new String[]{customer.getName()}, customer.getAddress(), contact, reservation.getTime(),reservation.getTable().getProducts(),total);
+        writeToInvoices.addDataToFile(new String[]{customer.getName(), customer.getEmail(), reservation.getTime().toString(),reservation.getTable().format(),total,id});
 
         // End the utils
         writeToInvoices.close();
@@ -93,7 +87,7 @@ public class Invoice {
     public String format(){
         ArrayList<LineItem> items = new ArrayList<>();
         StringBuilder toReturn = new StringBuilder();
-        toReturn.append(customer.getAddress()).append("\n").append(customer).append("\n");
+        toReturn.append(customer.getEmail()).append("\n").append(customer).append("\n");
         for (LineItem l : Table.convertToLineItems(products)) {
             toReturn.append(l.toString()).append("=".repeat(48));
         }
