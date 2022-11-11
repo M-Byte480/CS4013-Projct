@@ -2,6 +2,7 @@ package restaurant;
 
 import people.Customer;
 import people.Person;
+import reservation.Timetable;
 import till.Login;
 
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ public class Driver {
     public void menuForDriver() {
         in = new Scanner(System.in);
     }
+    private Timetable timetable = new Timetable();
 
     public void run() {
         // This updates the retaurant object
@@ -51,6 +53,34 @@ public class Driver {
         }
     }
 
+    public void loginOwner() {
+        boolean ownerMore = true;
+
+        while (ownerMore) {
+            System.out.println("M)ake Booking  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
+            String command = in.nextLine().toUpperCase();
+            if (command.equals("M")) {
+                createReservation():
+
+            } else if (command.equals("C")) {
+
+            } else if (command.equals("D")) {
+
+            } else if (command.equals("T")) {
+
+            } else if (command.equals("H")) {
+
+            } else if (command.equals("P")) {
+
+            } else if (command.equals("Q")) {
+
+
+            }
+
+        }
+    }
+
+
     private Appointment getChoice(ArrayList<Appointment> choices) {
         if (choices.size() == 0) return null;
         while (true) {
@@ -66,14 +96,16 @@ public class Driver {
         }
     }
 
+    p
+
     public void loginSuccesful(String id) {
         char type = id.charAt(0);
         Integer integer = Integer.parseInt(String.valueOf(type));
-        if(integer == 9 ) {
+        if (integer == 9) {
             loginOwner();
-        }else if (integer == 5 ) {
+        } else if (integer == 5) {
             loginStaff();
-        }else {
+        } else {
             loginCustomer();
         }
     }
@@ -85,7 +117,7 @@ public class Driver {
         String email = in.nextLine().toLowerCase();
         System.out.println("Enter Phone Number");
         String phoneNumber = in.nextLine();
-        Customer bob = new Customer(name,phoneNumber,email,"1",0);
+        Customer bob = new Customer(name, phoneNumber, email, "1", 0);
 
         restaurant.addPerson(bob);
         System.out.println("Your User ID : ");
@@ -98,15 +130,12 @@ public class Driver {
 
     }
 
-    public void loginOwner() {
 
+        @Override
+        public String toString () {
+            return "AppointmentMenu{" +
+                    "in=" + in +
+                    '}';
+        }
     }
-
-    @Override
-    public String toString() {
-        return "AppointmentMenu{" +
-                "in=" + in +
-                '}';
-    }
-}
 
