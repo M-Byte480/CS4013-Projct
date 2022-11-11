@@ -1,6 +1,6 @@
 package till;
 
-import restaurant.Util;
+import restaurant.CSVReader;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,14 +25,14 @@ public class Product {
 
         productsOfRestaurant.add(this);
 
-        Util readProducts = new Util(new File("src/data/products.csv"));
+        CSVReader readProducts = new CSVReader(new File("src/data/products.csv"));
         readProducts.addDataToFile(new String[] {name, description, cost + "", String.join( "-", allergies)});
     }
 
     public void removeFood(Product product) throws IOException {
         productsOfRestaurant.remove(product);
-        Util readProducts = new Util(new File("src/data/products.csv"));
-//        readProducts.read();
+        CSVReader readProducts = new CSVReader(new File("src/data/products.csv"));
+        readProducts.read();
         readProducts.remove("name", product.getName());
         readProducts.save();
         readProducts.close();
@@ -43,8 +43,8 @@ public class Product {
     }
 
     public static void loadProducts() throws IOException{
-        Util readProducts = new Util(new File("/src/data/products.csv"));
-//        readProducts.read();
+        CSVReader readProducts = new CSVReader(new File("/src/data/products.csv"));
+        readProducts.read();
         for (int i = 1; i < readProducts.getValues().size(); i++) {
             String[] details = readProducts.getValues().get(i);
             productsOfRestaurant.add(new Product(

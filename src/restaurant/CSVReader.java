@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-public class Util {
-    private final File file;
-    private final Scanner scanner;
-    private final ArrayList<String[]> values;
+public class CSVReader {
+    private File file;
+    private Scanner scanner;
+    private ArrayList<String[]> values;
 
     /**
      * Create a Utility object, by passing the File name or path
@@ -22,7 +22,7 @@ public class Util {
      * @param file File you want to read from
      * @throws FileNotFoundException Throws error if its not found
      */
-    public Util(File file) throws FileNotFoundException {
+    public CSVReader(File file) throws FileNotFoundException {
         scanner = new Scanner(file);
         this.file = file;
         this.values = new ArrayList<>();
@@ -269,11 +269,4 @@ public class Util {
     public ArrayList<String[]> getValues() {
         return values;
     }
-
-    public static void bootUp(){
-        //make new res, tables, staff, menu
-
-//        Restaurant restaurant = new Restaurant(reservations, tables, staff, menu);
-    }
-
 }
