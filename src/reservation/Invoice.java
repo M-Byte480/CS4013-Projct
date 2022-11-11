@@ -56,7 +56,7 @@ public class Invoice {
             setUniqueID(1);
             return;
         }
-        Util invoiceReader = new Util(new File("/src/data/invoices.csv"));
+        CSVReader invoiceReader = new CSVReader(new File("/src/data/invoices.csv"));
         String[] allID = invoiceReader.getAllArray("id");
         setUniqueID(Integer.parseInt(allID[allID.length - 1]));
         invoiceReader.close();
@@ -64,11 +64,11 @@ public class Invoice {
     public String[] customerDetailsToStringArr () {
 
         String contact = customer.getPhoneNumber();
-        ArrayList<String> invoice = new ArrayList();
+        ArrayList<String> invoice = new ArrayList<>();
         invoice.add(customer.getName());
         invoice.add(contact);
         invoice.add(reservation.getTime());
-        invoice.add(Util.getTimeNow());
+        invoice.add(CSVReader.getTimeNow());
         invoice.add(reservation.getProducts());
         String[] custDetails = new String[6];
         for (int i = 0; i < custDetails.length; i++) {
@@ -83,12 +83,12 @@ public class Invoice {
      * @throws IOException
      */
     public void sendInvoice() throws IOException {
-        Util writeToLog = new Util(new File("src/data/log.csv"));           // Create a writer to logs
-        Util writeToInvoices = new Util(new File("src/data/invoices.csv")); // Create a writer to invoices
+        CSVReader writeToLog = new CSVReader(new File("src/data/log.csv"));           // Create a writer to logs
+        CSVReader writeToInvoices = new CSVReader(new File("src/data/invoices.csv")); // Create a writer to invoices
 
         // Write to the files
-        writeToLog.addDataToFile(new String[] {Util.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
-        writeToInvoices.addDataToFile(new String[]{customer.getName(), customer.getEmail(), reservation.getTime().toString(),reservation.getTable().format(),total,id});
+        writeToLog.addDataToFile(new String[] {CSVReader.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
+        writeToInvoices.addDataToFile(new String[]{customer.getName(), customer.getEmail(), reservation.getTime().toString(), reservation.getTable().format(), total, id});
 
         // End the utils
         writeToInvoices.close();

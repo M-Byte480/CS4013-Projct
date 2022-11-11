@@ -33,6 +33,27 @@ public class Login {
             String[] usernameAndPasswordSplitter = l.split(", ");
             details.put(usernameAndPasswordSplitter[0], usernameAndPasswordSplitter[1]);
         });
+    public void createNewID(String id, String password) throws IOException {
+        this.ID = ID;
+        this.tillPassword = tillPassword;
+
+        CSVReader u = new CSVReader(new File("login.csv"));
+        u.addDataToFile(details + "\n");
+
+    }
+
+    /**
+     * @param path
+     * @return
+     */
+    public List<String> getLines(String path) {
+        List<String> lines = new ArrayList();
+        try {
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lines;
     }
 
 
@@ -46,14 +67,24 @@ public class Login {
      * @return
      */
     public boolean validateLogin(String id, String password) {
+        for (int i = 0; i < details.size(); i++) {
+            getLines("login.csv");
+
+
+            if (login.containsKey(id)) {
+                return login.get(id).equals(password);
+            }
+            return false;
+        }
         if (details.containsKey(id)) {
             return details.get(id).equals(id);
         }
         return true;
     }
 
-    //read will read file into itself
-    //split each
+        //read will read file into itself
+        //split each
+    }
 }
 
 
