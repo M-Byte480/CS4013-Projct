@@ -11,7 +11,6 @@ import till.Table;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.PreparedStatement;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -22,12 +21,13 @@ import java.util.Scanner;
 
 public class Driver {
     private Scanner in;
+    private static Restaurant restaurant;
     
     public void menuForDriver() {
         in = new Scanner(System.in);
     }
     
-    public void run() {
+    public static void run() {
         // This updates the retaurant object
         bootUp();
         
@@ -76,7 +76,7 @@ public class Driver {
         
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
-            String[] table = tablesFile.get(line[0], "tableNumber").split(", ");
+            String[] table = tablesFile.get(line[0], "tableNumber").split(",");
             res.add(new Reservation(
                 new Table(Integer.parseInt(table[0]), Integer.parseInt(table[1])), 
                 LocalDateTime.parse(line[1], DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), 
@@ -99,7 +99,7 @@ public class Driver {
             }
         });
         
-        Restaurant restaurant = new Restaurant(res, tables, staff, products);
+        restaurant = new Restaurant(res, tables, staff, products);
     }
     
     private Appointment getChoice(ArrayList<Appointment> choices) {
