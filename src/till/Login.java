@@ -1,7 +1,7 @@
 package till;
 
 
-import restaurant.Util;
+import restaurant.CSVReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,7 +30,7 @@ public class Login {
         this.ID = ID;
         this.tillPassword = tillPassword;
 
-        Util u = new Util(new File("login.csv"));
+        CSVReader u = new CSVReader(new File("login.csv"));
         u.addDataToFile(details + "\n");
 
     }

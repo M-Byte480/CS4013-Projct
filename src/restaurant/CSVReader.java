@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-public class Util {
+public class CSVReader {
     private File file;
     private Scanner scanner;
     private ArrayList<String[]> values;
@@ -20,7 +20,7 @@ public class Util {
      * @param file File you want to read from
      * @throws FileNotFoundException Throws error if its not found
      */
-    public Util(File file) throws FileNotFoundException {
+    public CSVReader(File file) throws FileNotFoundException {
         scanner = new Scanner(file);
         this.file = file;
         this.values = new ArrayList<>();

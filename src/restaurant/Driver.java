@@ -16,7 +16,7 @@ public class Driver {
 
     public void run() {
         // This updates the retaurant object
-        Util.bootUp();
+        CSVReader.bootUp();
 
         boolean more = true;
 
@@ -44,7 +44,7 @@ public class Driver {
                 signUp();
 
             } else if (command.equals("Q")) {
-                Util.save();
+                CSVReader.save();
                 System.out.println("Shutting Down");
                 System.exit(0);
             }

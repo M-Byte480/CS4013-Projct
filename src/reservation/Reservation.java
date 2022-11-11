@@ -90,7 +90,7 @@ public class Reservation {
 		else return false;
 	}
 
-	public Object getProducts() {
+	public ArrayList<Product> getProducts() {
 		ArrayList<Product> reservationProducts = new ArrayList<Product>();
 		for (Product p : table.getProducts()) {
 			reservationProducts.add(p);

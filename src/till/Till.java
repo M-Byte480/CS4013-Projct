@@ -1,7 +1,7 @@
 package till;
 
 import reservation.Invoice;
-import restaurant.Util;
+import restaurant.CSVReader;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,7 +70,7 @@ public class Till {
     }
 
     private void sendLog(String whatHappened) throws IOException {
-        Util writeToLog = new Util(new File("src/data/log.csv"));
+        CSVReader writeToLog = new CSVReader(new File("src/data/log.csv"));
 
         writeToLog.addDataToFile(whatHappened);
 
