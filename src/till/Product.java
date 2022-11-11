@@ -32,7 +32,7 @@ public class Product {
     public void removeFood(Product product) throws IOException {
         productsOfRestaurant.remove(product);
         Util readProducts = new Util(new File("src/data/products.csv"));
-        readProducts.read();
+//        readProducts.read();
         readProducts.remove("name", product.getName());
         readProducts.save();
         readProducts.close();
@@ -44,7 +44,7 @@ public class Product {
 
     public static void loadProducts() throws IOException{
         Util readProducts = new Util(new File("/src/data/products.csv"));
-        readProducts.read();
+//        readProducts.read();
         for (int i = 1; i < readProducts.getValues().size(); i++) {
             String[] details = readProducts.getValues().get(i);
             productsOfRestaurant.add(new Product(
