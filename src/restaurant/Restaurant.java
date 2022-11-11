@@ -3,6 +3,7 @@ package restaurant;
 import reservation.Reservation;
 import till.Login;
 import till.Menu;
+import till.Product;
 import till.Table;
 import people.Staff;
 
@@ -13,16 +14,17 @@ public class Restaurant extends Yum {
     private ArrayList<Reservation> reservations;
     private ArrayList<Table> tables;
     private ArrayList<Staff> staff;
+    private ArrayList<Product> products;
     private Menu menu;
     private double profit;
-    private ArrayList<Login> logins = new ArrayList<>();
+    private ArrayList<Login> logins;
 
 
-    public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Staff> staff, Menu menu) {
+    public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Staff> staff, ArrayList<Product> products) {
         this.reservations = reservations;
         this.tables = tables;
         this.staff = staff;
-        this.menu = menu;
+        this.products = products;
     }
     
     public ArrayList<Reservation> getReservations() {
