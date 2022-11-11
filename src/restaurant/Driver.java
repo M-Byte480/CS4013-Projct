@@ -1,11 +1,9 @@
 package restaurant;
 
 import people.Customer;
-import people.Person;
+import reservation.Reservation;
 import reservation.Timetable;
-import till.Login;
 
-import java.sql.PreparedStatement;
 import java.util.Scanner;
 
 public class Driver {
@@ -14,6 +12,7 @@ public class Driver {
     public void menuForDriver() {
         in = new Scanner(System.in);
     }
+
     private Timetable timetable = new Timetable();
 
     public void run() {
@@ -27,15 +26,13 @@ public class Driver {
             String command = in.nextLine().toUpperCase();
 
 
-            //If login
-
             if (command.equals("L")) {
                 System.out.println("Enter User ID");
                 String id = in.nextLine();
                 System.out.println("Enter Password : ");
                 String password = in.nextLine();
 
-                if (!restaraunt.getLogin(id, password)) {
+                if (!restaurant.getLogin(id, password)) {
                     System.out.println("Invalid credentials");
                 } else {
                     loginSuccesful(id);
@@ -63,40 +60,74 @@ public class Driver {
                 createReservation():
 
             } else if (command.equals("C")) {
+                createTable();
 
             } else if (command.equals("D")) {
+                deleteTable();
 
             } else if (command.equals("T")) {
+                run(menu);
 
             } else if (command.equals("H")) {
+                hireStaff();
+
 
             } else if (command.equals("P")) {
+                checkProfit();
 
             } else if (command.equals("Q")) {
-
+                Util.save();
+                run();
 
             }
 
         }
     }
 
+    public void loginStaff() {
+        boolean staffMore = true;
 
-    private Appointment getChoice(ArrayList<Appointment> choices) {
-        if (choices.size() == 0) return null;
-        while (true) {
-            char c = 'A';
-            for (Appointment choice : choices) {
-                System.out.println(c + ") " + choice.format());
-                c++;
+        while (staffMore) {
+            System.out.println("M)ake Booking  C)reate Table  D)elete Table   T)ake Order   Q)uit");
+            String command = in.nextLine().toUpperCase();
+            if (command.equals("M")) {
+                createReservation():
+
+            } else if (command.equals("C")) {
+                createTable();
+
+            } else if (command.equals("D")) {
+                deleteTable();
+
+            } else if (command.equals("T")) {
+                run(menu);
+
+            } else if (command.equals("Q")) {
+                Util.save();
+                run();
+
             }
-            String input = in.nextLine();
-            int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.size())
-                return choices.get(n);
+
         }
     }
 
-    p
+    public void loginCustomer() {
+        boolean custumerMore = true;
+
+        while (custumerMore) {
+            System.out.println("M)ake Booking  Q)uit");
+            String command = in.nextLine().toUpperCase();
+            if (command.equals("M")) {
+                createReservation():
+
+            } else if (command.equals("Q")) {
+                Util.save();
+                run();
+
+            }
+
+        }
+    }
 
     public void loginSuccesful(String id) {
         char type = id.charAt(0);
@@ -130,12 +161,16 @@ public class Driver {
 
     }
 
-
-        @Override
-        public String toString () {
-            return "AppointmentMenu{" +
-                    "in=" + in +
-                    '}';
-        }
+    public void createReservation() {
+        System.out.println("Enter ID : ");
+        String ID = in.nextLine();
+        System.out.println("Enter Date DD/MM/YYYY : ");
+        String DATE = in.nextLine().toLowerCase();
+        System.out.println("Enter Start Time : ");
+        String startTime = in.nextLine();
+        System.out.println("Enter End Time : ");
+        String endTime = in.nextLine();
+        Reservation newRes = new Reservation();
     }
+}
 
