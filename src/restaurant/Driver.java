@@ -27,7 +27,7 @@ public class Driver {
         in = new Scanner(System.in);
     }
     
-    public static void run() {
+    public void run() throws FileNotFoundException {
         // This updates the retaurant object
         bootUp();
         
@@ -49,14 +49,17 @@ public class Driver {
                 if (!restaraunt.getLogin(id, password)) {
                     System.out.println("Invalid credentials");
                 } else {
+                    // Once logged in, allow the person to have a access to certain options based on their level of access
                     loginSuccesful(id);
                 }
                 
                 
             } else if (command.equals("S")) {
+                // Signs up the person, create new person object and add it to the arraylist of people.
                 signUp();
                 
             } else if (command.equals("Q")) {
+                // Save the state the program to csv files
                 CSVReader.save();
                 System.out.println("Shutting Down");
                 System.exit(0);
@@ -113,7 +116,7 @@ public class Driver {
             String input = in.nextLine();
             int n = input.toUpperCase().charAt(0) - 'A';
             if (0 <= n && n < choices.size())
-            return choices.get(n);
+                return choices.get(n);
         }
     }
     
@@ -144,15 +147,40 @@ public class Driver {
         System.out.println("Enter A New Password : ");
         String password = in.nextLine();
         
-        retaurant.addLogins();
+        restaurant.addLogins();
         System.out.println("Sign Up Complete");
         
     }
     
     public void loginOwner() {
+        // Owner has access: create and delete table, view profit, add staff, add and remove order. pay
         
     }
-    
+
+    public void loginStaff(){
+        // Staff will have access to: create and remove table, add and remove order, make and cancel reservation, pay
+
+    }
+
+    public void loginCustomer(){
+        // Customer: Make and cancel reservation, pay
+
+    }
+
+    /*
+     * Reservation option will give option to make booking and delete
+     * It is literally copy and paste of the Appointment work from last lab
+     *
+     * Create and remove table is kind of like view, remove and add products
+     *
+     * Add and remove order is the same, it will be applied on top ofa table
+     *
+     * Pay wraps it up
+     *
+     * You need to make a method that handles each of these
+     *
+     */
+
     @Override
     public String toString() {
         return "AppointmentMenu{" +
