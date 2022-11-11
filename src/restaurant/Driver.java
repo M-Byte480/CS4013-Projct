@@ -66,7 +66,7 @@ public class Driver {
             }
         }
     }
-    public static void bootUp() throws FileNotFoundException{
+    public static void bootUp() throws FileNotFoundException {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"));
         CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"));
         CSVReader staffFile = new CSVReader(new File("src/data/login.csv"));
@@ -105,12 +105,12 @@ public class Driver {
         restaurant = new Restaurant(res, tables, staff, products);
     }
     
-    private Appointment getChoice(ArrayList<Appointment> choices) {
+    private Object getChoice(ArrayList<Object> choices) {
         if (choices.size() == 0) return null;
         while (true) {
             char c = 'A';
-            for (Appointment choice : choices) {
-                System.out.println(c + ") " + choice.format());
+            for (Object choice : choices) {
+                System.out.println(c + ") " + choice);
                 c++;
             }
             String input = in.nextLine();
@@ -121,8 +121,7 @@ public class Driver {
     }
     
     public void loginSuccesful(String id) {
-        char type = id.charAt(0);
-        Integer integer = Integer.parseInt(String.valueOf(type));
+        int integer = Character.getNumericValue(id.charAt(0));
         if(integer == 9 ) {
             loginOwner();
         }else if (integer == 5 ) {
