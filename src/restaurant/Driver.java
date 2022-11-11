@@ -64,19 +64,18 @@ public class Driver {
         }
     }
     public static void bootUp() throws FileNotFoundException{
-        //make new res, tables, staff, menu
         CSVReader resFile = new CSVReader(new File("reservations.csv"));
         CSVReader tablesFile = new CSVReader(new File("tables.csv"));
         CSVReader staffFile = new CSVReader(new File("login.csv"));
         CSVReader productsFile = new CSVReader(new File("products.csv"));
         
         ArrayList<Table> tables = new ArrayList<>();
-        tablesFile.getValues().forEach((String[] line) -> {
+        tablesFile.getValues().forEach(line -> {
             tables.add(new Table(Integer.parseInt(line[0]), Integer.parseInt(line[1])));
         });
         
         ArrayList<Reservation> res = new ArrayList<>();
-        resFile.getValues().forEach((String[] line) -> {
+        resFile.getValues().forEach(line -> {
             String[] table = tablesFile.get(line[0], "tableNumber").split(", ");
             res.add(new Reservation(
                 new Table(Integer.parseInt(table[0]), Integer.parseInt(table[1])), 
@@ -86,13 +85,12 @@ public class Driver {
         });
         
         ArrayList<Staff> staff = new ArrayList<>();
-        productsFile.getValues().forEach((String[] line) -> {
-            
+        productsFile.getValues().forEach(line -> {
             staff.add(new Staff(line[0], line[1], line[2], line[3]));
         });
 
         ArrayList<Product> products = new ArrayList<>();
-        staffFile.getValues().forEach((String[] line) -> {
+        staffFile.getValues().forEach(line -> {
             ArrayList<String> alergies = new ArrayList<>(Arrays.asList(line[3].split(";")));
             try {
                 products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
