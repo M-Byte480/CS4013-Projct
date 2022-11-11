@@ -22,10 +22,10 @@ public class Customer extends Person {
 
     /**
      * Constructor to create a customer object
-     * @param id
      * @param name
      * @param phoneNumber
      * @param email
+     * @param id
      * @param loyalty
      */
     public Customer(String name, String phoneNumber, String email, String id, double loyalty) {

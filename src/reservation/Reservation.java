@@ -1,7 +1,6 @@
 package reservation;
 
 import people.Customer;
-import people.Staff;
 import till.Product;
 import till.Table;
 
@@ -35,9 +34,19 @@ public class Reservation {
 	public Table getTable() {
 		return table;
 	}
+	
+	/** 
+	 * Returns the customer.
+	 * @return Customer
+	 */
 	public Customer getCust() {
 		return cust;
 	}
+	
+	/** 
+	 * Sets the customer.
+	 * @param cust
+	 */
 	public void setCust(Customer cust) {
 		this.cust = cust;
 	}
@@ -80,7 +89,7 @@ public class Reservation {
 
 	/**
 	 * Checks to see if a reservation overlaps with another one. Checks table and then time. 
-	 * Will return true if it overlaps else false.
+	 * Will return {@code true} if it overlaps else {@code false}.
 	 * @param res
 	 * @return boolean
 	 */
@@ -90,7 +99,11 @@ public class Reservation {
 		else if (res.time.isAfter(time) && res.time.isBefore(time.plus(length))) return true;
 		else return false;
 	}
-
+	
+	/** 
+	 * Gets the products arraylist.
+	 * @return ArrayList<Product>
+	 */
 	public ArrayList<Product> getProducts() {
 		ArrayList<Product> reservationProducts = new ArrayList<Product>();
 		for (Product p : table.getProducts()) {

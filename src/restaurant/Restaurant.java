@@ -17,7 +17,7 @@ public class Restaurant extends Yum {
     private ArrayList<Product> products;
     private Menu menu;
     private double profit;
-    private ArrayList<Login> logins = new ArrayList<>();
+    private ArrayList<Login> logins;
 
 
     public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Staff> staff, ArrayList<Product> products) {

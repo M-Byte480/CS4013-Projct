@@ -64,10 +64,10 @@ public class Driver {
         }
     }
     public static void bootUp() throws FileNotFoundException{
-        CSVReader resFile = new CSVReader(new File("reservations.csv"));
-        CSVReader tablesFile = new CSVReader(new File("tables.csv"));
-        CSVReader staffFile = new CSVReader(new File("login.csv"));
-        CSVReader productsFile = new CSVReader(new File("products.csv"));
+        CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"));
+        CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"));
+        CSVReader staffFile = new CSVReader(new File("src/data/login.csv"));
+        CSVReader productsFile = new CSVReader(new File("src/data/products.csv"));
         
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
