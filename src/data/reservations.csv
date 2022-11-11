@@ -1,1 +1,1 @@
-Table table, LocalDateTime time, TemporalAmount length
+int tableID, LocalDateTime time(yyyy-MM-dd HH:mm), Duration length

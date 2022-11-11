@@ -4,8 +4,9 @@ import people.Customer;
 import people.Staff;
 import till.Product;
 import till.Table;
+
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 
 public class Reservation {
@@ -13,7 +14,7 @@ public class Reservation {
 	private Customer cust;
 	
 	private LocalDateTime time;
-	private TemporalAmount length;
+	private Duration length;
 	
 	/**
 	 * Makes a Reservation object.
@@ -21,7 +22,7 @@ public class Reservation {
 	 * @param time
 	 * @param length
 	 */
-	public Reservation(Table table, LocalDateTime time, TemporalAmount length) {
+	public Reservation(Table table, LocalDateTime time, Duration length) {
 		this.table = table;
 		this.time = time;
 		this.length = length;
@@ -51,7 +52,7 @@ public class Reservation {
 	 * Gets the length the reservation is made for.
 	 * @return length
 	 */
-	public TemporalAmount getLength() {
+	public Duration getLength() {
 		return length;
 	}
 
@@ -73,7 +74,7 @@ public class Reservation {
 	 * Changes the length of the reservation.
 	 * @param length
 	 */
-	public void setLength(TemporalAmount length) {
+	public void setLength(Duration length) {
 		this.length = length;
 	}
 

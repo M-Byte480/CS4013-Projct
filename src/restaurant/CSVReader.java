@@ -24,6 +24,7 @@ public class CSVReader {
         scanner = new Scanner(file);
         this.file = file;
         this.values = new ArrayList<>();
+        read();
     }
 
     /**
@@ -31,7 +32,7 @@ public class CSVReader {
      *
      * @throws FileNotFoundException
      */
-    public void read() throws FileNotFoundException {
+    private void read() throws FileNotFoundException {
         //        this.dataFields = reader.scanner.nextLine().split(",");
         while (scanner.hasNextLine()) {
             values.add(scanner.nextLine().split(","));
@@ -258,11 +259,5 @@ public class CSVReader {
 
     public ArrayList<String[]> getValues() {
         return values;
-    }
-
-    public static void bootUp(){
-        //make new res, tables, staff, menu
-
-        Restaurant restaurant = new Restaurant(reservations, tables, staff, menu);
     }
 }

@@ -2,6 +2,8 @@ package people;
 
 import java.util.ArrayList;
 
+import restaurant.Utils;
+
 public class Person {
     private String name;
     private String phoneNumber;
@@ -9,7 +11,6 @@ public class Person {
     private String id;
     private static ArrayList<Person> people;
     private static int num = 0;
-    private static int uniqueID;
     private static String password;
 
     public Person() {
@@ -20,18 +21,11 @@ public class Person {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.id = uniqueIdGenerator(id);
+        this.id = id;
     }
 
     public static String getPassword() {
         return password;
-    }
-
-
-    public String uniqueIdGenerator(String id){
-        uniqueID++;
-        this.id = id + String.format("%07d", uniqueID);
-        return this.id;
     }
 
     public void addPerson(Person person){
@@ -105,14 +99,6 @@ public class Person {
 
     public static void setPeople(ArrayList<Person> people) {
         Person.people = people;
-    }
-
-    public static int getUniqueID() {
-        return uniqueID;
-    }
-
-    public static void setUniqueID(int uniqueID) {
-        Person.uniqueID = uniqueID;
     }
 
 
