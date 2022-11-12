@@ -43,7 +43,7 @@ public class Table {
     }
 
     public String getStaff() {
-        return getStaff();
+        return getStaff();          // uhh recursion
     }
     
     // Converts table to lineItem arrayList for invoices
@@ -77,13 +77,13 @@ public class Table {
     //closing/deleting booking
     //check if table is vacant
     public void deleteTable(Table table) {
-        productsOnTable.remove(table);
+        productsOnTable.remove(table);          // cant remove table object from arraylist of products
     }
 
     public String returnForawrdSlaah() {
         for (Product p : productsOnTable) {
             St
-            p.toString();
+            p.toString();                       // ummm what
         }
     }
 
