@@ -16,29 +16,47 @@ public class Invoice {
     private double total;
     private static int uniqueID;
 
-    public Invoice(Reservation reservation, Customer customer) throws IOException {
+    /**
+     * Creates an invoice Object
+     *
+     * @param reservation
+     * @throws IOException
+     */
+    public Invoice(Reservation reservation) throws IOException {
         this.reservation = reservation;                     // collects details of reservation
-        this.customer = customer;                               // contains details of the person who booked
+        this.customer = reservation.getCust();                               // contains details of the person who booked
         this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
         this.total = reservation.getTable().getTotal();
         uniqueID++;
         sendInvoice();
     }
 
+    /**
+     * Sets the uniqueID state
+     * @param uniqueID
+     */
     public static void setUniqueID(int uniqueID) {
         Invoice.uniqueID = uniqueID;
     }
 
+    /**
+     * Gets the ID state
+     * @return uniqueID current state
+     */
     public static int getUniqueID() {
         return uniqueID;
     }
 
+    /**
+     * Gets the latest uniqueID in the file and then it sets the uniqueID state from last usage
+     * @throws IOException
+     */
     public static void getLatestID() throws IOException {
         if(getUniqueID() == 0){
             setUniqueID(1);
             return;
         }
-        Util invoiceReader = new Util(new File("/src/data/invoices.csv"));
+        CSVReader invoiceReader = new CSVReader(new File("/src/data/invoices.csv"));
         String[] allID = invoiceReader.getAllArray("id");
         setUniqueID(Integer.parseInt(allID[allID.length - 1]));
         invoiceReader.close();
@@ -46,11 +64,11 @@ public class Invoice {
     public String[] customerDetailsToStringArr () {
 
         String contact = customer.getPhoneNumber();
-        ArrayList<String> invoice = new ArrayList();
+        ArrayList<String> invoice = new ArrayList<>();
         invoice.add(customer.getName());
         invoice.add(contact);
         invoice.add(reservation.getTime());
-        invoice.add(Util.getTimeNow());
+        invoice.add(CSVReader.getTimeNow());
         invoice.add(reservation.getProducts());
         String[] custDetails = new String[6];
         for (int i = 0; i < custDetails.length; i++) {
@@ -59,24 +77,32 @@ public class Invoice {
         return custDetails;
     }
 
+    /**
+     * Adds the invoice to invoice.csv file using the structure:
+     * name, address, contactDetail, reservationTime, products, netTotal
+     * @throws IOException
+     */
     public void sendInvoice() throws IOException {
-        Util writeToLog = new Util(new File("src/data/log.csv"));           // Create a writer to logs
-        Util writeToInvoices = new Util(new File("src/data/invoices.csv")); // Create a writer to invoices
-
-        String contact = customer.getPhoneNumber();// Check preferences of contact
+        CSVReader writeToLog = new CSVReader(new File("src/data/log.csv"));           // Create a writer to logs
+        CSVReader writeToInvoices = new CSVReader(new File("src/data/invoices.csv")); // Create a writer to invoices
 
         // Write to the files
-        writeToLog.addDataToFile(new String[] {Util.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
-        writeToInvoices.addDataToFile(customer.getName(),  contact, reservation.getTime(),reservation.getProducts(),total);
+        writeToLog.addDataToFile(new String[] {CSVReader.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
+        writeToInvoices.addDataToFile(new String[]{customer.getName(), customer.getEmail(), reservation.getTime().toString(), reservation.getTable().format(), total, id});
 
         // End the utils
         writeToInvoices.close();
         writeToLog.close();
     }
 
+    /**
+     * Formats the CSV file into a readable state in terminal
+     * @return
+     */
     public String format(){
         ArrayList<LineItem> items = new ArrayList<>();
         StringBuilder toReturn = new StringBuilder();
+        toReturn.append(customer.getEmail()).append("\n").append(customer).append("\n");
         for (LineItem l : Table.convertToLineItems(products)) {
             toReturn.append(l.toString()).append("=".repeat(48));
         }

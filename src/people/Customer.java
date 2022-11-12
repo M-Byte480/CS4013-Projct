@@ -22,10 +22,10 @@ public class Customer extends Person {
 
     /**
      * Constructor to create a customer object
-     * @param id
      * @param name
      * @param phoneNumber
      * @param email
+     * @param id
      * @param loyalty
      */
     public Customer(String name, String phoneNumber, String email, String id, double loyalty) {
@@ -67,7 +67,7 @@ public class Customer extends Person {
         return out;
     }
     public String[] customerDetailsToStringArr(){
-        ArrayList<String> cust = new ArrayList();
+        ArrayList<String> cust = new ArrayList<>();
         cust.add(getName());
         cust.add(getPhoneNumber());
         cust.add(getEmail());
@@ -84,7 +84,7 @@ public class Customer extends Person {
 
     public void addCustomerToPeople() throws IOException {
         Customer customer = this;
-        Util fileWriter = new Util(new File("src/data/people.csv"));
+        CSVReader fileWriter = new CSVReader(new File("src/data/people.csv"));
         System.out.println("Writting");
         fileWriter.addDataToFile(new String [] {customer.getName(), customer.getPhoneNumber(), customer.getEmail(), customer.getId(), Double.toString(loyalty)});
         System.out.println("Written");
@@ -92,7 +92,7 @@ public class Customer extends Person {
     }
     public void addCustomer() throws IOException {
         Customer customer = this;
-        Util fileWriter = new Util(new File("src/data/people.csv"));
+        CSVReader fileWriter = new CSVReader(new File("src/data/people.csv"));
         System.out.println("Sucessfully written");
         fileWriter.addDataToFile(customer.customerDetails());
         fileWriter.close();

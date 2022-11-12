@@ -1,12 +1,17 @@
-package restaurant;// Milan: Last edit 28/10
+// Milan: Last edit 28/10
 
-import java.io.*;
+package restaurant;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.ArrayList;
 
-public class Util {
+public class CSVReader {
     private File file;
     private Scanner scanner;
     private ArrayList<String[]> values;
@@ -17,10 +22,11 @@ public class Util {
      * @param file File you want to read from
      * @throws FileNotFoundException Throws error if its not found
      */
-    public Util(File file) throws FileNotFoundException {
+    public CSVReader(File file) throws FileNotFoundException {
         scanner = new Scanner(file);
         this.file = file;
         this.values = new ArrayList<>();
+        read();
     }
 
     /**
@@ -28,7 +34,7 @@ public class Util {
      *
      * @throws FileNotFoundException
      */
-    public void read() throws FileNotFoundException {
+    private void read() throws FileNotFoundException {
         //        this.dataFields = reader.scanner.nextLine().split(",");
         while (scanner.hasNextLine()) {
             values.add(scanner.nextLine().split(","));
@@ -245,32 +251,22 @@ public class Util {
         return everything.toArray(new String[0]);
     }
 
+    /**
+     * Counts the number of Instances of the value existing in certain datafield in the csv
+     * @param value to check
+     * @param datafield where the value exists
+     * @return int with respect to the number of values existing in the dataset
+     */
     public int count(String value, String datafield){
         return get(value, datafield).split(value).length - 1;
     }
+
 
     public static String getTimeNow(){
         return (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
     }
 
-/*
-    public static void main(String[] args) throws IOException {
-        Util hello = new Util(new File("Hello.txt"));
-        hello.read();
-        System.out.println(hello.get("Stephen", "firstName"));
-        System.out.println(hello.count("Stephen", "firstName"));
-        System.out.println(hello.getCombinations( new String[] {"Stephen","Fitzpatrick"}, new String[] {"firstName","lastName"}));
-        hello.save();
-        hello.close();
-    }
-//*/
     public ArrayList<String[]> getValues() {
         return values;
-    }
-
-    public static void bootUp(){
-        //make new res, tables, staff, menu
-
-        Restaurant restaurant = new Restaurant(reservations, tables, staff, menu);
     }
 }
