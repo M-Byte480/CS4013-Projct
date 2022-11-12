@@ -46,7 +46,7 @@ public class Driver {
                 System.out.println("Enter Password : ");
                 String password = in.nextLine();
                 
-                if (!restaraunt.getLogin(id, password)) {
+                if (!restaurant.getLogin(id, password)) {
                     System.out.println("Invalid credentials");
                 } else {
                     loginSuccesful(id);
@@ -57,7 +57,7 @@ public class Driver {
                 signUp();
                 
             } else if (command.equals("Q")) {
-                CSVReader.save();
+                restaurant.save();
                 System.out.println("Shutting Down");
                 System.exit(0);
             }
@@ -79,7 +79,7 @@ public class Driver {
             String[] table = tablesFile.get(line[0], "tableNumber").split(",");
             res.add(new Reservation(
                 new Table(Integer.parseInt(table[0]), Integer.parseInt(table[1])), 
-                LocalDateTime.parse(line[1], DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), 
+                LocalDateTime.parse(line[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
                 Duration.between(LocalTime.MIN, LocalTime.parse(line[2]))
             ));
         });
@@ -143,7 +143,7 @@ public class Driver {
         System.out.println("Enter A New Password : ");
         String password = in.nextLine();
         
-        retaurant.addLogins();
+        restaurant.addLogins();
         System.out.println("Sign Up Complete");
         
     }

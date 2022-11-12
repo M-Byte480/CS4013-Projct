@@ -34,7 +34,9 @@ public class Staff extends Person {
     }
 
 
-
+    public String CSVToString() {
+        return String.format("%s,%s,%s,%s", super.getName(), super.getPhoneNumber(), super.getEmail(), super.getId());
+    }
 
     @Override
     public String toString() {
