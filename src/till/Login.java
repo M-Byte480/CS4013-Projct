@@ -30,9 +30,8 @@ public class Login {
         this.ID = ID;
         this.tillPassword = tillPassword;
 
-        CSVReader u = new CSVReader(new File("login.csv"));
+        CSVReader u = new CSVReader(new File("src/data/login.csv"));
         u.addDataToFile(details + "\n");
-
     }
 
     /**
@@ -60,20 +59,17 @@ public class Login {
      * @return
      */
     public boolean validateLogin(String id, String password) {
-        for (int i = 0; i < details.size(); i++) {
+        for (int i = 0; i < details.size() ; i++) {
             getLines("login.csv");
-
 
             if (login.containsKey(id)) {
                 return login.get(id).equals(password);
             }
             return false;
         }
-
-        //read will read file into itself
-        //split each
+    //read will read file into itself
+    //split each
     }
-}
 
 
 

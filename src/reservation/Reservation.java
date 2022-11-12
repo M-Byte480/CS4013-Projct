@@ -111,4 +111,9 @@ public class Reservation {
 		}
 		return reservationProducts;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("%s,%s,%s", table.getTableNumber(), time.toString(), length);
+	}
 }

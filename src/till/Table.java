@@ -20,66 +20,40 @@ public class Table {
         this.seats = seats;
     }
 
-
+    public int getTableNumber() {
+        return tableNumber;
+    }
 
     //adding product to "order"
-    public void addProduct(Table x, Product pick) {
-
+    public void addProduct(Product pick) {
         productsOnTable.add(pick);
-
     }
 
     //deleting product from "order"
     public void deleteProduct(Product delete) {
-
         productsOnTable.add(delete);
     }
-
-    // Converts table to lineItem arrayList for invoices
-    // Milan
-    public static ArrayList<LineItem> convertToLineItems(ArrayList<Product> products){
-
-
 
     public double getTotal(){
         double sum = 0;
         for (Product p : productsOnTable) {
             sum += p.getCost();
-
         }
         return sum ;
-    }
-
-    public void closeTable() {
-        this.booking = null;
-
-    }
-
-    //closing/deleting booking
-    //check if table is vacant
-    public void deleteTable(Table table) {
-        productsOnTable.remove(table);
-
-    }
-
-    public ArrayList<Product> getProducts() {
-        return productsOnTable;
     }
 
     public String getStaff() {
         return getStaff();
     }
+    
+    // Converts table to lineItem arrayList for invoices
+    // Milan
     public static ArrayList<LineItem> convertToLineItems(ArrayList<Product> products) {
         ArrayList<LineItem> items = new ArrayList<>();
         HashMap<Product, Integer> occurences = new HashMap<>();
         Integer count = 0;
         for (Product p : products) {
             count = occurences.get(p);
-            if(count == null){
-                occurences.put(p, 1);
-            }else{
-                occurences.replace(p, count + 1);
-            count = occurences.get(p.getName());
             if (count == null) {
                 occurences.put(p, 1);
             } else {
@@ -87,15 +61,11 @@ public class Table {
             }
         }
 
-        for (HashMap.Entry<Product, Integer> item :
-                occurences.entrySet()) {
+        for (HashMap.Entry<Product, Integer> item : occurences.entrySet()) {
             items.add(new LineItem(item.getKey().getName(), item.getValue(), item.getKey().getCost()));
         }
-
         return items;
     }
-
-
 
     public void closeTable() throws IOException {
         Invoice invoice = new Invoice(this.booking);
@@ -108,8 +78,9 @@ public class Table {
     //check if table is vacant
     public void deleteTable(Table table) {
         productsOnTable.remove(table);
+    }
 
-    public String returnForawrdSlaah (){
+    public String returnForawrdSlaah() {
         for (Product p : productsOnTable) {
             St
             p.toString();
@@ -123,5 +94,9 @@ public class Table {
 
     public ArrayList<Product> getProducts() {
         return productsOnTable;
+    }
+
+    public String toString() {
+        return String.format("%s,%s", tableNumber, seats);
     }
 }
