@@ -22,6 +22,7 @@ private static double profit;
     Added for template
     */
     public void promoteStaff(Staff person){
+
     }
 
 
