@@ -1,14 +1,10 @@
 package people;
 
-
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import restaurant.*;
 import people.Customer;
-
-
 
 public class Customer extends Person {
     double loyalty;
@@ -17,8 +13,6 @@ public class Customer extends Person {
     Customer(){
 
     }
-
-
 
     /**
      * Constructor to create a customer object
@@ -36,8 +30,6 @@ public class Customer extends Person {
         setEmail(email);
         this.loyalty = loyalty;
     }
-
-
 
     /**
      * Method to increase loyalty value of customer depending on freq of visits
@@ -66,38 +58,10 @@ public class Customer extends Person {
         String out = getName()  + "," + getPhoneNumber() + "," + getEmail() + "," + getId() + "," + loyalty;
         return out;
     }
-    public String[] customerDetailsToStringArr(){
-        ArrayList<String> cust = new ArrayList<>();
-        cust.add(getName());
-        cust.add(getPhoneNumber());
-        cust.add(getEmail());
-        cust.add(getId());
-        cust.add(Double.toString(loyalty));
-        String[] custDetails = new String[6];
-        for (int i = 0; i < custDetails.length; i++){
-            custDetails[i] = cust.get(i);
-        }
-        return custDetails;
-    }
 
-
-
-    public void addCustomerToPeople() throws IOException {
-        Customer customer = this;
-        CSVReader fileWriter = new CSVReader(new File("src/data/people.csv"));
-        System.out.println("Writting");
-        fileWriter.addDataToFile(new String [] {customer.getName(), customer.getPhoneNumber(), customer.getEmail(), customer.getId(), Double.toString(loyalty)});
-        System.out.println("Written");
-        fileWriter.close();
-    }
     public void addCustomer() throws IOException {
-        Customer customer = this;
         CSVReader fileWriter = new CSVReader(new File("src/data/people.csv"));
-        System.out.println("Sucessfully written");
-        fileWriter.addDataToFile(customer.customerDetails());
+        fileWriter.addDataToFile(customerDetails());
         fileWriter.close();
     }
-
-
-
 }
