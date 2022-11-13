@@ -20,22 +20,30 @@ public class Invoice {
      * Creates an invoice Object
      *
      * @param reservation
-     * @throws IOException
      */
-    public Invoice(Reservation reservation) throws IOException {
+    public Invoice(Reservation reservation) {
         this.reservation = reservation;                     // collects details of reservation
         this.customer = reservation.getCust();                               // contains details of the person who booked
         this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
         this.total = reservation.getTable().getTotal();
         this.id = uniqueID++;
-        sendInvoice();
+        try {
+            sendInvoice();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    public Invoice(Reservation reservation, Customer customer, ArrayList<Product> products, double total, int id) {
-        this.reservation = reservation;
-        this.customer = customer;
-        this.products = products;
-        this.total = total;
+    public Invoice(Reservation reservation, int id) {
+        this.reservation = reservation;                     // collects details of reservation
+        this.customer = reservation.getCust();                               // contains details of the person who booked
+        this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
+        this.total = reservation.getTable().getTotal();
         this.id = id;
+        try {
+            sendInvoice();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

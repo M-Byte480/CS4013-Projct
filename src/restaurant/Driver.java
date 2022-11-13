@@ -108,11 +108,10 @@ public class Driver {
 
         ArrayList<Invoice> invoices = new ArrayList<>();
         invoicesFile.getValues().forEach(line -> {
-            String[] staffString = line[0].split(";");
             String[] resString = line[1].split(";");
             invoices.add(new Invoice(
-                new Staff(staffString[0], staffString[1], staffString[2]), 
-                makeReservation(line, tablesFile.get(line[0], "tableNumber").split(",")), 
+                makeReservation(resString, tablesFile.get(resString[0], "tableNumber").split(",")), 
+                Integer.parseInt(line[4])
                 ));
         });
         
