@@ -57,19 +57,19 @@ public class Product {
     //     readProducts.close();
     // }
 
-    // public static void loadProducts() throws IOException{
-    //     CSVReader readProducts = new CSVReader(new File("/src/data/products.csv"));
-    //     for (int i = 1; i < readProducts.getValues().size(); i++) {
-    //         String[] details = readProducts.getValues().get(i);
-    //         productsOfRestaurant.add(new Product(
-    //             details[0],
-    //             details[1],
-    //             Double.parseDouble(details[2]),
-    //             new ArrayList<String> (Arrays.asList(details[3].split("-")))
-    //         ));
-    //     }
-    //     readProducts.close();
-    // }
+//     public static void loadProducts() throws IOException{
+//         CSVReader readProducts = new CSVReader(new File("/src/data/products.csv"));
+//         for (int i = 1; i < readProducts.getValues().size(); i++) {
+//             String[] details = readProducts.getValues().get(i);
+//             productsOfRestaurant.add(new Product(
+//                 details[0],
+//                 details[1],
+//                 Double.parseDouble(details[2]),
+//                 new ArrayList<String> (Arrays.asList(details[3].split("-")))
+//             ));
+//         }
+//         readProducts.close();
+//     }
 
     public String toString() {
         StringBuilder retString = new StringBuilder(String.format("%s,%s,%d,", name, description, cost));

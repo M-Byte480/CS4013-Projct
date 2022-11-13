@@ -35,7 +35,7 @@ public class Driver {
         in = new Scanner(System.in);
     }
     
-    public void run() throws FileNotFoundException {
+    public void run() throws IOException {
         // This updates the retaurant object
         bootUp();
         
@@ -58,7 +58,7 @@ public class Driver {
                     System.out.println("Invalid credentials");
                 } else {
                     // Once logged in, allow the person to have a access to certain options based on their level of access
-                    loginSuccesful(id);
+                    loginSuccessful(id);
                 }
                 
                 
@@ -76,7 +76,7 @@ public class Driver {
     public static void bootUp() throws FileNotFoundException {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"));
         CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"));
-        CSVReader staffFile = new CSVReader(new File("src/data/login.csv"));
+        CSVReader staffFile = new CSVReader(new File("src/data/people.csv"));
         CSVReader productsFile = new CSVReader(new File("src/data/products.csv"));
         
         ArrayList<Table> tables = new ArrayList<>();
@@ -95,12 +95,14 @@ public class Driver {
         });
         
         ArrayList<Staff> staff = new ArrayList<>();
-        productsFile.getValues().forEach(line -> {
-            staff.add(new Staff(line[0], line[1], line[2], line[3]));
+        staffFile.getValues().forEach(line -> {
+            int id = Character.getNumericValue(line[3].charAt(0));
+            if (id > 1 && id != 9)
+                staff.add(new Staff(line[0], line[1], line[2], line[3]));
         });
 
         ArrayList<Product> products = new ArrayList<>();
-        staffFile.getValues().forEach(line -> {
+        productsFile.getValues().forEach(line -> {
             ArrayList<String> alergies = new ArrayList<>(Arrays.asList(line[3].split(";")));
             try {
                 products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
@@ -146,6 +148,7 @@ public class Driver {
 
     public void loginSuccessful(String id) throws IOException {
         int integer = Character.getNumericValue(id.charAt(0));
+
         String timeInString;LocalDateTime time;
 
         Table resTable = createTable();
@@ -191,6 +194,7 @@ public class Driver {
                     view profit
                     add staff
          */
+
 
     }
 

@@ -23,7 +23,7 @@ public class Menu {
             System.out.println("S : Show Products, A : Add A Product To Order, R : Remove A Product From Order, F : Finish, Q : Close Menu");
             String command = in.nextLine().toUpperCase();
             if (command.equals("S")) {
-                for (Product p : Product.productsOfRestaurant)
+                for (Product p : products)
                     System.out.println(p);
 
 
@@ -38,20 +38,20 @@ public class Menu {
                 //remove product from table
 
             } else if (command.equals("R")) {
-                t.deleteProduct(getChoice(productOnTable.toArray()));
-                System.out.println("Removed : " + getChoice(productOnTable.toArray()));
+                t.deleteProduct(getChoice(products.toArray()));
+                System.out.println("Removed : " + getChoice(products.toArray()));
 
                 //Pass products added to be made
 
             } else if (command.equals("F")) {
-                productOnTable.removeAll(Product);
+                products.removeAll(Product);
                 t.bookingStatus();
                 t.sendInvoice();
                 t.closeTable();
                 //remove all from table
                 //remove booking
             } else if (command.equals("Q")) {
-                productOnTable.set(null);
+                products.removeAll(products);
                 Table.bookingStatus();
 
 
@@ -65,4 +65,6 @@ public class Menu {
 
         }
     }
+
+
 }
