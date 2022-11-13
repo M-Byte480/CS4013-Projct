@@ -20,44 +20,41 @@ public class CSVReader {
      * Create a Utility object, by passing the File name or path
      *
      * @param file File you want to read from
-     * @throws FileNotFoundException Throws error if its not found
      */
-    public CSVReader(File file, boolean read) throws FileNotFoundException {
-        scanner = new Scanner(file);
+    public CSVReader(File file, boolean read) {
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         dataFields = scanner.nextLine().split(",");
         this.file = file;
         this.values = new ArrayList<>();
         if (read) read();
     }
 
-    /**
-     * Read file into memory
-     *
-     * @throws FileNotFoundException
-     */
-    private void read() throws FileNotFoundException {
+    private void read() {
         while (scanner.hasNextLine()) {
             values.add(scanner.nextLine().split(","));
         }
     }
 
-    /**
-     * Once you done adding data, you must save to file
-     *
-     * @throws IOException
-     */
-    public void save() throws IOException {
-        FileWriter fileWriter = new FileWriter(this.file);
-        StringBuilder toFile = new StringBuilder();
-
-        toFile.append(String.join(",", dataFields)).append("\n");
-        
-        for (String[] line : values) {
-            toFile.append(String.join(",", line)).append("\n");
+    public void save() {
+        try {
+            FileWriter fileWriter = new FileWriter(this.file);
+            StringBuilder toFile = new StringBuilder();
+    
+            toFile.append(String.join(",", dataFields)).append("\n");
+            
+            for (String[] line : values) {
+                toFile.append(String.join(",", line)).append("\n");
+            }
+    
+            fileWriter.write(toFile.toString());
+            fileWriter.close();
+        } catch (IOException e) { 
+            e.printStackTrace();
         }
-
-        fileWriter.write(toFile.toString());
-        fileWriter.close();
     }
 
     /**
@@ -82,16 +79,19 @@ public class CSVReader {
      * Write directly to the file. this does not require the read() in method.
      *
      * @param data
-     * @throws IOException
      */
-    public void addDataToFile(String[] data) throws IOException {
+    public void addDataToFile(String[] data) {
         addDataToFile(String.join(",", data));
     }
 
-    public void addDataToFile(String data) throws IOException {
-        FileWriter fileWriter = new FileWriter(this.file, true);
-        fileWriter.write(data + '\n');
-        fileWriter.close();
+    public void addDataToFile(String data) {
+        try {
+            FileWriter fileWriter = new FileWriter(this.file, true);
+            fileWriter.write(data + '\n');
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -106,7 +106,6 @@ public class CSVReader {
      *
      * @param dataField
      * @param value
-     * @throws IOException
      */
     public void remove(String dataField, String value) {
         String[] dataFieldValues = values.get(0).clone();
@@ -162,7 +161,7 @@ public class CSVReader {
      * @param dataFields
      * @return
      */
-    public String getCombinations(String[] fields, String[] dataFields){
+    public String getCombinations(String[] fields, String[] dataFields) {
         int size = dataFields.length;
 
         if(size != fields.length){
@@ -207,8 +206,6 @@ public class CSVReader {
      * @param dataField
      * @return
      */
-
-
     public String[] getAllValues(String dataField) {
         ArrayList<String> everything = new ArrayList<>();
         String[] dataFieldValues = values.get(0).clone();

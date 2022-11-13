@@ -104,7 +104,7 @@ public class Restaurant extends Yum {
     }
 
 
-    public void save() throws IOException {
+    public void save() {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), false);
         CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), false);
         CSVReader staffFile = new CSVReader(new File("src/data/people.csv"), false);

@@ -17,16 +17,15 @@ public class Login {
     private String ID;
     private ArrayList<String> details = new ArrayList<String>();
 
-    public Login() throws FileNotFoundException {
+    public Login() {
     }
 
     /**
      * @param id       - ID of person
      * @param password - Password of person
      *                 Reads the inpoutted parameters and adds them to a csv file
-     * @throws IOException
      */
-    public void createNewID(String id, String password) throws IOException {
+    public void createNewID(String id, String password) {
         this.ID = ID;
         this.tillPassword = tillPassword;
 

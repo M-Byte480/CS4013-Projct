@@ -15,7 +15,7 @@ public class Menu {
         this.in = new Scanner(System.in);
     }
 
-    public void run(Table t) throws IOException {
+    public void run(Table t) {
         boolean more = true;
 
         while (more) {

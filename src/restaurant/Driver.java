@@ -36,7 +36,7 @@ public class Driver {
         in = new Scanner(System.in);
     }
     
-    public void run() throws FileNotFoundException {
+    public void run() {
         // This updates the retaurant object
         bootUp();
         
@@ -74,7 +74,7 @@ public class Driver {
             }
         }
     }
-    public static void bootUp() throws FileNotFoundException {
+    public static void bootUp() {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), true);
         CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), true);
         CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
@@ -99,7 +99,6 @@ public class Driver {
             else if (level < 9)
                 people.put(line[2], new Staff(line[0], line[1], line[2]));
             else people.put(line[2], new Owner(line[0], line[1], line[2]));
-            
         });
 
         ArrayList<Product> products = new ArrayList<>();
@@ -159,7 +158,7 @@ public class Driver {
 
     }
 
-    public void loginSuccessful(String id) throws IOException {
+    public void loginSuccessful(String id) {
         int integer = Character.getNumericValue(id.charAt(0));
         String timeInString;LocalDateTime time;
 
