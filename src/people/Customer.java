@@ -1,12 +1,14 @@
 package people;
 
+import restaurant.Utils;
+
 public class Customer extends Person {
     double loyalty;
     int freqOfVisits;
 
-    Customer(){
-
-    }
+//    Customer(){
+//
+//    }
 
     /**
      * Constructor to create a customer object with auto generated id
@@ -54,12 +56,11 @@ public class Customer extends Person {
         return "Customer: \n" +
                 "name = '" + getName() + "'\n" +
                 "phoneNumber = '" + getPhoneNumber() + "'\n" +
-                "email = '" + getEmail() + "'\n" +
                 "id = '" + getId() + "'\n" +
                 "loyalty = '" + loyalty + "'\n";
     }
     public String customerDetails(){
-        String out = getName()  + "," + getPhoneNumber() + "," + getEmail() + "," + getId() + "," + loyalty;
+        String out = getName()  + "," + getPhoneNumber() + "," + getId() + "," + loyalty;
         return out;
     }
 

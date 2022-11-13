@@ -106,7 +106,6 @@ public class CSVReader {
      *
      * @param dataField
      * @param value
-     * @throws IOException
      */
     public void remove(String dataField, String value) {
         String[] dataFieldValues = values.get(0).clone();

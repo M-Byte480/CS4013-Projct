@@ -1,13 +1,10 @@
 package restaurant;
 
 import people.Customer;
-import people.Owner;
 import people.Person;
 import people.Staff;
 import reservation.Invoice;
-import reservation.LineItem;
 import reservation.Reservation;
-import till.Login;
 import till.Product;
 import till.Table;
 
@@ -24,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.spi.LocaleServiceProvider;
 
 
 public class Driver {
@@ -110,7 +106,7 @@ public class Driver {
         invoicesFile.getValues().forEach(line -> {
             String[] resString = line[1].split(";");
             invoices.add(new Invoice(
-                makeReservation(resString, tablesFile.get(resString[0], "tableNumber").split(",")), 
+                makeReservation(resString, tablesFile.get(resString[0], "tableNumber").split(",")),
                 Integer.parseInt(line[4])
                 ));
         });
