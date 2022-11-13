@@ -1,12 +1,12 @@
 package restaurant;
 
+import people.Person;
+import people.Staff;
 import reservation.Reservation;
 import till.Login;
 import till.Menu;
 import till.Product;
 import till.Table;
-import people.Customer;
-import people.Staff;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,17 +17,17 @@ import java.util.ArrayList;
 public class Restaurant extends Yum {
     private ArrayList<Reservation> reservations;
     private ArrayList<Table> tables;
-    private ArrayList<Staff> staff;
+    private ArrayList<Person> people;
     private ArrayList<Product> products;
     private Menu menu;
     private double profit;
     private ArrayList<Login> logins;
 
 
-    public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Staff> staff, ArrayList<Product> products) {
+    public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Person> people, ArrayList<Product> products) {
         this.reservations = reservations;
         this.tables = tables;
-        this.staff = staff;
+        this.people = people;
         this.products = products;
     }
     
@@ -66,16 +66,16 @@ public class Restaurant extends Yum {
         this.tables.remove(table);
     }
 
-    public ArrayList<Staff> getStaff() {
-        return staff;
+    public ArrayList<Person> getPeople() {
+        return people;
     }
 
     public void addStaff(Staff staff) {
-        this.staff.add(staff);
+        this.people.add(staff);
     }
 
     public void removeStaff(Staff staff) {
-        this.staff.remove(staff);
+        this.people.remove(staff);
     }
 
     public Menu getMenu() {
@@ -118,7 +118,7 @@ public class Restaurant extends Yum {
                 e.printStackTrace();
             }
         });
-        staff.forEach(staff -> {
+        people.forEach(staff -> {
             try {
                 staffFile.addDataToFile(staff.toString());
             } catch (IOException e) {

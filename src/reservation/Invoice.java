@@ -66,15 +66,14 @@ public class Invoice {
         invoiceReader.close();
     }
     public String[] customerDetailsToStringArr () {
-
-        String contact = customer.getPhoneNumber();
+        // name, phoneNumber, timeOfBooking, TimeOfSending, products
         ArrayList<String> invoice = new ArrayList<>();
         invoice.add(customer.getName());
-        invoice.add(contact);
-        invoice.add(reservation.getTime());
+        invoice.add(customer.getPhoneNumber());
+        invoice.add(reservation.getTime().toString());
         invoice.add(CSVReader.getTimeNow());
-        invoice.add(reservation.getProducts());
-        String[] custDetails = new String[6];
+        invoice.add(reservation.getProducts().toString());
+        String[] custDetails = new String[4];
         for (int i = 0; i < custDetails.length; i++) {
             custDetails[i] = invoice.get(i);
         }
@@ -92,7 +91,7 @@ public class Invoice {
 
         // Write to the files
         writeToLog.addDataToFile(new String[] {CSVReader.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
-        writeToInvoices.addDataToFile(new String[]{customer.getName(), customer.getEmail(), reservation.getTime().toString(), reservation.getTable().format(), total, id});
+        writeToInvoices.addDataToFile(new String[]{customer.getName(), customer.getEmail(), reservation.getTime().toString(), reservation.getTable().toString(), String.valueOf(total), String.valueOf(getUniqueID())});
 
         // End the utils
         writeToInvoices.close();
@@ -106,10 +105,13 @@ public class Invoice {
     public String format(){
         ArrayList<LineItem> items = new ArrayList<>();
         StringBuilder toReturn = new StringBuilder();
-        toReturn.append(customer.getEmail()).append("\n").append(customer).append("\n");
+        toReturn.append(customer.getEmail()).append("\n")
+                .append(customer).append("\n");
+
         for (LineItem l : Table.convertToLineItems(products)) {
             toReturn.append(l.toString()).append("=".repeat(48));
         }
+
         return toReturn.toString();
     }
 }
