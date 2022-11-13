@@ -88,12 +88,7 @@ public class Driver {
         
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
-            String[] table = tablesFile.get(line[0], "tableNumber").split(",");
-            res.add(new Reservation(
-                new Table(Integer.parseInt(table[0]), Integer.parseInt(table[1])), 
-                LocalDateTime.parse(line[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
-                LocalTime.parse(line[2])
-            ));
+            res.add(makeReservation(line, tablesFile.get(line[0], "tableNumber").split(",")));
         });
         
         HashMap<String, Person> people = new HashMap<>();
@@ -111,12 +106,24 @@ public class Driver {
             }
         });
 
-        // ArrayList<Invoice> invoices = new ArrayList<>();
-        // invoicesFile.getValues().forEach(line -> {
-        //     invoices.add(new Staff(), new Reservation(), )
-        // });
+        ArrayList<Invoice> invoices = new ArrayList<>();
+        invoicesFile.getValues().forEach(line -> {
+            String[] staffString = line[0].split(";");
+            String[] resString = line[1].split(";");
+            invoices.add(new Invoice(
+                new Staff(staffString[0], staffString[1], staffString[2]), 
+                makeReservation(line, tablesFile.get(line[0], "tableNumber").split(",")), 
+                ));
+        });
         
         restaurant = new Restaurant(res, tables, people, products, invoices);
+    }
+    private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
+        return new Reservation(
+            new Table(Integer.parseInt(TableParams[0]), Integer.parseInt(TableParams[1])), 
+            LocalDateTime.parse(ResParams[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
+            LocalTime.parse(ResParams[2])
+        );
     }
     
     private Object getChoice(ArrayList<Object> choices) {

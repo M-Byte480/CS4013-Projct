@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Invoice {
-
     private Reservation reservation;
     private Customer customer;
     private ArrayList<Product> products;
@@ -30,6 +29,13 @@ public class Invoice {
         this.total = reservation.getTable().getTotal();
         this.id = uniqueID++;
         sendInvoice();
+    }
+    public Invoice(Reservation reservation, Customer customer, ArrayList<Product> products, double total, int id) {
+        this.reservation = reservation;
+        this.customer = customer;
+        this.products = products;
+        this.total = total;
+        this.id = id;
     }
 
     /**
