@@ -17,21 +17,26 @@ public class Login {
     private String ID;
     private ArrayList<String> details = new ArrayList<String>();
 
-    public Login() throws FileNotFoundException {
+    public Login() {
     }
 
     /**
-     * @param id       - ID of person
+     * @param id - ID of person
      * @param password - Password of person
      *                 Reads the inpoutted parameters and adds them to a csv file
-     * @throws IOException
      */
-    public void createNewID(String id, String password) throws IOException {
+    public void createNewID(Util login) {
+            login.getValues().forEach(l -> {
+            String[] usernameAndPasswordSplitter = l.split(", ");
+            details.put(usernameAndPasswordSplitter[0], usernameAndPasswordSplitter[1]);
+        });
+    public void createNewID(String id, String password) {
         this.ID = ID;
         this.tillPassword = tillPassword;
 
-        CSVReader u = new CSVReader(new File("src/data/login.csv"));
+        CSVReader u = new CSVReader(new File("login.csv"));
         u.addDataToFile(details + "\n");
+
     }
 
     /**
@@ -62,14 +67,17 @@ public class Login {
         for (int i = 0; i < details.size() ; i++) {
             getLines("login.csv");
 
+
             if (login.containsKey(id)) {
                 return login.get(id).equals(password);
             }
             return false;
         }
+
     //read will read file into itself
     //split each
-    }
+}
+}
 
 
 

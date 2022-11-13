@@ -7,7 +7,6 @@ import till.Table;
 import people.Person;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -66,6 +65,7 @@ public class Restaurant extends Yum {
         tables.add(table);
     }
     public void removeTable(Table table) {
+        // make sure table doesnt have a reservation
         tables.remove(table);
     }
 
@@ -103,7 +103,7 @@ public class Restaurant extends Yum {
     }
 
 
-    public void save() throws IOException {
+    public void save() {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), false);
         CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), false);
         CSVReader staffFile = new CSVReader(new File("src/data/people.csv"), false);

@@ -3,12 +3,7 @@ package people;
 import restaurant.Utils;
 
 public class Customer extends Person {
-    double loyalty;
-    int freqOfVisits;
-
-//    Customer(){
-//
-//    }
+    private double loyalty;
 
     /**
      * Constructor to create a customer object with auto generated id
@@ -41,27 +36,7 @@ public class Customer extends Person {
     public void increaseLoyalty() {
         loyalty++;
     }
-
-
-
-    /**
-     * Overrides toString from Person class because a Customer has more
-     * specific attributes.
-     * Customer doesn't contain an address.
-     * Customer contains an id and a loyalty value.
-     * @return toString of Customer
-     */
-    @Override
-    public String toString(){
-        return "Customer: \n" +
-                "name = '" + getName() + "'\n" +
-                "phoneNumber = '" + getPhoneNumber() + "'\n" +
-                "id = '" + getId() + "'\n" +
-                "loyalty = '" + loyalty + "'\n";
+    public String toString() {
+        return String.format("%s,%s", super.toString(), loyalty);
     }
-    public String customerDetails(){
-        String out = getName()  + "," + getPhoneNumber() + "," + getId() + "," + loyalty;
-        return out;
-    }
-
 }
