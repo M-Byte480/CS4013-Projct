@@ -1,15 +1,18 @@
 package restaurant;
 
+import reservation.Invoice;
 import reservation.Reservation;
+import till.Login;
+import till.Menu;
 import till.Product;
 import till.Table;
-import people.Person;
+import people.Customer;
+import people.Staff;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 
 
 public class Restaurant extends Yum {
@@ -18,12 +21,14 @@ public class Restaurant extends Yum {
     private ArrayList<Table> tables;
     private HashMap<String, Person> people;
     private ArrayList<Product> products;
+    private ArrayList<Invoice> invoices;
 
-    public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, HashMap<String, Person> people, ArrayList<Product> products) {
+    public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, HashMap<String, Person> people, ArrayList<Product> products, ArrayList<Invoice> invoices) {
         this.reservations = reservations;
         this.tables = tables;
         this.people = people;
         this.products = products;
+        this.invoices = invoices;
     }
     
     public ArrayList<Reservation> getReservations() {
@@ -85,29 +90,48 @@ public class Restaurant extends Yum {
     public void addProfit(double profit) {
         this.profit += profit;
     }
+    
+    public ArrayList<Invoice> getInvoices() {
+        return invoices;
+    }
+    public void setInvoices(ArrayList<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+    public void addInvoice(Invoice invoice) {
+        invoices.add(invoice);
+    }
+    public void removeInvoice(Invoice invoice) {
+        invoices.remove(invoice);
+    }
+
 
     public void save() throws IOException {
-        // CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), false);
-        // CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), false);
-        // CSVReader staffFile = new CSVReader(new File("src/data/people.csv"), false);
-        // CSVReader productsFile = new CSVReader(new File("src/data/products.csv"), false);
+        CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), false);
+        CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), false);
+        CSVReader staffFile = new CSVReader(new File("src/data/people.csv"), false);
+        CSVReader productsFile = new CSVReader(new File("src/data/products.csv"), false);
+        CSVReader invoiceFile = new CSVReader(new File("src/data/invoices.csv"), false);
 
-        // reservations.forEach(res -> {
-        //     resFile.addData(res.toString());
-        // });
-        // tables.forEach(table -> {
-        //     tablesFile.addData(table.toString());
-        // });
-        // people.forEach((id, staff) -> {
-        //     staffFile.addData(staff.toString());
-        // });
-        // products.forEach(prod -> {
-        //     productsFile.addData(prod.toString());
-        // });
+        reservations.forEach(res -> {
+            resFile.addData(res.toString());
+        });
+        tables.forEach(table -> {
+            tablesFile.addData(table.toString());
+        });
+        people.forEach((id, staff) -> {
+            staffFile.addData(staff.toString());
+        });
+        products.forEach(prod -> {
+            productsFile.addData(prod.toString());
+        });
+        invoices.forEach(invoice -> {
+            invoiceFile.addData(invoice.toString());
+        });
 
-        // resFile.save();
-        // tablesFile.save();
-        // staffFile.save();
-        // productsFile.save();
+        resFile.save();
+        tablesFile.save();
+        staffFile.save();
+        productsFile.save();
+        invoiceFile.save();
     }
 }
