@@ -47,6 +47,10 @@ public class Invoice {
         return uniqueID;
     }
 
+    public double getTotal() {
+        return total;
+    }
+
     /**
      * Gets the latest uniqueID in the file and then it sets the uniqueID state from last usage
      * @throws IOException

@@ -54,6 +54,10 @@ public class Restaurant extends Yum {
         return tables;
     }
 
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
     public void addTables(Table table) {
         this.tables.add(table);
     }

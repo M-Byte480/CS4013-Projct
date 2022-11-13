@@ -1,12 +1,16 @@
 package restaurant;
 
 import people.Customer;
+import people.Owner;
 import people.Person;
 import people.Staff;
+import reservation.Invoice;
+import reservation.LineItem;
 import reservation.Reservation;
 import till.Login;
 import till.Product;
 import till.Table;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,13 +19,17 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.spi.LocaleServiceProvider;
+
 
 public class Driver {
     private Scanner in;
     private static Restaurant restaurant;
+
     
     public void menuForDriver() {
         in = new Scanner(System.in);
@@ -118,17 +126,75 @@ public class Driver {
                 return choices.get(n);
         }
     }
-    
-    public void loginSuccesful(String id) {
-        int integer = Character.getNumericValue(id.charAt(0));
-        if(integer == 9 ) {
-            loginOwner();
-        }else if (integer == 5 ) {
-            loginStaff();
-        }else {
-            loginCustomer();
-        }
+
+    private Table createTable(){
+        int tableNumber, seats;
+        System.out.println("Enter the table number");
+        tableNumber = in.nextInt();
+        System.out.println("Enter in the number of seats you need");
+        seats = in.nextInt();
+        Table resTable = new Table(tableNumber, seats);
+        return resTable;
     }
+
+    private void addToOrder(){
+
+    }
+    private void removeFromOrder(){
+
+    }
+
+    public void loginSuccessful(String id) throws IOException {
+        int integer = Character.getNumericValue(id.charAt(0));
+        String timeInString;LocalDateTime time;
+
+        Table resTable = createTable();
+        int tableNumber, seats, minutesDurationLength;
+        System.out.println("Enter the time you want to book in format: YYYY-MM-DDTHH:mm");
+        timeInString = in.nextLine();
+        time = LocalDateTime.parse(timeInString, DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
+        minutesDurationLength = in.nextInt();
+        Duration dur = Duration.of(minutesDurationLength, ChronoUnit.MINUTES);
+        Reservation reservation = new Reservation(resTable, time ,dur);
+        if (integer > 1){ //Uses char to specify which action to do i.e create or remove(closeTable)
+            Table create = createTable();
+            resTable.closeTable();
+            restaurant.getProducts();
+            Invoice invoice = new Invoice(reservation);
+            invoice.getTotal();
+            if (integer == 9){
+                restaurant.getProfit();
+                String name, phoneNumber, email, newStaffID;
+                System.out.println("Enter name of new staff member");
+                name = in.nextLine();
+                System.out.println("Enter phone number of new staff member");
+                phoneNumber = in.nextLine();
+                System.out.println("Enter new staff member's email address");
+                email = in.nextLine();
+                //
+                System.out.println("For a regular staff member enter 2 -8, or 0 for a manager");
+                newStaffID = in.nextLine();
+                restaurant.addStaff(new Staff(name, phoneNumber, email, newStaffID));
+            }
+        }
+        
+
+        /*
+        Start: make and create reservation
+
+            if(ID > 1)
+                create + remove table
+                add + remove order
+                pay
+
+                if( ID == 9)
+                    view profit
+                    add staff
+         */
+
+    }
+
+
     
     public void signUp() {
         System.out.println("Enter full name");
@@ -149,9 +215,10 @@ public class Driver {
         System.out.println("Sign Up Complete");
         
     }
-    
+
     public void loginOwner() {
         // Owner has access: create and delete table, view profit, add staff, add and remove order. pay
+
         
     }
 
