@@ -20,10 +20,6 @@ public class Table {
         this.seats = seats;
     }
 
-    public void addTable() {
-
-    }
-
     public int getTableNumber() {
         return tableNumber;
     }
@@ -116,7 +112,7 @@ public class Table {
                 }
 
 
-                public void closeTable () throws IOException {
+                public void closeTable () {
                     Invoice invoice = new Invoice(this.booking);
                     invoice.sendInvoice();
                     this.booking = null;
@@ -136,7 +132,7 @@ public class Table {
                     }
                 }
 
-                public void getMenu (Table t) throws IOException {
+                public void getMenu (Table t) {
                     Menu menu = new Menu();
                     menu.run(t);
                 }
@@ -149,5 +145,9 @@ public class Table {
                 }
             }
         }
+    }
+
+    public String toString() {
+        return String.format("%s,%s", tableNumber, seats);
     }
 }
