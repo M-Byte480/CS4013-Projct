@@ -14,6 +14,7 @@ public class Invoice {
     private Customer customer;
     private ArrayList<Product> products;
     private double total;
+    private int id;
     private static int uniqueID;
 
     /**
@@ -27,7 +28,7 @@ public class Invoice {
         this.customer = reservation.getCust();                               // contains details of the person who booked
         this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
         this.total = reservation.getTable().getTotal();
-        uniqueID++;
+        this.id = uniqueID++;
         sendInvoice();
     }
 
@@ -113,5 +114,20 @@ public class Invoice {
         }
 
         return toReturn.toString();
+    }
+    public String toString() {
+        StringBuilder prodString = new StringBuilder();
+        for (Product product : products) {
+            prodString.append(product.getName()).append(";");
+        }
+        prodString.deleteCharAt(prodString.length()-1);
+
+        return String.format("%s,%s,%s,%s,%s", 
+            customer.toString().replace(",", ";"),
+            reservation.toString().replace(",", ";"),
+            prodString,
+            total,
+            id
+        );
     }
 }
