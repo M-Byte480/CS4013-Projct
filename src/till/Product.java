@@ -49,7 +49,7 @@ public class Product {
     //     return productsOfRestaurant;
     // }
 
-    // public void removeFood(Product product) throws IOException {
+    // public void removeFood(Product product) {
     //     productsOfRestaurant.remove(product);
     //     CSVReader readProducts = new CSVReader(new File("src/data/products.csv"));
     //     readProducts.remove("name", product.getName());
@@ -57,7 +57,7 @@ public class Product {
     //     readProducts.close();
     // }
 
-    // public static void loadProducts() throws IOException{
+    // public static void loadProducts() {
     //     CSVReader readProducts = new CSVReader(new File("/src/data/products.csv"));
     //     for (int i = 1; i < readProducts.getValues().size(); i++) {
     //         String[] details = readProducts.getValues().get(i);
