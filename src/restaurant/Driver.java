@@ -31,7 +31,7 @@ public class Driver {
 
     private Timetable timetable = new Timetable();
 
-    public void run() {
+
 
     public void run() throws FileNotFoundException {
         // This updates the retaurant object
@@ -85,9 +85,9 @@ public class Driver {
         resFile.getValues().forEach(line -> {
             String[] table = tablesFile.get(line[0], "tableNumber").split(",");
             res.add(new Reservation(
-                new Table(Integer.parseInt(table[0]), Integer.parseInt(table[1])),
-                LocalDateTime.parse(line[1], DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-                Duration.between(LocalTime.MIN, LocalTime.parse(line[2]))
+                    new Table(Integer.parseInt(table[0]), Integer.parseInt(table[1])),
+                    LocalDateTime.parse(line[1], DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                    Duration.between(LocalTime.MIN, LocalTime.parse(line[2]))
             ));
         });
 
@@ -95,6 +95,67 @@ public class Driver {
         productsFile.getValues().forEach(line -> {
             staff.add(new Staff(line[0], line[1], line[2], line[3]));
         });
+
+        ArrayList<Product> products = new ArrayList<>();
+        staffFile.getValues().forEach(line -> {
+            ArrayList<String> alergies = new ArrayList<>(Arrays.asList(line[3].split(";")));
+            try {
+                products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
+            } catch (NumberFormatException | IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+        restaurant = new Restaurant(res, tables, staff, products);
+    }
+
+
+    private Object getChoice(ArrayList<Object> choices) {
+        if (choices.size() == 0) return null;
+        while (true) {
+            char c = 'A';
+            for (Object choice : choices) {
+                System.out.println(c + ") " + choice);
+                c++;
+            }
+            String input = in.nextLine();
+            int n = input.toUpperCase().charAt(0) - 'A';
+            if (0 <= n && n < choices.size())
+                return choices.get(n);
+        }
+    }
+
+    public void loginSuccesful(String id) {
+        int integer = Character.getNumericValue(id.charAt(0));
+        if(integer == 9 ) {
+            loginOwner();
+        }else if (integer == 5 ) {
+            loginStaff();
+        }else {
+            loginCustomer();
+        }
+    }
+
+    public void signUp() {
+        System.out.println("Enter full name");
+        String name = in.nextLine();
+        System.out.println("Enter Email");
+        String email = in.nextLine().toLowerCase();
+        System.out.println("Enter Phone Number");
+        String phoneNumber = in.nextLine();
+        Customer bob = new Customer(name, phoneNumber, email, "1", 0);
+
+        restaurant.addPerson(bob);
+        System.out.println("Your User ID : ");
+        System.out.println(bob.getId());
+        System.out.println("Enter A New Password : ");
+        String password = in.nextLine();
+
+        restaurant.addLogins();
+        System.out.println("Sign Up Complete");
+
+    }
 
     public void loginOwner() {
         boolean ownerMore = true;
@@ -125,33 +186,12 @@ public class Driver {
                 Util.save();
                 run();
 
-        ArrayList<Product> products = new ArrayList<>();
-        staffFile.getValues().forEach(line -> {
-            ArrayList<String> alergies = new ArrayList<>(Arrays.asList(line[3].split(";")));
-            try {
-                products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
-            } catch (NumberFormatException | IOException e) {
-                e.printStackTrace();
             }
-        });
-
-        restaurant = new Restaurant(res, tables, staff, products);
-    }
-
-    private Object getChoice(ArrayList<Object> choices) {
-        if (choices.size() == 0) return null;
-        while (true) {
-            char c = 'A';
-            for (Object choice : choices) {
-                System.out.println(c + ") " + choice);
-                c++;
-            }
-            String input = in.nextLine();
-            int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.size())
-                return choices.get(n);
         }
     }
+
+
+
 
     public void loginStaff() {
         boolean staffMore = true;
@@ -197,76 +237,20 @@ public class Driver {
 
         }
     }
+        //	public Reservation(Table table, LocalDateTime time, Duration length) {
+        //		this.table = table;
+        //		this.time = time;
+        //		this.length = length;
 
-    public void loginSuccesful(String id) {
-        int integer = Character.getNumericValue(id.charAt(0));
-        if(integer == 9 ) {
-            loginOwner();
-        }else if (integer == 5 ) {
-            loginStaff();
-        }else {
-            loginCustomer();
-        }
-    }
+        //    public Table(int tableNumber, int seats)
+        //        this.tableNumber = tableNumber;
+        //        this.seats = seats;
 
-    public void signUp() {
-        System.out.println("Enter full name");
-        String name = in.nextLine();
-        System.out.println("Enter Email");
-        String email = in.nextLine().toLowerCase();
-        System.out.println("Enter Phone Number");
-        String phoneNumber = in.nextLine();
-        Customer bob = new Customer(name, phoneNumber, email, "1", 0);
-
-        restaurant.addPerson(bob);
-        System.out.println("Your User ID : ");
-        System.out.println(bob.getId());
-        System.out.println("Enter A New Password : ");
-        String password = in.nextLine();
-
-        restaurant.addLogins();
-        System.out.println("Sign Up Complete");
-
-    }
-
-    public void loginOwner() {
-        // Owner has access: create and delete table, view profit, add staff, add and remove order. pay
-
-    }
-
-    public void loginStaff(){
-        // Staff will have access to: create and remove table, add and remove order, make and cancel reservation, pay
-
-    }
-
-    public void loginCustomer(){
-        // Customer: Make and cancel reservation, pay
-
-    }
-
-    /*
-     * Reservation option will give option to make booking and delete
-     * It is literally copy and paste of the Appointment work from last lab
-     *
-     * Create and remove table is kind of like view, remove and add products
-     *
-     * Add and remove order is the same, it will be applied on top ofa table
-     *
-     * Pay wraps it up
-     *
-     * You need to make a method that handles each of these
-     *
-     */
-
-    @Override
-    public String toString() {
-        return "AppointmentMenu{" +
-        "in=" + in +
-        '}';
 
     public void createReservation() {
-        System.out.println("Enter ID : ");
-        String ID = in.nextLine();
+        System.out.println("Enter Table ID : ");
+
+
         System.out.println("Enter Date DD/MM/YYYY : ");
         String DATE = in.nextLine().toLowerCase();
         System.out.println("Enter Start Time : ");

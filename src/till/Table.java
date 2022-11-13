@@ -20,6 +20,10 @@ public class Table {
         this.seats = seats;
     }
 
+    public void addTable() {
+
+    }
+
 
     //adding product to "order"
     public void addProduct(Table x, Product pick) {
