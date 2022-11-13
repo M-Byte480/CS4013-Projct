@@ -68,9 +68,8 @@ public class Invoice {
 
     /**
      * Gets the latest uniqueID in the file and then it sets the uniqueID state from last usage
-     * @throws IOException
      */
-    public static void getLatestID() throws IOException {
+    public static void getLatestID() {
         if(getUniqueID() == 0){
             setUniqueID(1);
             return;

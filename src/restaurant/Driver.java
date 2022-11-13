@@ -35,8 +35,8 @@ public class Driver {
     public void menuForDriver() {
         in = new Scanner(System.in);
     }
-
-    public void run() throws FileNotFoundException {
+    
+    public void run() {
         // This updates the retaurant object
         bootUp();
 
@@ -74,9 +74,7 @@ public class Driver {
             }
         }
     }
-
-
-    public static void bootUp() throws FileNotFoundException {
+    public static void bootUp() {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), true);
         CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), true);
         CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
@@ -95,17 +93,18 @@ public class Driver {
 
         HashMap<String, Person> people = new HashMap<>();
         peopleFile.getValues().forEach(line -> {
-            people.put(line[2], new Person(line[0], line[1], line[2]));
+            int level = Character.getNumericValue(line[2].charAt(0));
+            if (level < 2)
+                people.put(line[2], new Customer(line[0], line[1], line[2], Double.parseDouble(line[3])));
+            else if (level < 9)
+                people.put(line[2], new Staff(line[0], line[1], line[2]));
+            else people.put(line[2], new Owner(line[0], line[1], line[2]));
         });
 
         ArrayList<Product> products = new ArrayList<>();
         productsFile.getValues().forEach(line -> {
             ArrayList<String> alergies = new ArrayList<>(Arrays.asList(line[3].split(";")));
-            try {
-                products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
+            products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
         });
 
         ArrayList<Invoice> invoices = new ArrayList<>();
