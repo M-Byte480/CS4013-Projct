@@ -76,7 +76,7 @@ public class Driver {
     public static void bootUp() throws FileNotFoundException {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"));
         CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"));
-        CSVReader staffFile = new CSVReader(new File("src/data/login.csv"));
+        CSVReader staffFile = new CSVReader(new File("src/data/people.csv"));
         CSVReader productsFile = new CSVReader(new File("src/data/products.csv"));
         
         ArrayList<Table> tables = new ArrayList<>();
@@ -95,12 +95,14 @@ public class Driver {
         });
         
         ArrayList<Staff> staff = new ArrayList<>();
-        productsFile.getValues().forEach(line -> {
-            staff.add(new Staff(line[0], line[1], line[2], line[3]));
+        staffFile.getValues().forEach(line -> {
+            int id = Character.getNumericValue(line[3].charAt(0));
+            if (id > 1 && id != 9)
+                staff.add(new Staff(line[0], line[1], line[2], line[3]));
         });
 
         ArrayList<Product> products = new ArrayList<>();
-        staffFile.getValues().forEach(line -> {
+        productsFile.getValues().forEach(line -> {
             ArrayList<String> alergies = new ArrayList<>(Arrays.asList(line[3].split(";")));
             try {
                 products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
