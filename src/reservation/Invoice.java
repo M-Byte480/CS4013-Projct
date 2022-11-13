@@ -28,7 +28,6 @@ public class Invoice {
         this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
         this.total = reservation.getTable().getTotal();
         uniqueID++;
-        sendInvoice();
     }
 
     /**
@@ -60,10 +59,8 @@ public class Invoice {
             setUniqueID(1);
             return;
         }
-        CSVReader invoiceReader = new CSVReader(new File("/src/data/invoices.csv"));
-        String[] allID = invoiceReader.getAllArray("id");
-        setUniqueID(Integer.parseInt(allID[allID.length - 1]));
-        invoiceReader.close();
+
+        setUniqueID(Integer.parseInt(invoiceReader.getValues().get(invoiceReader.getValues().size() - 2)[invoiceReader.getValues().get(0).length - 1]));
     }
     public String[] customerDetailsToStringArr () {
         // name, phoneNumber, timeOfBooking, TimeOfSending, products
@@ -80,23 +77,6 @@ public class Invoice {
         return custDetails;
     }
 
-    /**
-     * Adds the invoice to invoice.csv file using the structure:
-     * name, address, contactDetail, reservationTime, products, netTotal
-     * @throws IOException
-     */
-    public void sendInvoice() throws IOException {
-        CSVReader writeToLog = new CSVReader(new File("src/data/log.csv"));           // Create a writer to logs
-        CSVReader writeToInvoices = new CSVReader(new File("src/data/invoices.csv")); // Create a writer to invoices
-
-        // Write to the files
-        writeToLog.addDataToFile(new String[] {CSVReader.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
-        writeToInvoices.addDataToFile(new String[]{customer.getName(), customer.getEmail(), reservation.getTime().toString(), reservation.getTable().toString(), String.valueOf(total), String.valueOf(getUniqueID())});
-
-        // End the utils
-        writeToInvoices.close();
-        writeToLog.close();
-    }
 
     /**
      * Formats the CSV file into a readable state in terminal

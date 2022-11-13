@@ -1,11 +1,5 @@
 package people;
 
-import java.io.File;
-import java.io.IOException;
-
-import restaurant.*;
-import people.Customer;
-
 public class Customer extends Person {
     double loyalty;
     int freqOfVisits;
@@ -59,9 +53,4 @@ public class Customer extends Person {
         return out;
     }
 
-    public void addCustomer() throws IOException {
-        CSVReader fileWriter = new CSVReader(new File("src/data/people.csv"));
-        fileWriter.addDataToFile(customerDetails());
-        fileWriter.close();
-    }
 }

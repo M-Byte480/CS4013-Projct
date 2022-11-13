@@ -22,13 +22,15 @@ public class CSVReader {
      * @param file File you want to read from
      * @throws FileNotFoundException Throws error if its not found
      */
-    public CSVReader(File file) throws FileNotFoundException {
+    public CSVReader(File file, boolean toRead) throws FileNotFoundException {
         scanner = new Scanner(file);
         dataFields = scanner.nextLine().split(",");
         this.file = file;
         this.values = new ArrayList<>();
-        read();
+        if(toRead) read();
     }
+
+
 
     /**
      * Read file into memory
@@ -47,7 +49,7 @@ public class CSVReader {
      * @throws IOException
      */
     public void save() throws IOException {
-        FileWriter fileWriter = new FileWriter(this.file);
+        FileWriter fileWriter = new FileWriter(this.file, false);
         StringBuilder toFile = new StringBuilder();
 
         for (String[] line : values) {
@@ -245,4 +247,5 @@ public class CSVReader {
     public ArrayList<String[]> getValues() {
         return values;
     }
+
 }
