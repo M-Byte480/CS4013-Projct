@@ -1,107 +1,35 @@
 package people;
 
-import java.util.ArrayList;
-
-import restaurant.Utils;
-
 public class Person {
     private String name;
     private String phoneNumber;
-    private String email;
     private String id;
-    private static ArrayList<Person> people;
-    private static int num = 0;
-    private static String password;
 
-    public Person() {
-
-    }
-
-    public Person(String name, String phoneNumber, String email, String id){
+    public Person(String name, String phoneNumber, String id){
         this.name = name;
-        this.email = email;
         this.phoneNumber = phoneNumber;
         this.id = id;
     }
 
-    public static String getPassword() {
-        return password;
-    }
-
-    public void addPerson(Person person){
-        people.add(person);
-    }
-    public void removePerson(Person person){
-        people.remove(person);
-    }
-
-    public void getGroupPeople(String idIndicator){
-
-    }
-
-    public Person getPerson(String id){
-        for (Person person :
-                people ) {
-            if(person.id.equals(id)){
-                return person;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public String toString() {
-         return "Person: \n" +
-                 "name = '" + name + "'\n" +
-                "phoneNumber = '" + phoneNumber + "'\n" +
-                "email = '" + email + "'\n";
-    }
-
-
-
-
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public static ArrayList<Person> getPeople() {
-        return people;
+    public String toString() {
+        return String.format("%s,%s,%s", name, phoneNumber, id);
     }
-
-    public static void setPeople(ArrayList<Person> people) {
-        Person.people = people;
-    }
-
-
 }
-
-

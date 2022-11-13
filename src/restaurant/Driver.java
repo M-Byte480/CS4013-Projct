@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.spi.LocaleServiceProvider;
 
@@ -74,10 +75,11 @@ public class Driver {
         }
     }
     public static void bootUp() throws FileNotFoundException {
-        CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"));
-        CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"));
-        CSVReader staffFile = new CSVReader(new File("src/data/people.csv"));
-        CSVReader productsFile = new CSVReader(new File("src/data/products.csv"));
+        CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), true);
+        CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), true);
+        CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
+        CSVReader productsFile = new CSVReader(new File("src/data/products.csv"), true);
+        CSVReader invoicesFile = new CSVReader(new File("src/data/invoices.csv"), true);
         
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
@@ -86,19 +88,12 @@ public class Driver {
         
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
-            String[] table = tablesFile.get(line[0], "tableNumber").split(",");
-            res.add(new Reservation(
-                new Table(Integer.parseInt(table[0]), Integer.parseInt(table[1])), 
-                LocalDateTime.parse(line[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
-                Duration.between(LocalTime.MIN, LocalTime.parse(line[2]))
-            ));
+            res.add(makeReservation(line, tablesFile.get(line[0], "tableNumber").split(",")));
         });
         
-        ArrayList<Staff> staff = new ArrayList<>();
-        staffFile.getValues().forEach(line -> {
-            int id = Character.getNumericValue(line[3].charAt(0));
-            if (id > 1 && id != 9)
-                staff.add(new Staff(line[0], line[1], line[2], line[3]));
+        HashMap<String, Person> people = new HashMap<>();
+        peopleFile.getValues().forEach(line -> {
+            people.put(line[2], new Person(line[0], line[1], line[2]));
         });
 
         ArrayList<Product> products = new ArrayList<>();
@@ -106,12 +101,28 @@ public class Driver {
             ArrayList<String> alergies = new ArrayList<>(Arrays.asList(line[3].split(";")));
             try {
                 products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
-            } catch (NumberFormatException | IOException e) {
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         });
+
+        ArrayList<Invoice> invoices = new ArrayList<>();
+        invoicesFile.getValues().forEach(line -> {
+            String[] resString = line[1].split(";");
+            invoices.add(new Invoice(
+                makeReservation(resString, tablesFile.get(resString[0], "tableNumber").split(",")), 
+                Integer.parseInt(line[4])
+                ));
+        });
         
-        restaurant = new Restaurant(res, tables, staff, products);
+        restaurant = new Restaurant(res, tables, people, products, invoices);
+    }
+    private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
+        return new Reservation(
+            new Table(Integer.parseInt(TableParams[0]), Integer.parseInt(TableParams[1])), 
+            LocalDateTime.parse(ResParams[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
+            LocalTime.parse(ResParams[2])
+        );
     }
     
     private Object getChoice(ArrayList<Object> choices) {

@@ -17,7 +17,7 @@ public class Product {
 
     // public static ArrayList<Product> productsOfRestaurant;
 
-    public Product(String name, String description, double cost, ArrayList<String> allergies) throws IOException {
+    public Product(String name, String description, double cost, ArrayList<String> allergies) {
         this.description = description;
         this.allergies = allergies;
         this.cost = cost;
@@ -72,10 +72,10 @@ public class Product {
     // }
 
     public String toString() {
-        StringBuilder retString = new StringBuilder(String.format("%s,%s,%d,", name, description, cost));
+        StringBuilder retString = new StringBuilder(String.format("%s,%s,%f,", name, description, cost));
         allergies.forEach(s -> {
             retString.append(s).append(";");
         });
-        return retString.toString();
+        return retString.deleteCharAt(retString.length()-1).toString();
     }
 }

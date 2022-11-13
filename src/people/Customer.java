@@ -9,28 +9,38 @@ public class Customer extends Person {
     }
 
     /**
-     * Constructor to create a customer object
+     * Constructor to create a customer object with auto generated id
      * @param name
      * @param phoneNumber
-     * @param email
+     * @param loyalty
+     */
+    public Customer(String name, String phoneNumber, double loyalty){
+        super(name, phoneNumber, Utils.uniqueIdGenerator("2"));
+        this.loyalty = loyalty;
+    }
+        /**
+     * Constructor to create a customer object with a certain id
+     * @param name
+     * @param phoneNumber
      * @param id
      * @param loyalty
      */
-    public Customer(String name, String phoneNumber, String email, String id, double loyalty) {
-        super();
-        setId(id);
-        setName(name);
-        setPhoneNumber(phoneNumber);
-        setEmail(email);
+    public Customer(String name, String phoneNumber, String id, double loyalty) {
+        super(name, phoneNumber, id);
         this.loyalty = loyalty;
     }
 
-    /**
-     * Method to increase loyalty value of customer depending on freq of visits
-     */
-    public void increaseLoyalty() {
-
+    public double getLoyalty() {
+        return loyalty;
     }
+    public void setLoyalty(double loyalty) {
+        this.loyalty = loyalty;
+    }
+    public void increaseLoyalty() {
+        loyalty++;
+    }
+
+
 
     /**
      * Overrides toString from Person class because a Customer has more
