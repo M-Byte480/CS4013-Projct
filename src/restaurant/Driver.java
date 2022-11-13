@@ -98,7 +98,7 @@ public class Driver {
         
         HashMap<String, Person> people = new HashMap<>();
         peopleFile.getValues().forEach(line -> {
-            people.put(line[1], new Person(line[0], line[1]));
+            people.put(line[2], new Person(line[0], line[1], line[2]));
         });
 
         ArrayList<Product> products = new ArrayList<>();

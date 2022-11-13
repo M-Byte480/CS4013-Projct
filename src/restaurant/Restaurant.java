@@ -2,17 +2,15 @@ package restaurant;
 
 import reservation.Invoice;
 import reservation.Reservation;
-import till.Login;
-import till.Menu;
 import till.Product;
 import till.Table;
-import people.Customer;
-import people.Staff;
+import people.Person;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 
 public class Restaurant extends Yum {
