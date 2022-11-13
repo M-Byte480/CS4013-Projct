@@ -5,26 +5,18 @@ import people.Owner;
 import people.Person;
 import people.Staff;
 import reservation.Invoice;
-import reservation.LineItem;
 import reservation.Reservation;
-import till.Login;
 import till.Product;
 import till.Table;
-
-
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.spi.LocaleServiceProvider;
+
 
 
 public class Driver {
@@ -32,10 +24,8 @@ public class Driver {
     private static Restaurant restaurant;
 
 
-    public void menuForDriver() {
-        in = new Scanner(System.in);
-    }
-    
+
+
     public void run() {
         // This updates the retaurant object
         bootUp();
@@ -55,7 +45,7 @@ public class Driver {
                 System.out.println("Enter Password : ");
                 String password = in.nextLine();
 
-                if (!restaurant.getLogin(id, password)) {
+                if (restaurant.getPerson(id) == null) {
                     System.out.println("Invalid credentials");
                 } else {
                     // Once logged in, allow the person to have a access to certain options based on their level of access
@@ -74,6 +64,7 @@ public class Driver {
             }
         }
     }
+
     public static void bootUp() {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), true);
         CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), true);
@@ -145,7 +136,7 @@ public class Driver {
     }
 
 
-    public void loginSuccessful(String id)  {
+    public void loginSuccessful(String id) {
         int integer = Character.getNumericValue(id.charAt(0));
         System.out.println("M)ake Booking  Q)uit");
         String command = in.nextLine().toUpperCase();
@@ -161,9 +152,12 @@ public class Driver {
         if (integer > 1) { //Uses char to specify which action to do i.e create or remove(closeTable)
 
 
-            System.out.println("M)ake Booking  C)reate Table  D)elete Table   T)ake Order   Q)uit");
+            System.out.println("M)ake Booking  A)dd Product  C)reate Table  D)elete Table   T)ake Order   Q)uit");
             if (command.equals("M")) {
                 createReservation();
+
+            } else if (command.equals("A")) {
+                addProduct();
 
             } else if (command.equals("C")) {
                 createTable();
@@ -181,9 +175,12 @@ public class Driver {
             }
 
             if (integer == 9) {
-                System.out.println("M)ake Booking  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
+                System.out.println("M)ake Booking   A)dd Product  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
                 if (command.equals("M")) {
                     createReservation();
+
+                } else if (command.equals("A")) {
+                    addProduct();
 
                 } else if (command.equals("C")) {
                     createTable();
@@ -266,6 +263,21 @@ public class Driver {
         seats = in.nextInt();
         Table resTable = new Table(tableNumber, seats);
         return resTable;
+    }
+
+    private void addProduct() {
+        System.out.println("Enter The Name Of The Product : ");
+        String nameOFProdcut = in.nextLine();
+        System.out.println("Enter The Product Description : ");
+        String description = in.nextLine();
+        System.out.println("Enter The Cost Of The Product: ");
+        double cost = in.nextDouble();
+        in.nextLine();
+        System.out.println("Enter The Name Of The Product (Seperate using ,)  : ");
+        String allergy = in.nextLine();
+        ArrayList<String> allergies = new ArrayList<>(Arrays.asList(allergy.split(";")));
+        Product newProduct = new Product(nameOFProdcut, description, cost, allergies);
+        restaurant.addProduct(newProduct);
     }
 }
 

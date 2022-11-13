@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//Breny
-//Adding product parameters and storing products in a product array list
 public class Product {
     private String name;
     private String description;
@@ -23,7 +21,7 @@ public class Product {
         this.cost = cost;
         this.name = name;
 
-        // productsOfRestaurant.add(this);
+
 
         // CSVReader readProducts = new CSVReader(new File("src/data/products.csv"));
         // readProducts.addDataToFile(new String[] {name, description, cost + "", String.join( "-", allergies)});
@@ -70,6 +68,8 @@ public class Product {
     //     }
     //     readProducts.close();
     // }
+
+
 
     public String toString() {
         StringBuilder retString = new StringBuilder(String.format("%s,%s,%f,", name, description, cost));
