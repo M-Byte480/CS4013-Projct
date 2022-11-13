@@ -22,12 +22,12 @@ public class CSVReader {
      * @param file File you want to read from
      * @throws FileNotFoundException Throws error if its not found
      */
-    public CSVReader(File file) throws FileNotFoundException {
+    public CSVReader(File file, boolean read) throws FileNotFoundException {
         scanner = new Scanner(file);
         dataFields = scanner.nextLine().split(",");
         this.file = file;
         this.values = new ArrayList<>();
-        read();
+        if (read) read();
     }
 
     /**

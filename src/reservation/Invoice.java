@@ -9,26 +9,41 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Invoice {
-
     private Reservation reservation;
     private Customer customer;
     private ArrayList<Product> products;
     private double total;
+    private int id;
     private static int uniqueID;
 
     /**
      * Creates an invoice Object
      *
      * @param reservation
-     * @throws IOException
      */
-    public Invoice(Reservation reservation) throws IOException {
+    public Invoice(Reservation reservation) {
         this.reservation = reservation;                     // collects details of reservation
         this.customer = reservation.getCust();                               // contains details of the person who booked
         this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
         this.total = reservation.getTable().getTotal();
-        uniqueID++;
-        sendInvoice();
+        this.id = uniqueID++;
+        try {
+            sendInvoice();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public Invoice(Reservation reservation, int id) {
+        this.reservation = reservation;                     // collects details of reservation
+        this.customer = reservation.getCust();                               // contains details of the person who booked
+        this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
+        this.total = reservation.getTable().getTotal();
+        this.id = id;
+        try {
+            sendInvoice();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -113,5 +128,20 @@ public class Invoice {
         }
 
         return toReturn.toString();
+    }
+    public String toString() {
+        StringBuilder prodString = new StringBuilder();
+        for (Product product : products) {
+            prodString.append(product.getName()).append(";");
+        }
+        prodString.deleteCharAt(prodString.length()-1);
+
+        return String.format("%s,%s,%s,%s,%s", 
+            customer.toString().replace(",", ";"),
+            reservation.toString().replace(",", ";"),
+            prodString,
+            total,
+            id
+        );
     }
 }
