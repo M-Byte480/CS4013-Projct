@@ -125,8 +125,8 @@ public class Driver {
         );
     }
     
-    private Object getChoice(ArrayList<Object> choices) {
-        if (choices.size() == 0) return null;
+    private Object getChoice(Object[] choices) {
+        if (choices.length == 0) return null;
         while (true) {
             char c = 'A';
             for (Object choice : choices) {
@@ -135,8 +135,8 @@ public class Driver {
             }
             String input = in.nextLine();
             int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.size())
-                return choices.get(n);
+            if (0 <= n && n < choices.length)
+                return choices[n];
         }
     }
 
