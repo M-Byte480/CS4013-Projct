@@ -1,1 +1,1 @@
-customer,email,time,products,total,id
+name;number;id;loyalty,tableID;time;length,productName,total,id

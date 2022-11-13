@@ -1,1 +1,1 @@
-int tableID, LocalDateTime time(yyyy-MM-dd HH:mm), Duration length
+tableID,time,length
