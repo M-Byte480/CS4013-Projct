@@ -20,4 +20,7 @@ public class Staff extends Person {
     public void setDiscount(double discount){
         this.discount = discount;
     }
+    public String toString() {
+        return String.format("%s,%s", super.toString(), discount);
+    }
 }

@@ -37,4 +37,7 @@ public class Customer extends Person {
     public void increaseLoyalty() {
         loyalty++;
     }
+    public String toString() {
+        return String.format("%s,%s", super.toString(), loyalty);
+    }
 }
