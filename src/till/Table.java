@@ -23,11 +23,25 @@ public class Table {
     public void addTable() {
 
     }
+    public int getTableNumber() {
+        return tableNumber;
+    }
 
+    public String getStaff() {
+        return getStaff();
+    }
 
-    //adding product to "order"
-    public void addProduct(Table x, Product pick) {
+    public Reservation getBooking() {
+        return booking;
+    }
+    public void setBooking(Reservation booking) {
+        this.booking = booking;
+    }
 
+    public ArrayList<Product> getProducts() {
+        return productsOnTable;
+    }
+    public void addProduct(Product pick) {
         productsOnTable.add(pick);
 
     }
@@ -44,6 +58,7 @@ public class Table {
 
 
         public double getTotal () {
+    public double getTotal(){
             double sum = 0;
             for (Product p : productsOnTable) {
                 sum += p.getCost();
@@ -125,5 +140,7 @@ public class Table {
 
             public ArrayList<Product> getProducts () {
                 return productsOnTable;
-            }
-        }
+    public String toString() {
+        return String.format("%s,%s", tableNumber, seats);
+    }
+}

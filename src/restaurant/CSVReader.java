@@ -15,7 +15,7 @@ public class CSVReader {
     private File file;
     private Scanner scanner;
     private ArrayList<String[]> values;
-
+    private String[] dataFields;
     /**
      * Create a Utility object, by passing the File name or path
      *
@@ -24,6 +24,7 @@ public class CSVReader {
      */
     public CSVReader(File file) throws FileNotFoundException {
         scanner = new Scanner(file);
+        dataFields = scanner.nextLine().split(",");
         this.file = file;
         this.values = new ArrayList<>();
         read();
@@ -35,7 +36,6 @@ public class CSVReader {
      * @throws FileNotFoundException
      */
     private void read() throws FileNotFoundException {
-        //        this.dataFields = reader.scanner.nextLine().split(",");
         while (scanner.hasNextLine()) {
             values.add(scanner.nextLine().split(","));
         }
@@ -50,6 +50,8 @@ public class CSVReader {
         FileWriter fileWriter = new FileWriter(this.file);
         StringBuilder toFile = new StringBuilder();
 
+        toFile.append(String.join(",", dataFields)).append("\n");
+        
         for (String[] line : values) {
             toFile.append(String.join(",", line)).append("\n");
         }
@@ -134,30 +136,24 @@ public class CSVReader {
      * @return
      */
     public String get(String value, String dataField) {
-        StringBuilder everything = new StringBuilder();
-        String[] dataFieldValues = values.get(0).clone();
+        StringBuilder dataLinesString = new StringBuilder();
+        String[] dataFieldValues = this.dataFields;
+
         int index = -1;
+
         for (int i = 0; i < dataFieldValues.length; i++) {
             if (dataFieldValues[i].equals(dataField)) {
                 index = i;
             }
         }
-        if (index == -1) {
-            System.out.println("Failed to find the Data Field");
-            return null;
-        }
-        for (int i = 1; i < values.size() - 1; i++) {
+
+        for (int i = 0; i < values.size(); i++) {
             if (values.get(i)[index].equals(value)) {
-                everything.append(i).append(") ");
-                everything.append(String.join(", ", values.get(i)));
-                everything.append('\n');
+                dataLinesString.append(String.join(",", values.get(i))).append('\n');
             }
         }
-        if(everything.toString().equals("")){
-            return null;
-        }
 
-        return everything.toString();
+        return dataLinesString.toString();
     }
 
     /**
@@ -211,27 +207,9 @@ public class CSVReader {
      * @param dataField
      * @return
      */
-    public String getAll(String dataField) {
-        StringBuilder everything = new StringBuilder();
-        String[] dataFieldValues = values.get(0).clone();
-        int index = -1;
-        for (int i = 0; i < dataFieldValues.length; i++) {
-            if (dataFieldValues[i].equals(dataField)) {
-                index = i;
-            }
-        }
-        if (index == -1) {
-            System.out.println("Failed to find the Data Field");
-            return null;
-        }
-        for (int i = 1; i < values.size() - 1; i++) {
-            everything.append(i).append(") ").append(values.get(i)[index]).append('\n');
-        }
 
-        return everything.toString();
-    }
 
-    public String[] getAllArray(String dataField) {
+    public String[] getAllValues(String dataField) {
         ArrayList<String> everything = new ArrayList<>();
         String[] dataFieldValues = values.get(0).clone();
         int index = -1;

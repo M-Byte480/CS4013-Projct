@@ -23,7 +23,7 @@ public class Login {
     /**
      * @param id - ID of person
      * @param password - Password of person
-     * Reads the inpoutted parameters and adds them to a csv file
+     *                 Reads the inpoutted parameters and adds them to a csv file
      * @throws IOException
      */
     public void createNewID(Util login) throws IOException {
@@ -57,16 +57,15 @@ public class Login {
 
     /**
      * @param id
-     * @param password
-     * Make Hashmap
-     * For each line in the csv split using regex and store in hash map
-     * if correct key and pass allow logine
-     * else
-     * return  false
+     * @param password Make Hashmap
+     *                 For each line in the csv split using regex and store in hash map
+     *                 if correct key and pass allow logine
+     *                 else
+     *                 return  false
      * @return
      */
     public boolean validateLogin(String id, String password) {
-        for (int i = 0; i < details.size(); i++) {
+        for (int i = 0; i < details.size() ; i++) {
             getLines("login.csv");
 
 
@@ -78,6 +77,7 @@ public class Login {
 
     //read will read file into itself
     //split each
+}
 }
 
 

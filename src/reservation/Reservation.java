@@ -6,6 +6,7 @@ import till.Table;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Reservation {
@@ -13,7 +14,7 @@ public class Reservation {
 	private Customer cust;
 	
 	private LocalDateTime time;
-	private Duration length;
+	private LocalTime length;
 	
 	/**
 	 * Makes a Reservation object.
@@ -21,7 +22,7 @@ public class Reservation {
 	 * @param time
 	 * @param length
 	 */
-	public Reservation(Table table, LocalDateTime time, Duration length) {
+	public Reservation(Table table, LocalDateTime time, LocalTime length) {
 		this.table = table;
 		this.time = time;
 		this.length = length;
@@ -61,7 +62,7 @@ public class Reservation {
 	 * Gets the length the reservation is made for.
 	 * @return length
 	 */
-	public Duration getLength() {
+	public LocalTime getLength() {
 		return length;
 	}
 
@@ -83,7 +84,7 @@ public class Reservation {
 	 * Changes the length of the reservation.
 	 * @param length
 	 */
-	public void setLength(Duration length) {
+	public void setLength(LocalTime length) {
 		this.length = length;
 	}
 
@@ -95,8 +96,8 @@ public class Reservation {
 	 */
 	public boolean overlaps(Reservation res) {
 		if (!table.equals(res.table)) return false;
-		else if (time.isAfter(res.time) && time.isBefore(res.time.plus(res.length))) return true;
-		else if (res.time.isAfter(time) && res.time.isBefore(time.plus(length))) return true;
+		else if (time.isAfter(res.time) && time.isBefore(res.time.plus(Duration.between(LocalTime.MIN, res.length)))) return true;
+		else if (res.time.isAfter(time) && res.time.isBefore(time.plus(Duration.between(LocalTime.MIN, length)))) return true;
 		else return false;
 	}
 	
@@ -110,5 +111,10 @@ public class Reservation {
 			reservationProducts.add(p);
 		}
 		return reservationProducts;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s,%s,%s", table.getTableNumber(), time.toString(), length);
 	}
 }
