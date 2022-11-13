@@ -50,6 +50,8 @@ public class CSVReader {
         FileWriter fileWriter = new FileWriter(this.file);
         StringBuilder toFile = new StringBuilder();
 
+        toFile.append(String.join(",", dataFields)).append("\n");
+        
         for (String[] line : values) {
             toFile.append(String.join(",", line)).append("\n");
         }
