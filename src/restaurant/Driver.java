@@ -20,28 +20,29 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Driver {
     private Scanner in;
     private static Restaurant restaurant;
-    
+
     public void menuForDriver() {
         in = new Scanner(System.in);
     }
-    
-    public void run() throws FileNotFoundException {
+
+    public void run() throws IOException {
         // This updates the retaurant object
         bootUp();
-        
+
         boolean more = true;
-        
+
         while (more) {
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
-            
-            
+
+
             //If login
-            
+
             if (command.equals("L")) {
                 System.out.println("Enter User ID");
                 String id = in.nextLine();
@@ -51,15 +52,13 @@ public class Driver {
                 if (!restaurant.getLogin(id, password)) {
                     System.out.println("Invalid credentials");
                 } else {
-                    // Once logged in, allow the person to have a access to certain options based on their level of access
-                    loginSuccesful(id);
+
+                    loginSuccessful(id);
                 }
-                
-                
             } else if (command.equals("S")) {
                 // Signs up the person, create new person object and add it to the arraylist of people.
                 signUp();
-                
+
             } else if (command.equals("Q")) {
                 restaurant.save();
                 System.out.println("Shutting Down");
@@ -67,27 +66,28 @@ public class Driver {
             }
         }
     }
+
     public static void bootUp() throws FileNotFoundException {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"));
         CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"));
         CSVReader staffFile = new CSVReader(new File("src/data/people.csv"));
         CSVReader productsFile = new CSVReader(new File("src/data/products.csv"));
-        
+
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
             tables.add(new Table(Integer.parseInt(line[0]), Integer.parseInt(line[1])));
         });
-        
+
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
             String[] table = tablesFile.get(line[0], "tableNumber").split(",");
             res.add(new Reservation(
-                new Table(Integer.parseInt(table[0]), Integer.parseInt(table[1])), 
-                LocalDateTime.parse(line[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
-                Duration.between(LocalTime.MIN, LocalTime.parse(line[2]))
+                    new Table(Integer.parseInt(table[0]), Integer.parseInt(table[1])),
+                    LocalDateTime.parse(line[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
+                    Duration.between(LocalTime.MIN, LocalTime.parse(line[2]))
             ));
         });
-        
+
         ArrayList<Staff> staff = new ArrayList<>();
         staffFile.getValues().forEach(line -> {
             int id = Character.getNumericValue(line[3].charAt(0));
@@ -104,12 +104,12 @@ public class Driver {
                 e.printStackTrace();
             }
         });
-        
+
         restaurant = new Restaurant(res, tables, staff, products);
     }
-    
-    private Object getChoice(ArrayList<Object> choices) {
-        if (choices.size() == 0) return null;
+
+    private Object getChoice(Object[] choices) {
+        if (choices.length == 0) return null;
         while (true) {
             char c = 'A';
             for (Object choice : choices) {
@@ -118,62 +118,79 @@ public class Driver {
             }
             String input = in.nextLine();
             int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.size())
-                return choices.get(n);
+            if (0 <= n && n < choices.length)
+                return choices[n];
         }
     }
-    
-    private Table createTable(){
-        int tableNumber, seats;
-        System.out.println("Enter the table number");
-        tableNumber = in.nextInt();
-        System.out.println("Enter in the number of seats you need");
-        seats = in.nextInt();
-        Table resTable = new Table(tableNumber, seats);
-        return resTable;
-    }
 
-    private void addToOrder(){
 
-    }
-    private void removeFromOrder(){
-
-    }
+    //make interface for loginSuccessful
 
     public void loginSuccessful(String id) throws IOException {
-        int integer = Character.getNumericValue(id.charAt(0));
-        String timeInString;LocalDateTime time;
 
-        Table resTable = createTable();
-        int tableNumber, seats, minutesDurationLength;
-        System.out.println("Enter the time you want to book in format: YYYY-MM-DDTHH:mm");
-        timeInString = in.nextLine();
-        time = LocalDateTime.parse(timeInString, DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
-        minutesDurationLength = in.nextInt();
-        Duration dur = Duration.of(minutesDurationLength, ChronoUnit.MINUTES);
-        Reservation reservation = new Reservation(resTable, time ,dur);
-        if (integer > 1){ //Uses char to specify which action to do i.e create or remove(closeTable)
-            Table create = createTable();
-            resTable.closeTable();
-            restaurant.getProducts();
-            Invoice invoice = new Invoice(reservation);
-            invoice.getTotal();
-            if (integer == 9){
-                restaurant.getProfit();
-                String name, phoneNumber, email, newStaffID;
-                System.out.println("Enter name of new staff member");
-                name = in.nextLine();
-                System.out.println("Enter phone number of new staff member");
-                phoneNumber = in.nextLine();
-                System.out.println("Enter new staff member's email address");
-                email = in.nextLine();
-                //
-                System.out.println("For a regular staff member enter 2 -8, or 0 for a manager");
-                newStaffID = in.nextLine();
-                restaurant.addStaff(new Staff(name, phoneNumber, email, newStaffID));
+        System.out.println("M)ake Booking  Q)uit");
+        String command = in.nextLine().toUpperCase();
+        if (command.equals("M")) {
+            createReservation();
+
+        } else if (command.equals("Q")) {
+            restaurant.save();
+            run();
+
+        }
+
+        if (integer > 1) { //Uses char to specify which action to do i.e create or remove(closeTable)
+
+
+            System.out.println("M)ake Booking  C)reate Table  D)elete Table   T)ake Order   Q)uit");
+            String command = in.nextLine().toUpperCase();
+            if (command.equals("M")) {
+                createReservation();
+
+            } else if (command.equals("C")) {
+                createTable();
+
+            } else if (command.equals("D")) {
+                deleteTable();
+
+            } else if (command.equals("T")) {
+                run(Menu);
+
+            } else if (command.equals("Q")) {
+                restaurant.save();
+                run();
+
+            }
+
+            if (integer == 9) {
+                System.out.println("M)ake Booking  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
+                if (command.equals("M")) {
+                    createReservation();
+
+                } else if (command.equals("C")) {
+                    createTable();
+
+                } else if (command.equals("D")) {
+                    deleteTable();
+
+                } else if (command.equals("T")) {
+                    run(menu);
+
+                } else if (command.equals("H")) {
+                    hireStaff();
+
+
+                } else if (command.equals("P")) {
+                    checkProfit();
+
+                } else if (command.equals("Q")) {
+                    restaurant.save();
+                    run();
+
+                }
+            } else throw new RuntimeException("Invalid Command, Please Select Another");
         }
     }
-
 
         /*
         Start: make and create reservation
@@ -188,10 +205,6 @@ public class Driver {
                     add staff
          */
 
-    }
-
-
-
     public void signUp() {
         System.out.println("Enter full name");
         String name = in.nextLine();
@@ -199,118 +212,73 @@ public class Driver {
         String email = in.nextLine().toLowerCase();
         System.out.println("Enter Phone Number");
         String phoneNumber = in.nextLine();
-        Customer bob = new Customer(name,phoneNumber,email,"1",0);
-        
+        Customer bob = new Customer(name, phoneNumber, email, "1", 0);
+
         restaurant.addPerson(bob);
         System.out.println("Your User ID : ");
         System.out.println(bob.getId());
         System.out.println("Enter A New Password : ");
         String password = in.nextLine();
-        
+
         restaurant.addLogins();
         System.out.println("Sign Up Complete");
-        
-    }
-    
-    public void loginOwner() {
-        boolean ownerMore = true;
-
-        while (ownerMore) {
-            System.out.println("M)ake Booking  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
-            String command = in.nextLine().toUpperCase();
-            if (command.equals("M")) {
-                createReservation():
-
-            } else if (command.equals("C")) {
-                createTable();
-
-            } else if (command.equals("D")) {
-                deleteTable();
-
-            } else if (command.equals("T")) {
-                run(menu);
-
-            } else if (command.equals("H")) {
-                hireStaff();
-
-
-            } else if (command.equals("P")) {
-                checkProfit();
-
-            } else if (command.equals("Q")) {
-                Util.save();
-                run();
-
-            }
-        }
 
     }
 
-    public void loginStaff() {
-        boolean staffMore = true;
-
-        while (staffMore) {
-            System.out.println("M)ake Booking  C)reate Table  D)elete Table   T)ake Order   Q)uit");
-            String command = in.nextLine().toUpperCase();
-            if (command.equals("M")) {
-                createReservation():
-
-            } else if (command.equals("C")) {
-                createTable();
-
-            } else if (command.equals("D")) {
-                deleteTable();
-
-            } else if (command.equals("T")) {
-                run(menu);
-
-            } else if (command.equals("Q")) {
-                Util.save();
-                run();
-
-            }
-
-        }
+    private void createReservation() {
+        System.out.println("Enter Table ID, Enter Start Time Enter End Time ");
+        Table table = ((Table) getChoice(restaurant.getTables().toArray());
     }
 
-    public void loginCustomer() {
-        boolean custumerMore = true;
+    private void deleteTable() {
+        System.out.println("Select a table which you would like to delete :  ");
+        restaurant.removetable((Table) getChoice(restaurant.getTables().toArray()));
+    }
 
-        while (custumerMore) {
-            System.out.println("M)ake Booking  Q)uit");
-            String command = in.nextLine().toUpperCase();
-            if (command.equals("M")) {
-                createReservation():
+    private void hireStaff() {
+        System.out.println("Enter name of new staff member");
+        String name = in.nextLine();
+        System.out.println("Enter phone number of new staff member");
+        String phoneNumber = in.nextLine();
+        Staff newRecruit = new Staff(name, phoneNumber);
+        restaurant.addStaff(newRecruit);
+    }
 
-            } else if (command.equals("Q")) {
-                Util.save();
-                run();
+    public double checkProfit() {
+        double tadhgRyanShmoney = restaurant.getProfit();
+        return tadhgRyanShmoney;
+    }
 
-            }
+    private Table createTable() {
+        int tableNumber, seats;
+        System.out.println("Enter the table number");
+        tableNumber = in.nextInt();
+        System.out.println("Enter in the number of seats you need");
+        seats = in.nextInt();
+        Table resTable = new Table(tableNumber, seats);
+        return resTable;
+    }
+
+    private void addToOrder() {
 
     }
+
+    private void removeFromOrder() {
+
     }
-        //	public Reservation(Table table, LocalDateTime time, Duration length) {
-        //		this.table = table;
-        //		this.time = time;
-        //		this.length = length;
-
-        //    public Table(int tableNumber, int seats)
-        //        this.tableNumber = tableNumber;
-        //        this.seats = seats;
 
 
-    public void createReservation() {
-        System.out.println("Enter Table ID : ");
+    int integer = Character.getNumericValue(id.charAt(0));
+    String timeInString;
+    LocalDateTime time;
 
+    Table resTable = createTable();
+    int tableNumber, seats, minutesDurationLength;
+        System.out.println("Enter the time you want to book in format: YYYY-MM-DDTHH:mm");
+                timeInString=in.nextLine();
+                time=LocalDateTime.parse(timeInString,DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
+                minutesDurationLength=in.nextInt();
+                Duration dur=Duration.of(minutesDurationLength,ChronoUnit.MINUTES);
+                Reservation reservation=new Reservation(resTable,time,dur);
 
-        System.out.println("Enter Date DD/MM/YYYY : ");
-        String DATE = in.nextLine().toLowerCase();
-        System.out.println("Enter Start Time : ");
-        String startTime = in.nextLine();
-        System.out.println("Enter End Time : ");
-        String endTime = in.nextLine();
-        Reservation newRes = new Reservation();
-    }
-}
 

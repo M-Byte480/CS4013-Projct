@@ -27,7 +27,9 @@ public class Reservation {
 		this.time = time;
 		this.length = length;
 	}
-	
+
+
+
 	/**
 	 * Gets the table that the reservation is made for.
 	 * @return table

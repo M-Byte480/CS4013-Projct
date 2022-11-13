@@ -24,6 +24,7 @@ public class Restaurant extends Yum {
     private ArrayList<Login> logins;
 
 
+
     public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Person> people, ArrayList<Product> products) {
         this.reservations = reservations;
         this.tables = tables;
@@ -62,9 +63,7 @@ public class Restaurant extends Yum {
         this.tables.add(table);
     }
 
-    public void removetables(Table table) {
-        this.tables.remove(table);
-    }
+
 
     public ArrayList<Person> getPeople() {
         return people;
@@ -97,6 +96,11 @@ public class Restaurant extends Yum {
 	public boolean getLogin(String id, String password) {
 		return Login.validateCredentials(id, password);
 	}
+
+    public void removetable(Table table) {
+
+
+    }
 
     public void save() throws FileNotFoundException {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"));
@@ -133,4 +137,6 @@ public class Restaurant extends Yum {
             }
         });
     }
+
+
 }
