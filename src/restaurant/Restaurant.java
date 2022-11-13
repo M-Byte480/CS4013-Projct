@@ -1,40 +1,34 @@
 package restaurant;
 
 import reservation.Reservation;
-import till.Login;
-import till.Menu;
 import till.Product;
 import till.Table;
-import people.Customer;
-import people.Staff;
+import people.Person;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 
 public class Restaurant extends Yum {
+    private double profit;
     private ArrayList<Reservation> reservations;
     private ArrayList<Table> tables;
-    private ArrayList<Staff> staff;
+    private HashMap<String, Person> people;
     private ArrayList<Product> products;
-    private Menu menu;
-    private double profit;
-    private ArrayList<Login> logins;
 
-
-    public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Staff> staff, ArrayList<Product> products) {
+    public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, HashMap<String, Person> people, ArrayList<Product> products) {
         this.reservations = reservations;
         this.tables = tables;
-        this.staff = staff;
+        this.people = people;
         this.products = products;
     }
     
     public ArrayList<Reservation> getReservations() {
         return reservations;
     }
-    
     public boolean addReservation(Reservation reservation) {
         boolean isBooked = false;
         for (Reservation res : reservations) {
@@ -45,92 +39,75 @@ public class Restaurant extends Yum {
         this.reservations.add(reservation);
         return true;
     }
-
     public void removeReservation(Reservation reservation) {
-        this.reservations.remove(reservation);
-    }
-
-    public ArrayList<Table> getTables() {
-        return tables;
+        reservations.remove(reservation);
     }
 
     public ArrayList<Product> getProducts() {
         return products;
     }
-
-    public void addTables(Table table) {
-        this.tables.add(table);
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+    }
+    public void addProduct(Product prod) {
+        products.add(prod);
+    }
+    public void removeProduct(Product prod) {
+        products.remove(prod);
     }
 
-    public void removetables(Table table) {
-        this.tables.remove(table);
+    public ArrayList<Table> getTables() {
+        return tables;
+    }
+    public void addTable(Table table) {
+        tables.add(table);
+    }
+    public void removeTable(Table table) {
+        tables.remove(table);
     }
 
-    public ArrayList<Staff> getStaff() {
-        return staff;
+    public Collection<Person> getPeople() {
+        return people.values();
     }
-
-    public void addStaff(Staff staff) {
-        this.staff.add(staff);
+    public void addPerson(Person person) {
+        people.put(person.getId(), person);
     }
-
-    public void removeStaff(Staff staff) {
-        this.staff.remove(staff);
+    public Person getPerson(String id) {
+        return people.get(id);
     }
-
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
+    public void removePerson(Person person) {
+        people.remove(person.getId());
     }
 
     public double getProfit() {
         return profit;
     }
-
-    public void setProfit(double profit) {
-        this.profit = profit;
+    public void addProfit(double profit) {
+        this.profit += profit;
     }
 
-	public boolean getLogin(String id, String password) {
-		return Login.validateCredentials(id, password);
-	}
+    public void save() throws IOException {
+        // CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), false);
+        // CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), false);
+        // CSVReader staffFile = new CSVReader(new File("src/data/people.csv"), false);
+        // CSVReader productsFile = new CSVReader(new File("src/data/products.csv"), false);
 
-    public void save() throws FileNotFoundException {
-        CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"));
-        CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"));
-        CSVReader staffFile = new CSVReader(new File("src/data/login.csv"));
-        CSVReader productsFile = new CSVReader(new File("src/data/products.csv"));
+        // reservations.forEach(res -> {
+        //     resFile.addData(res.toString());
+        // });
+        // tables.forEach(table -> {
+        //     tablesFile.addData(table.toString());
+        // });
+        // people.forEach((id, staff) -> {
+        //     staffFile.addData(staff.toString());
+        // });
+        // products.forEach(prod -> {
+        //     productsFile.addData(prod.toString());
+        // });
 
-        reservations.forEach(res -> {
-            try {
-                resFile.addDataToFile(res.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        tables.forEach(table -> {
-            try {
-                tablesFile.addDataToFile(table.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        staff.forEach(staff -> {
-            try {
-                staffFile.addDataToFile(staff.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        products.forEach(prod -> {
-            try {
-                productsFile.addDataToFile(prod.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        // resFile.save();
+        // tablesFile.save();
+        // staffFile.save();
+        // productsFile.save();
     }
 }
