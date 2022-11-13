@@ -80,55 +80,7 @@ public class Invoice {
         setUniqueID(Integer.parseInt(allID[allID.length - 1]));
         invoiceReader.close();
     }
-    public String[] customerDetailsToStringArr () {
-        // name, phoneNumber, timeOfBooking, TimeOfSending, products
-        ArrayList<String> invoice = new ArrayList<>();
-        invoice.add(customer.getName());
-        invoice.add(customer.getPhoneNumber());
-        invoice.add(reservation.getTime().toString());
-        invoice.add(CSVReader.getTimeNow());
-        invoice.add(reservation.getProducts().toString());
-        String[] custDetails = new String[4];
-        for (int i = 0; i < custDetails.length; i++) {
-            custDetails[i] = invoice.get(i);
-        }
-        return custDetails;
-    }
 
-    /**
-     * Adds the invoice to invoice.csv file using the structure:
-     * name, address, contactDetail, reservationTime, products, netTotal
-     * @throws IOException
-     */
-    public void sendInvoice() throws IOException {
-        CSVReader writeToLog = new CSVReader(new File("src/data/log.csv"));           // Create a writer to logs
-        CSVReader writeToInvoices = new CSVReader(new File("src/data/invoices.csv")); // Create a writer to invoices
-
-        // Write to the files
-        writeToLog.addDataToFile(new String[] {CSVReader.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
-        writeToInvoices.addDataToFile(new String[]{customer.getName(), customer.getEmail(), reservation.getTime().toString(), reservation.getTable().toString(), String.valueOf(total), String.valueOf(getUniqueID())});
-
-        // End the utils
-        writeToInvoices.close();
-        writeToLog.close();
-    }
-
-    /**
-     * Formats the CSV file into a readable state in terminal
-     * @return
-     */
-    public String format(){
-        ArrayList<LineItem> items = new ArrayList<>();
-        StringBuilder toReturn = new StringBuilder();
-        toReturn.append(customer.getEmail()).append("\n")
-                .append(customer).append("\n");
-
-        for (LineItem l : Table.convertToLineItems(products)) {
-            toReturn.append(l.toString()).append("=".repeat(48));
-        }
-
-        return toReturn.toString();
-    }
     public String toString() {
         StringBuilder prodString = new StringBuilder();
         for (Product product : products) {

@@ -66,6 +66,7 @@ public class Restaurant extends Yum {
         tables.add(table);
     }
     public void removeTable(Table table) {
+        // make sure table doesnt have a reservation
         tables.remove(table);
     }
 
