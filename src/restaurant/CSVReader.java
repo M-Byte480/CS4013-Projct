@@ -42,6 +42,16 @@ public class CSVReader {
         appendToFile(datafields);
     }
 
+    public CSVReader(File file){
+        this.file = file;
+        this.values = new ArrayList<>();
+        try {
+            scanner = new Scanner(file);
+        }  catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Reads CSV file into the system
      */

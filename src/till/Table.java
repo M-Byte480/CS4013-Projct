@@ -6,6 +6,7 @@ public class Table {
     private int tableNumber;
     private int seats;
     private ArrayList<Product> products;
+    public boolean isTableFree = false;
 
     public Table(int tableNumber, int seats) {
         this.tableNumber = tableNumber;
@@ -46,5 +47,10 @@ public class Table {
         }
 		return total;
 	}
+
+    public void closeTable(){
+        this.isTableFree = true;
+        System.out.println("Table has been closed.");
+    }
 }
 
