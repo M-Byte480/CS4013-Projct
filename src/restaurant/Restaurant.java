@@ -7,6 +7,8 @@ import till.Table;
 import people.Person;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -102,6 +104,15 @@ public class Restaurant extends Yum {
         invoices.remove(invoice);
     }
 
+    // public ArrayList<Table> getTablesBetweenTime(LocalDateTime timeStart, LocalDateTime timeEnd) {
+    //     ArrayList<Table> tempTables = new ArrayList<>();
+    //     for (Reservation res : reservations) {
+    //         if (res.getTime().minus(TemporalAmount res.getLength()).isAfter(timeStart) && res.getTime().isBefore(timeEnd) ) {
+
+    //         }
+    //     }
+    //     return tempTables;
+    // }
 
     public void save() {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), false);

@@ -28,8 +28,6 @@ public class Reservation {
 		this.length = length;
 	}
 
-
-
 	/**
 	 * Gets the table that the reservation is made for.
 	 * @return table
@@ -37,21 +35,12 @@ public class Reservation {
 	public Table getTable() {
 		return table;
 	}
-	
 	/** 
 	 * Returns the customer.
 	 * @return Customer
 	 */
 	public Customer getCust() {
 		return cust;
-	}
-	
-	/** 
-	 * Sets the customer.
-	 * @param cust
-	 */
-	public void setCust(Customer cust) {
-		this.cust = cust;
 	}
 	/**
 	 * Gets the time the reservation is made for.
@@ -88,6 +77,13 @@ public class Reservation {
 	 */
 	public void setLength(LocalTime length) {
 		this.length = length;
+	}
+	/**
+	 * Sets the customer.
+	 * @param cust
+	 */
+	public void setCust(Customer cust) {
+		this.cust = cust;
 	}
 
 	/**
