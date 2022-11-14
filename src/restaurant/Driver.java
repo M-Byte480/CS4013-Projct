@@ -1,30 +1,22 @@
 package restaurant;
 
 import people.Customer;
-import people.Owner;
 import people.Person;
 import people.Staff;
 import reservation.Invoice;
-import reservation.LineItem;
 import reservation.Reservation;
-import till.Login;
 import till.Product;
 import till.Table;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.spi.LocaleServiceProvider;
 
 
 public class Driver {
@@ -88,7 +80,7 @@ public class Driver {
 
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
-            res.add(makeReservation(line, tablesFile.get(line[0], "tableNumber").split(",")));
+            res.add(makeReservation(line, tablesFile.getData(line[0], "tableNumber").split(",")));
         });
 
         HashMap<String, Person> people = new HashMap<>();
@@ -111,7 +103,7 @@ public class Driver {
         invoicesFile.getValues().forEach(line -> {
             String[] resString = line[1].split(";");
             invoices.add(new Invoice(
-                    makeReservation(resString, tablesFile.get(resString[0], "tableNumber").split(",")),
+                    makeReservation(resString, tablesFile.getData(resString[0], "tableNumber").split(",")),
                     Integer.parseInt(line[4])
             ));
         });
