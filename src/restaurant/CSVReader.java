@@ -6,64 +6,77 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class CSVReader {
     private File file;
     private Scanner scanner;
     private ArrayList<String[]> values;
+    private String[] dataFields;
 
     /**
      * Create a Utility object, by passing the File name or path
      *
      * @param file File you want to read from
-     * @throws FileNotFoundException Throws error if its not found
      */
-    public CSVReader(File file) throws FileNotFoundException {
-        scanner = new Scanner(file);
+    public CSVReader(File file, boolean toRead) {
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        dataFields = scanner.nextLine().split(",");
         this.file = file;
         this.values = new ArrayList<>();
-        read();
+        if (toRead) readIntoSystem();
+    }
+    public CSVReader(File file, String datafields) {
+        this.file = file;
+        this.values = new ArrayList<>();
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        appendToFile(datafields);
     }
 
     /**
-     * Read file into memory
-     *
-     * @throws FileNotFoundException
+     * Reads CSV file into the system
      */
-    private void read() throws FileNotFoundException {
-        //        this.dataFields = reader.scanner.nextLine().split(",");
+    private void readIntoSystem() {
         while (scanner.hasNextLine()) {
             values.add(scanner.nextLine().split(","));
         }
     }
 
     /**
-     * Once you done adding data, you must save to file
-     *
-     * @throws IOException
+     * Save the system to CSV
      */
-    public void save() throws IOException {
-        FileWriter fileWriter = new FileWriter(this.file);
-        StringBuilder toFile = new StringBuilder();
+    public void saveToCSV() {
+        try {
+            FileWriter fileWriter = new FileWriter(this.file);
+            StringBuilder toFile = new StringBuilder();
 
-        for (String[] line : values) {
-            toFile.append(String.join(",", line)).append("\n");
+            toFile.append(String.join(",", dataFields)).append("\n");
+
+            for (String[] line : values) {
+                toFile.append(String.join(",", line)).append("\n");
+            }
+
+            fileWriter.write(toFile.toString());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        fileWriter.write(toFile.toString());
-        fileWriter.close();
     }
 
     /**
      * Add a String array, where each element matches the data fields
-     *
-     * @param data
+     * to the system
      */
-    public void addData(String[] data) {
+    public void addDataToSystem(String[] data) {
         this.values.add(data);
     }
 
@@ -72,30 +85,31 @@ public class CSVReader {
      *
      * @param data
      */
-    public void addData(String data) {
-        addData(data.split(","));
+    public void addDataToSystem(String data) {
+        addDataToSystem(data.split(","));
     }
 
     /**
-     * Write directly to the file. this does not require the read() in method.
-     *
-     * @param data
-     * @throws IOException
+     * Write a line to the end of the file
      */
-    public void addDataToFile(String[] data) throws IOException {
-        addDataToFile(String.join(",", data));
+    public void appendToFile(String[] data) {
+        appendToFile(String.join(",", data));
     }
 
-    public void addDataToFile(String data) throws IOException {
-        FileWriter fileWriter = new FileWriter(this.file, true);
-        fileWriter.write(data + '\n');
-        fileWriter.close();
+    public void appendToFile(String data) {
+        try {
+            FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter.write(data + '\n');
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Close restaurant.Util
+     * Close scanner
      */
-    public void close() {
+    public void closeReader() {
         this.scanner.close();
     }
 
@@ -104,9 +118,8 @@ public class CSVReader {
      *
      * @param dataField
      * @param value
-     * @throws IOException
      */
-    public void remove(String dataField, String value) {
+    public void removeDataSet(String dataField, String value) {
         String[] dataFieldValues = values.get(0).clone();
         int index = -1;
         for (int i = 0; i < dataFieldValues.length; i++) {
@@ -128,48 +141,44 @@ public class CSVReader {
     }
 
     /**
-     * Get every line where dataField = value;
+     * Get line where dataField = value
+     *
      * @param value
      * @param dataField
      * @return
      */
-    public String get(String value, String dataField) {
-        StringBuilder everything = new StringBuilder();
-        String[] dataFieldValues = values.get(0).clone();
+    public String getData(String value, String dataField) {
+        StringBuilder dataLinesString = new StringBuilder();
+        String[] dataFieldValues = this.dataFields;
+
         int index = -1;
+
         for (int i = 0; i < dataFieldValues.length; i++) {
             if (dataFieldValues[i].equals(dataField)) {
                 index = i;
             }
         }
-        if (index == -1) {
-            System.out.println("Failed to find the Data Field");
-            return null;
-        }
-        for (int i = 1; i < values.size() - 1; i++) {
+
+        for (int i = 0; i < values.size(); i++) {
             if (values.get(i)[index].equals(value)) {
-                everything.append(i).append(") ");
-                everything.append(String.join(", ", values.get(i)));
-                everything.append('\n');
+                dataLinesString.append(String.join(",", values.get(i))).append('\n');
             }
         }
-        if(everything.toString().equals("")){
-            return null;
-        }
 
-        return everything.toString();
+        return dataLinesString.toString();
     }
 
     /**
      * Returns a combination of corresponding parallel arrays of Values to DataFieldName
+     *
      * @param fields
      * @param dataFields
      * @return
      */
-    public String getCombinations(String[] fields, String[] dataFields){
+    public String getCombinationSet(String[] fields, String[] dataFields) {
         int size = dataFields.length;
 
-        if(size != fields.length){
+        if (size != fields.length) {
             return null;
         }
 
@@ -178,7 +187,7 @@ public class CSVReader {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < values.get(0).length; j++) {
-                if (dataFields[i].equals(dataFieldValues[j])){
+                if (dataFields[i].equals(dataFieldValues[j])) {
                     indexes[i] = j;
                 }
             }
@@ -189,13 +198,13 @@ public class CSVReader {
             String[] temp = values.get(line);
 
             for (int element : indexes) {
-                if(!temp[element].equals(fields[element])){
+                if (!temp[element].equals(fields[element])) {
                     incorrect = false;
                 }
             }
 
 
-            if(incorrect){
+            if (incorrect) {
                 everything.append(line).append(") ");
                 everything.append(String.join(", ", values.get(line)));
                 everything.append("\n");
@@ -208,30 +217,11 @@ public class CSVReader {
 
     /**
      * Returns a string of every line of the data Field with its corresponding line number
+     *
      * @param dataField
      * @return
      */
-    public String getAll(String dataField) {
-        StringBuilder everything = new StringBuilder();
-        String[] dataFieldValues = values.get(0).clone();
-        int index = -1;
-        for (int i = 0; i < dataFieldValues.length; i++) {
-            if (dataFieldValues[i].equals(dataField)) {
-                index = i;
-            }
-        }
-        if (index == -1) {
-            System.out.println("Failed to find the Data Field");
-            return null;
-        }
-        for (int i = 1; i < values.size() - 1; i++) {
-            everything.append(i).append(") ").append(values.get(i)[index]).append('\n');
-        }
-
-        return everything.toString();
-    }
-
-    public String[] getAllArray(String dataField) {
+    public String[] getColumnOfData(String dataField) {
         ArrayList<String> everything = new ArrayList<>();
         String[] dataFieldValues = values.get(0).clone();
         int index = -1;
@@ -253,17 +243,13 @@ public class CSVReader {
 
     /**
      * Counts the number of Instances of the value existing in certain datafield in the csv
-     * @param value to check
+     *
+     * @param value     to check
      * @param datafield where the value exists
      * @return int with respect to the number of values existing in the dataset
      */
-    public int count(String value, String datafield){
-        return get(value, datafield).split(value).length - 1;
-    }
-
-
-    public static String getTimeNow(){
-        return (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
+    public int countInstancesOfData(String value, String datafield) {
+        return getData(value, datafield).split(value).length - 1;
     }
 
     public ArrayList<String[]> getValues() {

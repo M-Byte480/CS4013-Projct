@@ -1,28 +1,17 @@
 package people;
 
-public class Owner extends Person{
-
-private static double profit;
+public class Owner extends Person {
     /**
      * Constructor to make an Owner object
      * @param id
-     * @param name
      * @param phoneNumber
-     * @param email
+     * @param name
      */
-    public Owner(String id, String name, String phoneNumber, String email){
-        super();
-        setId(id);
-        setName(name);
-        setPhoneNumber(phoneNumber);
-        setEmail(email);
+    public Owner(String name, String phoneNumber, String id){
+        super(name, phoneNumber, id);
     }
 
-    /*
-    Added for template
-    */
-    public void promoteStaff(Staff person){
+    public void promoteStaff(Staff person) {
+        
     }
-
-
 }

@@ -4,7 +4,6 @@ import people.Customer;
 import till.Product;
 import till.Table;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -13,7 +12,7 @@ public class Reservation {
 	private Customer cust;
 	
 	private LocalDateTime time;
-	private Duration length;
+	private LocalDateTime length;
 	
 	/**
 	 * Makes a Reservation object.
@@ -21,12 +20,12 @@ public class Reservation {
 	 * @param time
 	 * @param length
 	 */
-	public Reservation(Table table, LocalDateTime time, Duration length) {
+	public Reservation(Table table, LocalDateTime time, LocalDateTime length) {
 		this.table = table;
 		this.time = time;
 		this.length = length;
 	}
-	
+
 	/**
 	 * Gets the table that the reservation is made for.
 	 * @return table
@@ -34,21 +33,12 @@ public class Reservation {
 	public Table getTable() {
 		return table;
 	}
-	
 	/** 
 	 * Returns the customer.
 	 * @return Customer
 	 */
 	public Customer getCust() {
 		return cust;
-	}
-	
-	/** 
-	 * Sets the customer.
-	 * @param cust
-	 */
-	public void setCust(Customer cust) {
-		this.cust = cust;
 	}
 	/**
 	 * Gets the time the reservation is made for.
@@ -61,7 +51,7 @@ public class Reservation {
 	 * Gets the length the reservation is made for.
 	 * @return length
 	 */
-	public Duration getLength() {
+	public LocalDateTime getLength() {
 		return length;
 	}
 
@@ -83,8 +73,15 @@ public class Reservation {
 	 * Changes the length of the reservation.
 	 * @param length
 	 */
-	public void setLength(Duration length) {
+	public void setLength(LocalDateTime length) {
 		this.length = length;
+	}
+	/**
+	 * Sets the customer.
+	 * @param cust
+	 */
+	public void setCust(Customer cust) {
+		this.cust = cust;
 	}
 
 	/**
@@ -95,8 +92,8 @@ public class Reservation {
 	 */
 	public boolean overlaps(Reservation res) {
 		if (!table.equals(res.table)) return false;
-		else if (time.isAfter(res.time) && time.isBefore(res.time.plus(res.length))) return true;
-		else if (res.time.isAfter(time) && res.time.isBefore(time.plus(length))) return true;
+		else if (time.isAfter(res.time) && time.isBefore(res.length)) return true;
+		else if (res.time.isAfter(time) && res.time.isBefore(length)) return true;
 		else return false;
 	}
 	
@@ -110,5 +107,10 @@ public class Reservation {
 			reservationProducts.add(p);
 		}
 		return reservationProducts;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s,%s,%s", table.getTableNumber(), time.toString(), length);
 	}
 }

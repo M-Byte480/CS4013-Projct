@@ -4,7 +4,6 @@ import reservation.Invoice;
 import restaurant.CSVReader;
 
 import java.io.File;
-import java.io.IOException;
 
 public class Till {
     private  double startOfEachDay = 200;
@@ -34,7 +33,7 @@ public class Till {
 
     //closing table
     //calculate price
-    public void billTable(char type, double amount, Table table) throws IOException {
+    public void billTable(char type, double amount, Table table) {
         switch (type) {
             case 1:
                 type = 'C';
@@ -69,11 +68,11 @@ public class Till {
         }
     }
 
-    private void sendLog(String whatHappened) throws IOException {
+    private void sendLog(String whatHappened) {
         CSVReader writeToLog = new CSVReader(new File("src/data/log.csv"));
 
-        writeToLog.addDataToFile(whatHappened);
+        writeToLog.appendToFile(whatHappened);
 
-        writeToLog.close();
+        writeToLog.closeReader();
     }
 }
