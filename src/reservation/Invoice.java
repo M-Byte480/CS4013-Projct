@@ -82,21 +82,21 @@ public class Invoice {
 
         setUniqueID(Utils.getInvoiceLatestID());
     }
-
-    public String[] customerDetailsToStringArr () {
-        // name, phoneNumber, timeOfBooking, TimeOfSending, products
-        ArrayList<String> invoice = new ArrayList<>();
-        invoice.add(customer.getName());
-        invoice.add(customer.getPhoneNumber());
-        invoice.add(reservation.getTime().toString());
-        invoice.add(CSVReader.getTimeNow());
-        invoice.add(reservation.getProducts().toString());
-        String[] custDetails = new String[4];
-        for (int i = 0; i < custDetails.length; i++) {
-            custDetails[i] = invoice.get(i);
-        }
-        return custDetails;
-    }
+//    public String[] customerDetailsToStringArr () {
+//
+//        String contact = customer.getPhoneNumber();
+//        ArrayList<String> invoice = new ArrayList();
+//        invoice.add(customer.getName());
+//        invoice.add(contact);
+//        invoice.add(reservation.getTime());
+//        invoice.add(Util.getTimeNow());
+//        invoice.add(reservation.getProducts());
+//        String[] custDetails = new String[6];
+//        for (int i = 0; i < custDetails.length; i++) {
+//            custDetails[i] = invoice.get(i);
+//        }
+//        return custDetails;
+//    }
 
     public String toString() {
         StringBuilder prodString = new StringBuilder();
