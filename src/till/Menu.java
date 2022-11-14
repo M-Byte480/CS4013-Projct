@@ -1,86 +1,70 @@
 package till;
 
-import restaurant.Restaurant;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
+    private ArrayList<Product> products;
+
     private Scanner in;
-    private Restaurant restaurant;
 
-    public void run(Restaurant restaurant) {
+    private Till till1 = new Till();
 
-        while (true) {
+    public Menu() {
+        this.in = new Scanner(System.in);
+    }
 
-            // Add Option to Quit or Select table
-            System.out.println("Select A Table : ");
-            Table t = (Table) getChoice(restaurant.getTables().toArray());
+    public void run(Table t) throws IOException {
+        boolean more = true;
 
-            while (true) {
-                System.out.println("S)how Products, O)rder Details A)dd A Product To Order, R)emove A Product From Order, F)inish, Q)uit");
-                String command = in.nextLine().toUpperCase();
+        while (more) {
+//javaFX will overdo this
+            System.out.println("S : Show Products, A : Add A Product To Order, R : Remove A Product From Order, F : Finish, Q : Close Menu");
+            String command = in.nextLine().toUpperCase();
+            if (command.equals("S")) {
+                for (Product p : products)
+                    System.out.println(p);
 
-                if (command.equals("S")) {
-                    System.out.println("Products Available : ");
-                    showProducts();
 
-                } else if (command.equals("O")) {
-                    System.out.printf("Products In Order : ");
-                    showProductsOnTable(t);
+                //show all products available
+                //select a product using a input
+                //add product to table
+            } else if (command.equals("A")) {
+                t.addProduct(getChoice(products.toArray()));
+                System.out.println("Added : " + getChoice(products.toArray()));
+                //show all products on table
+                //select a product using input
+                //remove product from table
 
-                } else if (command.equals("A")) {
-                    System.out.printf("Add A Product To Order : ");
-                    addProduct(t);
+            } else if (command.equals("R")) {
+                t.deleteProduct(getChoice(products.toArray()));
+                System.out.println("Removed : " + getChoice(products.toArray()));
 
-                } else if (command.equals("R")) {
-                    System.out.printf("Remove A Product From Order : ");
-                    removeProduct(t);
+                //Pass products added to be made
 
-                } else if (command.equals("F")) {
-                    removeAllProducts(t);
+            } else if (command.equals("F")) {
+                products.removeAll(Product);
+                t.bookingStatus();
+                t.sendInvoice();
+                t.closeTable();
+                //remove all from table
+                //remove booking
+            } else if (command.equals("Q")) {
+                products.removeAll(products);
+                Table.bookingStatus();
 
-                } else if (command.equals("Q")) {
-                    break;
-                }
+
             }
-        }
     }
 
-    private ArrayList<Product> showProductsOnTable(Table t) {
-        return t.getProducts();
-    }
 
-    private String showProducts() {
-        return restaurant.getProducts().toString();
-    }
-
-    private void addProduct(Table t) {
-        Product p = (Product) getChoice(t.getProducts().toArray());
-        t.addProducts(p);
-    }
-
-    private void removeProduct(Table t) {
-        Product p = (Product) getChoice(t.getProducts().toArray());
-        t.removeProduct(p);
-    }
-
-    private void removeAllProducts(Table t) {
-        t.clearFood();
-    }
-
+    // This code was taken from Micheal
     private Object getChoice(Object[] choices) {
-        if (choices.length == 0) return null;
-        while (true) {
-            char c = 'A';
-            for (Object choice : choices) {
-                System.out.println(c + ") " + choice);
-                c++;
-            }
-            String input = in.nextLine();
-            int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.length)
-                return choices[n];
+
+
         }
     }
+
+
 }
