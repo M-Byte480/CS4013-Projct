@@ -72,7 +72,7 @@ public class Product {
 
 
     public String toString() {
-        StringBuilder retString = new StringBuilder(String.format("%s,%s,%f,", name, description, cost));
+        StringBuilder retString = new StringBuilder(String.format("%s,%s,%f,", name, description, cost  + "n"));
         allergies.forEach(s -> {
             retString.append(s).append(";");
         });
