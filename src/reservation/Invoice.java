@@ -14,6 +14,7 @@ public class Invoice {
     private final double total;
     private final int id;
     private static int uniqueID;
+    private static ArrayList<Invoice> invoices = new ArrayList<>();
 
     /**
      * Creates an invoice Object
@@ -50,6 +51,7 @@ public class Invoice {
     public static int getUniqueID() {
         return uniqueID;
     }
+
 
     public double getTotal() {
         return total;
