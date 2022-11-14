@@ -27,7 +27,6 @@ public class Invoice {
         this.id = uniqueID++;
     }
 
-
     public Invoice(Reservation reservation, int id) {
         this.reservation = reservation;                         // collects details of reservation
         this.customer = reservation.getCust();                  // contains details of the person who booked
@@ -56,6 +55,22 @@ public class Invoice {
         return total;
     }
 
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     /**
      * Gets the latest uniqueID in the file, and then it sets the uniqueID state from last usage
      */
@@ -67,6 +82,7 @@ public class Invoice {
 
         setUniqueID(Utils.getInvoiceLatestID());
     }
+
     public String[] customerDetailsToStringArr () {
         // name, phoneNumber, timeOfBooking, TimeOfSending, products
         ArrayList<String> invoice = new ArrayList<>();
@@ -81,9 +97,6 @@ public class Invoice {
         }
         return custDetails;
     }
-
-
-
 
     public String toString() {
         StringBuilder prodString = new StringBuilder();

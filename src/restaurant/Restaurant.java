@@ -102,7 +102,23 @@ public class Restaurant extends Yum {
         invoices.remove(invoice);
     }
 
-    public ArrayList<Table> getTablesBetweenTime(LocalDateTime timeStart, LocalDateTime timeEnd) {
+    public ArrayList<Table> getFreeTablesOfSizeBetweenTime(int size, LocalDateTime timeStart, LocalDateTime timeEnd) {
+        ArrayList<Table> freeTables = getTablesBookedBetweenTime(timeStart, timeEnd);
+        ArrayList<Table> freeTablesOfSize = new ArrayList<>();
+        for (Table table : freeTables) {
+            if (table.getSeats() >= size) freeTablesOfSize.add(table);
+        }
+        return freeTablesOfSize;
+    }
+
+    public ArrayList<Table> getFreeTablesBetweenTime(LocalDateTime timeStart, LocalDateTime timeEnd) {
+        ArrayList<Table> bookedTables = getTablesBookedBetweenTime(timeStart, timeEnd);
+        ArrayList<Table> allTables = new ArrayList<>(tables);
+        allTables.removeAll(bookedTables);
+        return allTables;
+    }
+
+    public ArrayList<Table> getTablesBookedBetweenTime(LocalDateTime timeStart, LocalDateTime timeEnd) {
         ArrayList<Table> tempTables = new ArrayList<>();
         for (Reservation res : reservations) {
             if ((res.getTime().isAfter(timeStart)) && (res.getTime().isBefore(timeEnd))) continue;
@@ -111,10 +127,13 @@ public class Restaurant extends Yum {
         }
         return tempTables;
     }
+
     public double getProfitBetweenTime(LocalDateTime timeStart, LocalDateTime timeEnd) {
         double profit = 0;
         for (Invoice invoice : invoices) {
-            
+            if ((invoice.getReservation().getTime().isAfter(timeStart)) && (invoice.getReservation().getTime().isBefore(timeEnd))) continue;
+            else if ((invoice.getReservation().getLength().isAfter(timeStart)) && (invoice.getReservation().getLength().isBefore(timeEnd))) continue;
+            profit += invoice.getTotal();
         }
         return profit;
     }
