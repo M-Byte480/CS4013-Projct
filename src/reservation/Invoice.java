@@ -4,31 +4,35 @@ import people.*;
 import till.*;
 import restaurant.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Invoice {
-
-    private Reservation reservation;
-    private Customer customer;
-    private ArrayList<Product> products;
-    private double total;
+    private final Reservation reservation;
+    private final Customer customer;
+    private final ArrayList<Product> products;
+    private final double total;
+    private final int id;
     private static int uniqueID;
 
     /**
      * Creates an invoice Object
      *
-     * @param reservation
-     * @throws IOException
      */
-    public Invoice(Reservation reservation) throws IOException {
-        this.reservation = reservation;                     // collects details of reservation
-        this.customer = reservation.getCust();                               // contains details of the person who booked
+    public Invoice(Reservation reservation) {
+        this.reservation = reservation;                         // collects details of reservation
+        this.customer = reservation.getCust();                  // contains details of the person who booked
         this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
         this.total = reservation.getTable().getTotal();
-        uniqueID++;
-        sendInvoice();
+        this.id = uniqueID++;
+    }
+
+    public Invoice(Reservation reservation, int id) {
+        this.reservation = reservation;                         // collects details of reservation
+        this.customer = reservation.getCust();                  // contains details of the person who booked
+        this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
+        this.total = reservation.getTable().getTotal();
+        this.id = id;
     }
 
     /**
@@ -47,65 +51,99 @@ public class Invoice {
         return uniqueID;
     }
 
+    public double getTotal() {
+        return total;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     /**
-     * Gets the latest uniqueID in the file and then it sets the uniqueID state from last usage
-     * @throws IOException
+     * Gets the latest uniqueID in the file, and then it sets the uniqueID state from last usage
      */
-    public static void getLatestID() throws IOException {
+    public static void getLatestID() {
         if(getUniqueID() == 0){
             setUniqueID(1);
             return;
         }
-        Util invoiceReader = new Util(new File("/src/data/invoices.csv"));
-        String[] allID = invoiceReader.getAllArray("id");
-        setUniqueID(Integer.parseInt(allID[allID.length - 1]));
-        invoiceReader.close();
-    }
-//    public String[] customerDetailsToStringArr () {
-//
-//        String contact = customer.getPhoneNumber();
-//        ArrayList<String> invoice = new ArrayList();
-//        invoice.add(customer.getName());
-//        invoice.add(contact);
-//        invoice.add(reservation.getTime());
-//        invoice.add(Util.getTimeNow());
-//        invoice.add(reservation.getProducts());
-//        String[] custDetails = new String[6];
-//        for (int i = 0; i < custDetails.length; i++) {
-//            custDetails[i] = invoice.get(i);
-//        }
-//        return custDetails;
-//    }
 
-    /**
-     * Adds the invoice to invoice.csv file using the structure:
-     * name, address, contactDetail, reservationTime, products, netTotal
-     * @throws IOException
-     */
-    public void sendInvoice() throws IOException {
-        Util writeToLog = new Util(new File("src/data/log.csv"));           // Create a writer to logs
-        Util writeToInvoices = new Util(new File("src/data/invoices.csv")); // Create a writer to invoices
-
-        // Write to the files
-        writeToLog.addDataToFile(new String[] {Util.getTimeNow(), reservation.getTable().getStaff(), "Sent away invoice"});
-        writeToInvoices.addDataToFile(new String[]{customer.getName(), customer.getEmail(), reservation.getTime().toString(),reservation.getTable().format(),total,id});
-
-        // End the utils
-        writeToInvoices.close();
-        writeToLog.close();
+        setUniqueID(Utils.getInvoiceLatestID());
     }
 
-    /**
-     * Formats the CSV file into a readable state in terminal
-     * @return
-     */
-    public String format(){
-        ArrayList<LineItem> items = new ArrayList<>();
-        StringBuilder toReturn = new StringBuilder();
-        toReturn.append(customer.getEmail()).append("\n").append(customer).append("\n");
-        for (LineItem l : Table.convertToLineItems(products)) {
-            toReturn.append(l.toString()).append("=".repeat(48));
+    public String[] customerDetailsToStringArr () {
+        // name, phoneNumber, timeOfBooking, TimeOfSending, products
+        ArrayList<String> invoice = new ArrayList<>();
+        invoice.add(customer.getName());
+        invoice.add(customer.getPhoneNumber());
+        invoice.add(reservation.getTime().toString());
+        invoice.add(CSVReader.getTimeNow());
+        invoice.add(reservation.getProducts().toString());
+        String[] custDetails = new String[4];
+        for (int i = 0; i < custDetails.length; i++) {
+            custDetails[i] = invoice.get(i);
         }
-        return toReturn.toString();
+        return custDetails;
+    }
+
+    public String toString() {
+        StringBuilder prodString = new StringBuilder();
+        for (Product product : products) {
+            prodString.append(product.getName()).append(";");
+        }
+        prodString.deleteCharAt(prodString.length()-1);
+
+        return String.format("%s,%s,%s,%s,%s",
+            customer.toString().replace(",", ";"),
+            reservation.toString().replace(",", ";"),
+            prodString,
+            total,
+            id
+        );
+    }
+
+    public String toFormat() {
+        HashMap<Product, Integer> occurrences = new HashMap<>();
+        Integer count = 0;
+        StringBuilder formattedInvoice = new StringBuilder();
+
+        formattedInvoice.append("Invoice Number: %10s\n"); // ID
+        formattedInvoice.append("%26s\n");   // Name
+        formattedInvoice.append("=".repeat(26));
+
+        for (Product p : products) {
+            count = occurrences.get(p);
+            if (count == null) {
+                occurrences.put(p, 1);
+            } else {
+                occurrences.replace(p, count + 1);
+            }
+        }
+
+        double total = 0;
+        for (HashMap.Entry<Product, Integer> item :
+                occurrences.entrySet()) {
+            formattedInvoice.append(Invoice.toLineItem(item.getKey().getName(), item.getValue(), item.getKey().getCost(), item.getValue() * item.getKey().getCost()));
+            total += item.getValue() * item.getKey().getCost();
+        }
+
+        formattedInvoice.append(String.format("%26f\n", total));
+        return String.format(formattedInvoice.toString(), this.id, this.customer.getName());
+    }
+
+    public static String toLineItem(String name, int quantity, double unitPrice, double total){
+        return String.format("%7S%7S%7S€%5S\n" + "=".repeat(26), name, quantity, unitPrice, total);
     }
 }

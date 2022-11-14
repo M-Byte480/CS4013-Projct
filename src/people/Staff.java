@@ -1,38 +1,26 @@
 package people;
 
+import restaurant.Utils;
+
 public class Staff extends Person {
+    private double discount;
 
-    private String discount;
-    private static String password;
-
-    public Staff(String name, String address, String phoneNumber, String email){
-        super(name, address, phoneNumber, email, "2");
+    public Staff(String name, String phoneNumber){
+        super(name, phoneNumber, Utils.uniqueIdGenerator("2"));
+        discount = 0.95;
+    }
+    public Staff(String name, String phoneNumber, String id){
+        super(name, phoneNumber, id); 
+        discount = 0.95;
     }
 
-    public Staff() {
-    }
-
-    public void setPassword(String password){
-        this.password = password;
-    }
-
-    public static String getPassword() {
-        return password;
-    }
-
-    public String getDiscount(){
+    public double getDiscount(){
         return this.discount;
     }
-
-    public void setDiscount(String discount){
+    public void setDiscount(double discount){
         this.discount = discount;
     }
-
-
-
-
-    @Override
     public String toString() {
-        return "Staff: \n" + super.toString();
+        return String.format("%s,%s", super.toString(), discount);
     }
 }
