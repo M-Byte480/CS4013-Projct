@@ -82,6 +82,11 @@ public class Table {
         }
 		return total;
 	}
+
+    public void closeTable(){
+        this.isTableFree = true;
+        System.out.println("Table has been closed.");
+    }
 }
 
     public String getStaff() {
