@@ -1,6 +1,7 @@
 package restaurant;
 
 import people.Customer;
+import people.Owner;
 import people.Person;
 import people.Staff;
 import reservation.Invoice;
@@ -115,9 +116,8 @@ public class Driver {
     private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
         return new Reservation(
                 new Table(Integer.parseInt(TableParams[0]), Integer.parseInt(TableParams[1])),
-
                 LocalDateTime.parse(ResParams[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
-                LocalTime.parse(ResParams[2])
+                LocalDateTime.parse(ResParams[2], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"))
         );
     }
 
@@ -225,7 +225,7 @@ public class Driver {
         System.out.println("Enter Length (HH:mm) : ");
         String length = in.nextLine();
         LocalDateTime start = LocalDateTime.parse(time, DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
-        LocalTime end = LocalTime.parse(length);
+        LocalDateTime end = LocalDateTime.parse(length, DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
 
         Reservation newReservaion = new Reservation(table, start, end);
         restaurant.addReservation(newReservaion);
