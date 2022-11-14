@@ -11,7 +11,6 @@ import till.Product;
 import till.Table;
 import java.io.File;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,9 +23,19 @@ public class Driver {
     private Menu menu;
 
     public void run() {
-        // This updates the retaurant object
-        bootUp();
+        // Check if we have data already
+        CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
+        in = new Scanner(System.in);
 
+        //     String name = (String) getChoice(restaurantFile.getValues().toArray());
+
+        System.out.println("Name your First Restaurant: ");
+        String name = in.nextLine();
+        restaurant = new Restaurant(name);
+        restaurantFile.appendToFile(name);
+        // bootUp(name);
+        
+        menu = new Menu();
         while (true) {
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
@@ -59,12 +68,12 @@ public class Driver {
             }
         }
     }
-    public void bootUp() {
-        CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), true);
-        CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), true);
-        CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
-        CSVReader productsFile = new CSVReader(new File("src/data/products.csv"), true);
-        CSVReader invoicesFile = new CSVReader(new File("src/data/invoices.csv"), true);
+    public void bootUp(String name) {
+        CSVReader resFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/reservations.csv"), true);
+        CSVReader tablesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/tables.csv"), true);
+        CSVReader peopleFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/people.csv"), true);
+        CSVReader productsFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/products.csv"), true);
+        CSVReader invoicesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/invoices.csv"), true);
 
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
@@ -101,8 +110,7 @@ public class Driver {
             ));
         });
 
-        menu = new Menu();
-        restaurant = new Restaurant(res, tables, people, products, invoices);
+        restaurant = new Restaurant(name, res, tables, people, products, invoices);
     }
 
     private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
@@ -132,14 +140,13 @@ public class Driver {
         int integer = Character.getNumericValue(id.charAt(0));
 
         while (true) {
-            System.out.println("M)ake Booking  Q)uit");
+            System.out.println("M)ake Booking  Q)uit");     // error yeah also sign up makes me a staff.
             String command = in.nextLine().toUpperCase();
             if (command.equals("M")) {
                 createReservation();
     
             } else if (command.equals("Q")) {
-                restaurant.save();
-                run();
+                break;
             }
     
             if (integer > 1) { //Uses char to specify which action to do i.e create or remove(closeTable)
@@ -212,12 +219,14 @@ public class Driver {
 
     private void createReservation() {
         Table table = ((Table) getChoice(restaurant.getTables().toArray()));
-        System.out.println("Enter Start Date (YYYY-MM-DD'T'HH:mm) : ");
+        System.out.println("Enter Date (YYYY-MM-DD) : ");
+        String date = in.nextLine();
+        System.out.println("Enter Time (HH:mm) : ");
         String time = in.nextLine();
-        System.out.println("Enter Length (HH:mm) : ");
-        String length = in.nextLine();
-        LocalDateTime start = LocalDateTime.parse(time, DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
-        LocalDateTime end = LocalDateTime.parse(length, DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
+        System.out.println("Enter Finish Time (HH:mm) : ");
+        String finish = in.nextLine();
+        LocalDateTime start = LocalDateTime.parse(String.format("%sT%s", date, time), DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
+        LocalDateTime end = LocalDateTime.parse(String.format("%sT%s", date, finish), DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
 
         Reservation newReservaion = new Reservation(table, start, end);
         restaurant.addReservation(newReservaion);

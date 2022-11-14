@@ -38,5 +38,13 @@ public class Table {
             products.remove(p);
         }
     }
+
+	public double getTotal() {
+        double total = 0;
+        for (Product product : products) {
+            total += product.getCost();   
+        }
+		return total;
+	}
 }
 

@@ -6,9 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class CSVReader {
@@ -33,7 +31,16 @@ public class CSVReader {
         this.values = new ArrayList<>();
         if (toRead) readIntoSystem();
     }
-
+    public CSVReader(File file, String datafields) {
+        this.file = file;
+        this.values = new ArrayList<>();
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        appendToFile(datafields);
+    }
 
     /**
      * Reads CSV file into the system
@@ -91,7 +98,7 @@ public class CSVReader {
 
     public void appendToFile(String data) {
         try {
-            FileWriter fileWriter = new FileWriter(this.file, true);
+            FileWriter fileWriter = new FileWriter(file, true);
             fileWriter.write(data + '\n');
             fileWriter.close();
         } catch (IOException e) {
@@ -243,11 +250,6 @@ public class CSVReader {
      */
     public int countInstancesOfData(String value, String datafield) {
         return getData(value, datafield).split(value).length - 1;
-    }
-
-
-    public static String getTimeNow() {
-        return (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
     }
 
     public ArrayList<String[]> getValues() {

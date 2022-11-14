@@ -11,8 +11,10 @@ public class Yum {
         restaurants = new ArrayList<>();
     }
     
-    public void addRestaurant() {
-        restaurants.add(new Restaurant());
+    public void addRestaurant(String name) {
+        restaurants.add(new Restaurant(name));
+
+        // make .csv files
     }
 
     public double getOverallProfit() {

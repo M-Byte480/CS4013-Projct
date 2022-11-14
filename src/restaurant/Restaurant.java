@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class Restaurant extends Yum {
+    private String name;
     private double profit;
     private ArrayList<Reservation> reservations;
     private ArrayList<Table> tables;
@@ -20,14 +21,28 @@ public class Restaurant extends Yum {
     private ArrayList<Product> products;
     private ArrayList<Invoice> invoices;
 
-    public Restaurant(ArrayList<Reservation> reservations, ArrayList<Table> tables, HashMap<String, Person> people, ArrayList<Product> products, ArrayList<Invoice> invoices) {
+    public Restaurant(String name) {
+        this.name = name;
+        this.reservations = new ArrayList<>();
+        this.tables = new ArrayList<>();
+        this.people = new HashMap<>();
+        this.products = new ArrayList<>();
+        this.invoices = new ArrayList<>();
+        Utils.makeCSVFiles(name);
+    }
+    public Restaurant(String name, ArrayList<Reservation> reservations, ArrayList<Table> tables, HashMap<String, Person> people, ArrayList<Product> products, ArrayList<Invoice> invoices) {
+        this.name = name;
         this.reservations = reservations;
         this.tables = tables;
         this.people = people;
         this.products = products;
         this.invoices = invoices;
     }
-    
+
+    public String getName() {
+        return name;
+    }
+
     public ArrayList<Reservation> getReservations() {
         return reservations;
     }
@@ -139,11 +154,11 @@ public class Restaurant extends Yum {
     }
 
     public void save() {
-        CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), false);
-        CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), false);
-        CSVReader staffFile = new CSVReader(new File("src/data/people.csv"), false);
-        CSVReader productsFile = new CSVReader(new File("src/data/products.csv"), false);
-        CSVReader invoiceFile = new CSVReader(new File("src/data/invoices.csv"), false);
+        CSVReader resFile = new CSVReader(new File("src/data/" + name + "/reservations.csv"), false);
+        CSVReader tablesFile = new CSVReader(new File("src/data/" + name + "/tables.csv"), false);
+        CSVReader staffFile = new CSVReader(new File("src/data/" + name + "/people.csv"), false);
+        CSVReader productsFile = new CSVReader(new File("src/data/" + name + "/products.csv"), false);
+        CSVReader invoiceFile = new CSVReader(new File("src/data/" + name + "/invoices.csv"), false);
 
         reservations.forEach(res -> {
             resFile.addDataToSystem(res.toString());
