@@ -14,4 +14,12 @@ public class Yum {
     public void addRestaurant() {
         restaurants.add(new Restaurant());
     }
+
+    public double getOverallProfit() {
+        return overallProfit;
+    }
+    public void addOverallProfit(double overallProfit) {
+        this.overallProfit += overallProfit;
+    }
+
 }

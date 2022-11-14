@@ -7,11 +7,10 @@ import till.Table;
 import people.Person;
 
 import java.io.File;
-import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-
 
 public class Restaurant extends Yum {
     private double profit;
@@ -103,6 +102,22 @@ public class Restaurant extends Yum {
         invoices.remove(invoice);
     }
 
+    public ArrayList<Table> getTablesBetweenTime(LocalDateTime timeStart, LocalDateTime timeEnd) {
+        ArrayList<Table> tempTables = new ArrayList<>();
+        for (Reservation res : reservations) {
+            if ((res.getTime().isAfter(timeStart)) && (res.getTime().isBefore(timeEnd))) continue;
+            else if ((res.getLength().isAfter(timeStart)) && (res.getLength().isBefore(timeEnd))) continue;
+            tempTables.add(res.getTable());
+        }
+        return tempTables;
+    }
+    public double getProfitBetweenTime(LocalDateTime timeStart, LocalDateTime timeEnd) {
+        double profit = 0;
+        for (Invoice invoice : invoices) {
+            
+        }
+        return profit;
+    }
 
     public void save() {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), false);
@@ -112,26 +127,26 @@ public class Restaurant extends Yum {
         CSVReader invoiceFile = new CSVReader(new File("src/data/invoices.csv"), false);
 
         reservations.forEach(res -> {
-            resFile.addData(res.toString());
+            resFile.addDataToSystem(res.toString());
         });
         tables.forEach(table -> {
-            tablesFile.addData(table.toString());
+            tablesFile.addDataToSystem(table.toString());
         });
         people.forEach((id, staff) -> {
-            staffFile.addData(staff.toString());
+            staffFile.addDataToSystem(staff.toString());
         });
         products.forEach(prod -> {
-            productsFile.addData(prod.toString());
+            productsFile.addDataToSystem(prod.toString());
         });
         invoices.forEach(invoice -> {
-            invoiceFile.addData(invoice.toString());
+            invoiceFile.addDataToSystem(invoice.toString());
         });
 
-        resFile.save();
-        tablesFile.save();
-        staffFile.save();
-        productsFile.save();
-        invoiceFile.save();
+        resFile.saveToCSV();
+        tablesFile.saveToCSV();
+        staffFile.saveToCSV();
+        productsFile.saveToCSV();
+        invoiceFile.saveToCSV();
     }
 
 }

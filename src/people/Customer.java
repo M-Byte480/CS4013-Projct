@@ -1,6 +1,5 @@
 package people;
 
-import people.Customer;
 import restaurant.Utils;
 
 public class Customer extends Person {

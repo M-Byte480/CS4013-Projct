@@ -4,12 +4,8 @@ package till;
 import restaurant.CSVReader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class Login {
@@ -35,7 +31,7 @@ public class Login {
         this.tillPassword = tillPassword;
 
         CSVReader u = new CSVReader(new File("login.csv"));
-        u.addDataToFile(details + "\n");
+        u.appendToFile(details + "\n");
 
     }
 

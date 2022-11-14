@@ -64,7 +64,6 @@ public class Driver {
             }
         }
     }
-
     public static void bootUp() {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), true);
         CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), true);
@@ -79,7 +78,7 @@ public class Driver {
 
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
-            res.add(makeReservation(line, tablesFile.get(line[0], "tableNumber").split(",")));
+            res.add(makeReservation(line, tablesFile.getData(line[0], "tableNumber").split(",")));
         });
 
         HashMap<String, Person> people = new HashMap<>();
@@ -102,7 +101,7 @@ public class Driver {
         invoicesFile.getValues().forEach(line -> {
             String[] resString = line[1].split(";");
             invoices.add(new Invoice(
-                    makeReservation(resString, tablesFile.get(resString[0], "tableNumber").split(",")),
+                    makeReservation(resString, tablesFile.getData(resString[0], "tableNumber").split(",")),
                     Integer.parseInt(line[4])
             ));
         });
@@ -114,9 +113,8 @@ public class Driver {
     private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
         return new Reservation(
                 new Table(Integer.parseInt(TableParams[0]), Integer.parseInt(TableParams[1])),
-
                 LocalDateTime.parse(ResParams[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
-                LocalTime.parse(ResParams[2])
+                LocalDateTime.parse(ResParams[2], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"))
         );
     }
 
@@ -136,7 +134,7 @@ public class Driver {
     }
 
 
-    public void loginSuccessful(String id) {
+    public void loginSuccessful(String id)  {
         int integer = Character.getNumericValue(id.charAt(0));
         System.out.println("M)ake Booking  Q)uit");
         String command = in.nextLine().toUpperCase();
