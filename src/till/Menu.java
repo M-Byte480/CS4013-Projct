@@ -1,24 +1,21 @@
 package till;
 
 import restaurant.Restaurant;
-import till.Product;
-import till.Table;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
     private Scanner in;
-    private static Restaurant restaurant;
+    private Restaurant restaurant;
 
-
-    public void run() {
+    public void run(Restaurant restaurant) {
 
         while (true) {
 
+            // Add Option to Quit or Select table
             System.out.println("Select A Table : ");
-            Table t = (Table) getChoice(restaurant.getTables());
-
+            Table t = (Table) getChoice(restaurant.getTables().toArray());
 
             while (true) {
                 System.out.println("S)how Products, O)rder Details A)dd A Product To Order, R)emove A Product From Order, F)inish, Q)uit");
@@ -36,25 +33,19 @@ public class Menu {
                     System.out.printf("Add A Product To Order : ");
                     addProduct(t);
 
-
                 } else if (command.equals("R")) {
                     System.out.printf("Remove A Product From Order : ");
                     removeProduct(t);
 
-
                 } else if (command.equals("F")) {
                     removeAllProducts(t);
 
-
-
                 } else if (command.equals("Q")) {
                     break;
-
                 }
             }
         }
     }
-
 
     private ArrayList<Product> showProductsOnTable(Table t) {
         return t.getProducts();
@@ -64,38 +55,32 @@ public class Menu {
         return restaurant.getProducts().toString();
     }
 
-
     private void addProduct(Table t) {
-        Product p = (Product) getChoice(t.addProduct());
-        t.addToTable(p);
+        Product p = (Product) getChoice(t.getProducts().toArray());
+        t.addProducts(p);
     }
 
     private void removeProduct(Table t) {
-        Product p = (Product) getChoice(t.removeProduct());
-        t.removeFromTable(p);
+        Product p = (Product) getChoice(t.getProducts().toArray());
+        t.removeProduct(p);
     }
 
     private void removeAllProducts(Table t) {
-        t.clearFood(t);
+        t.clearFood();
     }
 
-    private Object getChoice(Product[] choices) {
+    private Object getChoice(Object[] choices) {
+        if (choices.length == 0) return null;
         while (true) {
             char c = 'A';
             for (Object choice : choices) {
                 System.out.println(c + ") " + choice);
                 c++;
             }
-        }
-    }
-
-    private Object getChoice(ArrayList<Table> choices) {
-        while (true) {
-            char c = 'A';
-            for (Object choice : choices) {
-                System.out.println(c + ") " + choice);
-                c++;
-            }
+            String input = in.nextLine();
+            int n = input.toUpperCase().charAt(0) - 'A';
+            if (0 <= n && n < choices.length)
+                return choices[n];
         }
     }
 }

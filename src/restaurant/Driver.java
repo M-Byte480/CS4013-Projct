@@ -6,6 +6,7 @@ import people.Person;
 import people.Staff;
 import reservation.Invoice;
 import reservation.Reservation;
+import till.Menu;
 import till.Product;
 import till.Table;
 import java.io.File;
@@ -17,22 +18,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
-
-
 public class Driver {
     private Scanner in;
-    private static Restaurant restaurant;
-
-
-
+    private Restaurant restaurant;
+    private Menu menu;
 
     public void run() {
         // This updates the retaurant object
         bootUp();
 
-        boolean more = true;
-
-        while (more) {
+        while (true) {
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
 
@@ -64,7 +59,7 @@ public class Driver {
             }
         }
     }
-    public static void bootUp() {
+    public void bootUp() {
         CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), true);
         CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), true);
         CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
@@ -106,9 +101,9 @@ public class Driver {
             ));
         });
 
+        menu = new Menu();
         restaurant = new Restaurant(res, tables, people, products, invoices);
     }
-
 
     private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
         return new Reservation(
@@ -133,75 +128,70 @@ public class Driver {
         }
     }
 
-
     public void loginSuccessful(String id)  {
         int integer = Character.getNumericValue(id.charAt(0));
-        System.out.println("M)ake Booking  Q)uit");
-        String command = in.nextLine().toUpperCase();
-        if (command.equals("M")) {
-            createReservation();
 
-        } else if (command.equals("Q")) {
-            restaurant.save();
-            run();
-
-        }
-
-        if (integer > 1) { //Uses char to specify which action to do i.e create or remove(closeTable)
-
-
-            System.out.println("M)ake Booking  A)dd Product  C)reate Table  D)elete Table   T)ake Order   Q)uit");
+        while (true) {
+            System.out.println("M)ake Booking  Q)uit");
+            String command = in.nextLine().toUpperCase();
             if (command.equals("M")) {
                 createReservation();
-
-            } else if (command.equals("A")) {
-                addProduct();
-
-            } else if (command.equals("C")) {
-                createTable();
-
-            } else if (command.equals("D")) {
-                deleteTable();
-
-            } else if (command.equals("T")) {
-                run(Menu);
-
+    
             } else if (command.equals("Q")) {
                 restaurant.save();
                 run();
-
             }
-
-            if (integer == 9) {
-                System.out.println("M)ake Booking   A)dd Product  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
+    
+            if (integer > 1) { //Uses char to specify which action to do i.e create or remove(closeTable)
+    
+                System.out.println("M)ake Booking  A)dd Product  C)reate Table  D)elete Table   T)ake Order   Q)uit");
                 if (command.equals("M")) {
                     createReservation();
-
+    
                 } else if (command.equals("A")) {
                     addProduct();
-
+    
                 } else if (command.equals("C")) {
                     createTable();
-
+    
                 } else if (command.equals("D")) {
                     deleteTable();
-
+    
                 } else if (command.equals("T")) {
-                    run(Menu);
-
-                } else if (command.equals("H")) {
-                    hireStaff();
-
-
-                } else if (command.equals("P")) {
-                    checkProfit();
-
+                    menu.run(restaurant);
+    
                 } else if (command.equals("Q")) {
-                    restaurant.save();
-                    run();
-
+                    break;
                 }
-            } else throw new RuntimeException("Invalid Command, Please Select Another");
+    
+                if (integer == 9) {
+                    System.out.println("M)ake Booking   A)dd Product  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
+                    if (command.equals("M")) {
+                        createReservation();
+    
+                    } else if (command.equals("A")) {
+                        addProduct();
+    
+                    } else if (command.equals("C")) {
+                        createTable();
+    
+                    } else if (command.equals("D")) {
+                        deleteTable();
+    
+                    } else if (command.equals("T")) {
+                        menu.run(restaurant);
+    
+                    } else if (command.equals("H")) {
+                        hireStaff();
+    
+                    } else if (command.equals("P")) {
+                        checkProfit();
+    
+                    } else if (command.equals("Q")) {
+                        break;
+                    }
+                } else System.out.println("Invalid Command, Please Select Another");
+            }
         }
     }
 
@@ -218,7 +208,6 @@ public class Driver {
         String password = in.nextLine();
         restaurant.getPerson(bob.getId());
         System.out.println("Sign Up Complete");
-
     }
 
     private void createReservation() {
@@ -228,7 +217,7 @@ public class Driver {
         System.out.println("Enter Length (HH:mm) : ");
         String length = in.nextLine();
         LocalDateTime start = LocalDateTime.parse(time, DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
-        LocalTime end = LocalTime.parse(length);
+        LocalDateTime end = LocalDateTime.parse(length, DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
 
         Reservation newReservaion = new Reservation(table, start, end);
         restaurant.addReservation(newReservaion);
