@@ -16,6 +16,7 @@ public class CSVReader {
     private Scanner scanner;
     private ArrayList<String[]> values;
     private String[] dataFields;
+
     /**
      * Create a Utility object, by passing the File name or path
      *
@@ -30,18 +31,23 @@ public class CSVReader {
         dataFields = scanner.nextLine().split(",");
         this.file = file;
         this.values = new ArrayList<>();
-        if(toRead) read();
+        if (toRead) readIntoSystem();
     }
 
 
-
-    private void read() {
+    /**
+     * Reads CSV file into the system
+     */
+    private void readIntoSystem() {
         while (scanner.hasNextLine()) {
             values.add(scanner.nextLine().split(","));
         }
     }
 
-    public void save() {
+    /**
+     * Save the system to CSV
+     */
+    public void saveToCSV() {
         try {
             FileWriter fileWriter = new FileWriter(this.file);
             StringBuilder toFile = new StringBuilder();
@@ -61,10 +67,9 @@ public class CSVReader {
 
     /**
      * Add a String array, where each element matches the data fields
-     *
-     * @param data
+     * to the system
      */
-    public void addData(String[] data) {
+    public void addDataToSystem(String[] data) {
         this.values.add(data);
     }
 
@@ -73,20 +78,18 @@ public class CSVReader {
      *
      * @param data
      */
-    public void addData(String data) {
-        addData(data.split(","));
+    public void addDataToSystem(String data) {
+        addDataToSystem(data.split(","));
     }
 
     /**
-     * Write directly to the file. this does not require the read() in method.
-     *
-     * @param data
+     * Write a line to the end of the file
      */
-    public void addDataToFile(String[] data) {
-        addDataToFile(String.join(",", data));
+    public void appendToFile(String[] data) {
+        appendToFile(String.join(",", data));
     }
 
-    public void addDataToFile(String data) {
+    public void appendToFile(String data) {
         try {
             FileWriter fileWriter = new FileWriter(this.file, true);
             fileWriter.write(data + '\n');
@@ -97,9 +100,9 @@ public class CSVReader {
     }
 
     /**
-     * Close restaurant.Util
+     * Close scanner
      */
-    public void close() {
+    public void closeReader() {
         this.scanner.close();
     }
 
@@ -109,7 +112,7 @@ public class CSVReader {
      * @param dataField
      * @param value
      */
-    public void remove(String dataField, String value) {
+    public void removeDataSet(String dataField, String value) {
         String[] dataFieldValues = values.get(0).clone();
         int index = -1;
         for (int i = 0; i < dataFieldValues.length; i++) {
@@ -131,12 +134,13 @@ public class CSVReader {
     }
 
     /**
-     * Get every line where dataField = value;
+     * Get line where dataField = value
+     *
      * @param value
      * @param dataField
      * @return
      */
-    public String get(String value, String dataField) {
+    public String getData(String value, String dataField) {
         StringBuilder dataLinesString = new StringBuilder();
         String[] dataFieldValues = this.dataFields;
 
@@ -159,14 +163,15 @@ public class CSVReader {
 
     /**
      * Returns a combination of corresponding parallel arrays of Values to DataFieldName
+     *
      * @param fields
      * @param dataFields
      * @return
      */
-    public String getCombinations(String[] fields, String[] dataFields) {
+    public String getCombinationSet(String[] fields, String[] dataFields) {
         int size = dataFields.length;
 
-        if(size != fields.length){
+        if (size != fields.length) {
             return null;
         }
 
@@ -175,7 +180,7 @@ public class CSVReader {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < values.get(0).length; j++) {
-                if (dataFields[i].equals(dataFieldValues[j])){
+                if (dataFields[i].equals(dataFieldValues[j])) {
                     indexes[i] = j;
                 }
             }
@@ -186,13 +191,13 @@ public class CSVReader {
             String[] temp = values.get(line);
 
             for (int element : indexes) {
-                if(!temp[element].equals(fields[element])){
+                if (!temp[element].equals(fields[element])) {
                     incorrect = false;
                 }
             }
 
 
-            if(incorrect){
+            if (incorrect) {
                 everything.append(line).append(") ");
                 everything.append(String.join(", ", values.get(line)));
                 everything.append("\n");
@@ -205,10 +210,11 @@ public class CSVReader {
 
     /**
      * Returns a string of every line of the data Field with its corresponding line number
+     *
      * @param dataField
      * @return
      */
-    public String[] getAllValues(String dataField) {
+    public String[] getColumnOfData(String dataField) {
         ArrayList<String> everything = new ArrayList<>();
         String[] dataFieldValues = values.get(0).clone();
         int index = -1;
@@ -230,16 +236,17 @@ public class CSVReader {
 
     /**
      * Counts the number of Instances of the value existing in certain datafield in the csv
-     * @param value to check
+     *
+     * @param value     to check
      * @param datafield where the value exists
      * @return int with respect to the number of values existing in the dataset
      */
-    public int count(String value, String datafield){
-        return get(value, datafield).split(value).length - 1;
+    public int countInstancesOfData(String value, String datafield) {
+        return getData(value, datafield).split(value).length - 1;
     }
 
 
-    public static String getTimeNow(){
+    public static String getTimeNow() {
         return (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
     }
 

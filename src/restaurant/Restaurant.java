@@ -111,25 +111,25 @@ public class Restaurant extends Yum {
         CSVReader invoiceFile = new CSVReader(new File("src/data/invoices.csv"), false);
 
         reservations.forEach(res -> {
-            resFile.addData(res.toString());
+            resFile.addDataToSystem(res.toString());
         });
         tables.forEach(table -> {
-            tablesFile.addData(table.toString());
+            tablesFile.addDataToSystem(table.toString());
         });
         people.forEach((id, staff) -> {
-            staffFile.addData(staff.toString());
+            staffFile.addDataToSystem(staff.toString());
         });
         products.forEach(prod -> {
-            productsFile.addData(prod.toString());
+            productsFile.addDataToSystem(prod.toString());
         });
         invoices.forEach(invoice -> {
-            invoiceFile.addData(invoice.toString());
+            invoiceFile.addDataToSystem(invoice.toString());
         });
 
-        resFile.save();
-        tablesFile.save();
-        staffFile.save();
-        productsFile.save();
-        invoiceFile.save();
+        resFile.saveToCSV();
+        tablesFile.saveToCSV();
+        staffFile.saveToCSV();
+        productsFile.saveToCSV();
+        invoiceFile.saveToCSV();
     }
 }
