@@ -6,19 +6,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import restaurant.*;
-import people.Customer;
 
 
 
 public class Customer extends Person {
     double loyalty;
     int freqOfVisits;
-
-    Customer(){
-
-    }
-
-
 
     /**
      * Constructor to create a customer object
@@ -29,11 +22,11 @@ public class Customer extends Person {
      * @param loyalty
      */
     public Customer(String name, String phoneNumber, String email, String id, double loyalty) {
-        super();
-        setId(id);
-        setName(name);
-        setPhoneNumber(phoneNumber);
-        setEmail(email);
+        super(name, phoneNumber, email, id);
+//        setId(id);
+//        setName(name);
+//        setPhoneNumber(phoneNumber);
+//        setEmail(email);
         this.loyalty = loyalty;
     }
 

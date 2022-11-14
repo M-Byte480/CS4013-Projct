@@ -85,7 +85,7 @@ public class Driver {
         String email = in.nextLine().toLowerCase();
         System.out.println("Enter Phone Number");
         String phoneNumber = in.nextLine();
-        Customer bob = new Customer(name,phoneNumber,email,"1",0);
+        Customer bob = new Customer(name,phoneNumber,email,"1",1);
 
         restaurant.addPerson(bob);
         System.out.println("Your User ID : ");

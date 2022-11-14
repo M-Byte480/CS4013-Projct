@@ -1,5 +1,6 @@
 package till;
 
+import people.Staff;
 import reservation.Invoice;
 import reservation.LineItem;
 import reservation.Reservation;
@@ -14,11 +15,16 @@ public class Table {
     private Reservation booking;
     private ArrayList<Product> productsOnTable;
     private Till till;
+    private Staff staffServing;
+
+    //staff data field, not in constructor, setter and remove
 
     public Table(int tableNumber, int seats) {
         this.tableNumber = tableNumber;
         this.seats = seats;
     }
+
+
 
 
 
@@ -37,7 +43,8 @@ public class Table {
 
     // Converts table to lineItem arrayList for invoices
     // Milan
-    public static ArrayList<LineItem> convertToLineItems(ArrayList<Product> products){
+
+
 
 
 
@@ -48,11 +55,6 @@ public class Table {
 
         }
         return sum ;
-    }
-
-    public void closeTable() {
-        this.booking = null;
-
     }
 
     //closing/deleting booking
@@ -75,53 +77,58 @@ public class Table {
         Integer count = 0;
         for (Product p : products) {
             count = occurences.get(p);
-            if(count == null){
-                occurences.put(p, 1);
-            }else{
-                occurences.replace(p, count + 1);
-            count = occurences.get(p.getName());
             if (count == null) {
                 occurences.put(p, 1);
             } else {
                 occurences.replace(p, count + 1);
+                count = occurences.get(p.getName());
+                if (count == null) {
+                    occurences.put(p, 1);
+                } else {
+                    occurences.replace(p, count + 1);
+                }
             }
         }
 
-        for (HashMap.Entry<Product, Integer> item :
-                occurences.entrySet()) {
-            items.add(new LineItem(item.getKey().getName(), item.getValue(), item.getKey().getCost()));
+            for (HashMap.Entry<Product, Integer> item :
+                    occurences.entrySet()) {
+                items.add(new LineItem(item.getKey().getName(), item.getValue(), item.getKey().getCost()));
+            }
+
+            return items;
         }
 
-        return items;
-    }
 
 
 
-    public void closeTable() throws IOException {
-        Invoice invoice = new Invoice(this.booking);
-        invoice.sendInvoice();
-        this.booking = null;
-        this.productsOnTable = null;
-    }
+        public void closeTable () throws IOException {
+            Invoice invoice = new Invoice(this.booking);
+            invoice.sendInvoice();
+            this.booking = null;
+            this.productsOnTable = null;
+        }
 
-    //closing/deleting booking
-    //check if table is vacant
-    public void deleteTable(Table table) {
-        productsOnTable.remove(table);
+        //closing/deleting booking
+        //check if table is vacant
 
-    public String returnForawrdSlaah (){
-        for (Product p : productsOnTable) {
-            St
-            p.toString();
+
+            public String returnForawrdSlaah(){ //Return all products in products array with delimiter '/'
+                for (Product p : productsOnTable) {
+                    St
+                    p.toString();
+                }
+                return "";
+            }
+
+            public void getMenu (Table t) throws IOException {
+                Menu menu = new Menu();
+                menu.run(t);
+            }
+
+
+
+
+        public void setStaffServing (Staff staffServing){
+            this.staffServing = staffServing;
         }
     }
-
-    public void getMenu(Table t) throws IOException {
-        Menu menu = new Menu();
-        menu.run(t);
-    }
-
-    public ArrayList<Product> getProducts() {
-        return productsOnTable;
-    }
-}
