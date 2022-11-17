@@ -138,6 +138,35 @@ public class Driver {
 
     public void loginSuccessful(String id)  {
         int integer = Character.getNumericValue(id.charAt(0));
+        System.out.println("M)ake Booking  Q)uit");
+        String command = in.nextLine().toUpperCase();
+        if (command.equals("M")) {
+            createReservation();
+
+        } else if (command.equals("Q")) {
+            restaurant.save();
+            run();
+
+        }
+
+        if (integer > 1) { //Uses char to specify which action to do i.e create or remove(closeTable)
+
+
+            System.out.println("M)ake Booking  A)dd Product  C)reate Table  D)elete Table   T)ake Order   Q)uit");
+            if (command.equals("M")) {
+                createReservation();
+
+            } else if (command.equals("A")) {
+                addProduct();
+
+            } else if (command.equals("C")) {
+                createTable();
+
+            } else if (command.equals("D")) {
+                deleteTable();
+
+            } else if (command.equals("T")) {
+                run(Menu);
 
         while (true) {
             System.out.println("M)ake Booking  Q)uit");     // error yeah also sign up makes me a staff.
@@ -276,4 +305,3 @@ public class Driver {
         restaurant.addProduct(newProduct);
     }
 }
-

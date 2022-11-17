@@ -1,7 +1,9 @@
 package restaurant;
 
+import people.Staff;
 import reservation.Invoice;
 import reservation.Reservation;
+import till.Login;
 import till.Product;
 import till.Table;
 import people.Person;
@@ -20,6 +22,7 @@ public class Restaurant extends Yum {
     private HashMap<String, Person> people;
     private ArrayList<Product> products;
     private ArrayList<Invoice> invoices;
+
 
     public Restaurant(String name) {
         this.name = name;
