@@ -2,6 +2,7 @@ package till;
 
 
 import restaurant.CSVReader;
+import restaurant.Restaurant;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,6 +17,27 @@ public class Login {
     public Login() {
     }
 
+    public Login(String ID, String tillPassword){
+        this.ID = ID;
+        this.tillPassword = tillPassword;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public String getTillPassword() {
+        return tillPassword;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public void setDetails(ArrayList<String> details) {
+        this.details = details;
+    }
+
     /**
      * @param id - ID of person
      * @param password - Password of person
@@ -25,7 +47,8 @@ public class Login {
             login.getValues().forEach(l -> {
             String[] usernameAndPasswordSplitter = l.split(", ");
             details.put(usernameAndPasswordSplitter[0], usernameAndPasswordSplitter[1]);
-        });
+        }
+    }
     public void createNewID(String id, String password) {
         this.ID = ID;
         this.tillPassword = tillPassword;
@@ -59,6 +82,16 @@ public class Login {
      *                 return  false
      * @return
      */
+
+    public boolean passwordValidator(String ID, String password){
+        boolean validated = false;
+        if(this.ID.equals(ID) && this.tillPassword.equals(password)){
+            validated = true;
+        }
+        return validated;
+    }
+
+    /*
     public boolean validateLogin(String id, String password) {
         for (int i = 0; i < details.size() ; i++) {
             getLines("login.csv");
@@ -73,6 +106,8 @@ public class Login {
     //read will read file into itself
     //split each
 }
+*/
+
 }
 
 

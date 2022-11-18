@@ -2,6 +2,7 @@ package restaurant;
 
 import reservation.Invoice;
 import reservation.Reservation;
+import till.Login;
 import till.Product;
 import till.Table;
 import people.Person;
@@ -20,6 +21,9 @@ public class Restaurant extends Yum {
     private HashMap<String, Person> people;
     private ArrayList<Product> products;
     private ArrayList<Invoice> invoices;
+    private ArrayList<Login> logins;
+
+
 
     public Restaurant(String name) {
         this.name = name;
@@ -30,13 +34,26 @@ public class Restaurant extends Yum {
         this.invoices = new ArrayList<>();
         Utils.makeCSVFiles(name);
     }
-    public Restaurant(String name, ArrayList<Reservation> reservations, ArrayList<Table> tables, HashMap<String, Person> people, ArrayList<Product> products, ArrayList<Invoice> invoices) {
+    public Restaurant(String name, ArrayList<Reservation> reservations, ArrayList<Table> tables, HashMap<String, Person> people, ArrayList<Product> products, ArrayList<Invoice> invoices, ArrayList<Login> logins) {
         this.name = name;
         this.reservations = reservations;
         this.tables = tables;
         this.people = people;
         this.products = products;
         this.invoices = invoices;
+        this.logins = logins;
+    }
+
+    public ArrayList<Login> getLogins() {
+        return logins;
+    }
+
+    public void setLogins(ArrayList<Login> logins) {
+        this.logins = logins;
+    }
+
+    public void addLogin(String id, String password){
+        logins.add(new Login(id, password));
     }
 
     public String getName() {

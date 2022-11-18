@@ -10,6 +10,7 @@ import till.Menu;
 import till.Product;
 import till.Table;
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class Driver {
         restaurant = new Restaurant(name);
         restaurantFile.appendToFile(name);
         // bootUp(name);
-        
+
         menu = new Menu();
         while (true) {
             System.out.println("L)ogin  S)ign up  Q)uit");
@@ -144,56 +145,56 @@ public class Driver {
             String command = in.nextLine().toUpperCase();
             if (command.equals("M")) {
                 createReservation();
-    
+
             } else if (command.equals("Q")) {
                 break;
             }
-    
+
             if (integer > 1) { //Uses char to specify which action to do i.e create or remove(closeTable)
-    
+
                 System.out.println("M)ake Booking  A)dd Product  C)reate Table  D)elete Table   T)ake Order   Q)uit");
                 if (command.equals("M")) {
                     createReservation();
-    
+
                 } else if (command.equals("A")) {
                     addProduct();
-    
+
                 } else if (command.equals("C")) {
                     createTable();
-    
+
                 } else if (command.equals("D")) {
                     deleteTable();
-    
+
                 } else if (command.equals("T")) {
                     menu.run(restaurant);
-    
+
                 } else if (command.equals("Q")) {
                     break;
                 }
-    
+
                 if (integer == 9) {
                     System.out.println("M)ake Booking   A)dd Product  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
                     if (command.equals("M")) {
                         createReservation();
-    
+
                     } else if (command.equals("A")) {
                         addProduct();
-    
+
                     } else if (command.equals("C")) {
                         createTable();
-    
+
                     } else if (command.equals("D")) {
                         deleteTable();
-    
+
                     } else if (command.equals("T")) {
                         menu.run(restaurant);
-    
+
                     } else if (command.equals("H")) {
                         hireStaff();
-    
+
                     } else if (command.equals("P")) {
                         checkProfit();
-    
+
                     } else if (command.equals("Q")) {
                         break;
                     }
@@ -228,8 +229,8 @@ public class Driver {
         LocalDateTime start = LocalDateTime.parse(String.format("%sT%s", date, time), DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
         LocalDateTime end = LocalDateTime.parse(String.format("%sT%s", date, finish), DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
 
-        Reservation newReservaion = new Reservation(table, start, end);
-        restaurant.addReservation(newReservaion);
+        Reservation newReservation = new Reservation(table, start, end);
+        restaurant.addReservation(newReservation);
     }
 
     private void deleteTable() {
@@ -263,7 +264,7 @@ public class Driver {
 
     private void addProduct() {
         System.out.println("Enter The Name Of The Product : ");
-        String nameOFProdcut = in.nextLine();
+        String nameOfProduct = in.nextLine();
         System.out.println("Enter The Product Description : ");
         String description = in.nextLine();
         System.out.println("Enter The Cost Of The Product: ");
@@ -272,7 +273,7 @@ public class Driver {
         System.out.println("Enter The Name Of The Product (Seperate using ,)  : ");
         String allergy = in.nextLine();
         ArrayList<String> allergies = new ArrayList<>(Arrays.asList(allergy.split(";")));
-        Product newProduct = new Product(nameOFProdcut, description, cost, allergies);
+        Product newProduct = new Product(nameOfProduct, description, cost, allergies);
         restaurant.addProduct(newProduct);
     }
 }

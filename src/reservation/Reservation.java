@@ -1,6 +1,7 @@
 package reservation;
 
 import people.Customer;
+import till.Login;
 import till.Product;
 import till.Table;
 
@@ -13,7 +14,9 @@ public class Reservation {
 	
 	private LocalDateTime time;
 	private LocalDateTime length;
-	
+
+
+
 	/**
 	 * Makes a Reservation object.
 	 * @param table
