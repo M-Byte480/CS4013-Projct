@@ -5,58 +5,67 @@ import people.Owner;
 import people.Person;
 import people.Staff;
 import reservation.Invoice;
+import reservation.LineItem;
 import reservation.Reservation;
+import till.Login;
 import till.Product;
 import till.Table;
+
+
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Scanner;
-
+import java.util.spi.LocaleServiceProvider;
 
 
 public class Driver {
     private Scanner in;
     private static Restaurant restaurant;
 
-
-
-
-    public void run() {
+    
+    public void menuForDriver() {
+        in = new Scanner(System.in);
+    }
+    
+    public void run() throws IOException {
         // This updates the retaurant object
         bootUp();
-
+        
         boolean more = true;
-
+        
         while (more) {
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
-
-
+            
+            
             //If login
-
+            
             if (command.equals("L")) {
                 System.out.println("Enter User ID");
                 String id = in.nextLine();
                 System.out.println("Enter Password : ");
                 String password = in.nextLine();
-
-                if (restaurant.getPerson(id) == null) {
+                
+                if (!restaurant.getLogin(id, password)) {
                     System.out.println("Invalid credentials");
                 } else {
                     // Once logged in, allow the person to have a access to certain options based on their level of access
                     loginSuccessful(id);
                 }
-
-
+                
+                
             } else if (command.equals("S")) {
                 // Signs up the person, create new person object and add it to the arraylist of people.
                 signUp();
-
+                
             } else if (command.equals("Q")) {
                 restaurant.save();
                 System.out.println("Shutting Down");
@@ -64,64 +73,49 @@ public class Driver {
             }
         }
     }
-
-    public static void bootUp() {
-        CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), true);
-        CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), true);
-        CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
-        CSVReader productsFile = new CSVReader(new File("src/data/products.csv"), true);
-        CSVReader invoicesFile = new CSVReader(new File("src/data/invoices.csv"), true);
-
+    public static void bootUp() throws FileNotFoundException {
+        CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"));
+        CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"));
+        CSVReader staffFile = new CSVReader(new File("src/data/people.csv"));
+        CSVReader productsFile = new CSVReader(new File("src/data/products.csv"));
+        
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
             tables.add(new Table(Integer.parseInt(line[0]), Integer.parseInt(line[1])));
         });
-
+        
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
-            res.add(makeReservation(line, tablesFile.get(line[0], "tableNumber").split(",")));
+            String[] table = tablesFile.get(line[0], "tableNumber").split(",");
+            res.add(new Reservation(
+                new Table(Integer.parseInt(table[0]), Integer.parseInt(table[1])), 
+                LocalDateTime.parse(line[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
+                Duration.between(LocalTime.MIN, LocalTime.parse(line[2]))
+            ));
         });
-
-        HashMap<String, Person> people = new HashMap<>();
-        peopleFile.getValues().forEach(line -> {
-            int level = Character.getNumericValue(line[2].charAt(0));
-            if (level < 2)
-                people.put(line[2], new Customer(line[0], line[1], line[2], Double.parseDouble(line[3])));
-            else if (level < 9)
-                people.put(line[2], new Staff(line[0], line[1], line[2]));
-            else people.put(line[2], new Owner(line[0], line[1], line[2]));
+        
+        ArrayList<Staff> staff = new ArrayList<>();
+        staffFile.getValues().forEach(line -> {
+            int id = Character.getNumericValue(line[3].charAt(0));
+            if (id > 1 && id != 9)
+                staff.add(new Staff(line[0], line[1], line[2], line[3]));
         });
 
         ArrayList<Product> products = new ArrayList<>();
         productsFile.getValues().forEach(line -> {
             ArrayList<String> alergies = new ArrayList<>(Arrays.asList(line[3].split(";")));
-            products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
+            try {
+                products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
+            } catch (NumberFormatException | IOException e) {
+                e.printStackTrace();
+            }
         });
-
-        ArrayList<Invoice> invoices = new ArrayList<>();
-        invoicesFile.getValues().forEach(line -> {
-            String[] resString = line[1].split(";");
-            invoices.add(new Invoice(
-                    makeReservation(resString, tablesFile.get(resString[0], "tableNumber").split(",")),
-                    Integer.parseInt(line[4])
-            ));
-        });
-
-        restaurant = new Restaurant(res, tables, people, products, invoices);
+        
+        restaurant = new Restaurant(res, tables, staff, products);
     }
-
-
-    private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
-        return new Reservation(
-                new Table(Integer.parseInt(TableParams[0]), Integer.parseInt(TableParams[1])),
-
-                LocalDateTime.parse(ResParams[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
-                LocalTime.parse(ResParams[2])
-        );
-    }
-
-    private Object getChoice(Object[] choices) {
-        if (choices.length == 0) return null;
+    
+    private Object getChoice(ArrayList<Object> choices) {
+        if (choices.size() == 0) return null;
         while (true) {
             char c = 'A';
             for (Object choice : choices) {
@@ -130,8 +124,8 @@ public class Driver {
             }
             String input = in.nextLine();
             int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.length)
-                return choices[n];
+            if (0 <= n && n < choices.size())
+                return choices.get(n);
         }
     }
 
