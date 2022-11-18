@@ -1,7 +1,6 @@
 package till;
 
 
-
 import restaurant.CSVReader;
 
 import java.io.File;
@@ -23,12 +22,11 @@ public class Login {
      *                 Reads the inpoutted parameters and adds them to a csv file
      */
     public void createNewID(Util login) {
-        login.getValues().forEach(l -> {
+            login.getValues().forEach(l -> {
             String[] usernameAndPasswordSplitter = l.split(", ");
-            details.add(usernameAndPasswordSplitter[0], usernameAndPasswordSplitter[1]);
+            details.put(usernameAndPasswordSplitter[0], usernameAndPasswordSplitter[1]);
         });
-    }
-    public void createNewID(String ID, String tillPassword) {
+    public void createNewID(String id, String password) {
         this.ID = ID;
         this.tillPassword = tillPassword;
 
