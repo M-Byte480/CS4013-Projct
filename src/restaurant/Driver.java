@@ -6,6 +6,7 @@ import people.Person;
 import people.Staff;
 import reservation.Invoice;
 import reservation.Reservation;
+import till.Login;
 import till.Menu;
 import till.Product;
 import till.Table;
@@ -26,15 +27,17 @@ public class Driver {
     public void run() {
         // Check if we have data already
         CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
+        ArrayList<String[]> restaurants = restaurantFile.getValues();
         in = new Scanner(System.in);
 
-        //     String name = (String) getChoice(restaurantFile.getValues().toArray());
-
-        System.out.println("Name your First Restaurant: ");
-        String name = in.nextLine();
-        restaurant = new Restaurant(name);
-        restaurantFile.appendToFile(name);
-        // bootUp(name);
+        if (restaurants.isEmpty()) {
+            System.out.println("Name your First Restaurant: ");
+            String name = in.nextLine();
+            restaurant = new Restaurant(name);
+            restaurantFile.appendToFile(name);
+        }
+        
+        // bootUp(getChoice(restaurants));
 
         menu = new Menu();
         while (true) {
@@ -75,6 +78,7 @@ public class Driver {
         CSVReader peopleFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/people.csv"), true);
         CSVReader productsFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/products.csv"), true);
         CSVReader invoicesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/invoices.csv"), true);
+        CSVReader loginsFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/logins.csv"), true);
 
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
@@ -111,7 +115,15 @@ public class Driver {
             ));
         });
 
-        restaurant = new Restaurant(name, res, tables, people, products, invoices);
+        ArrayList<Login> logins = new ArrayList<>();
+        loginsFile.getValues().forEach(line -> {
+            logins.add(new Login(
+                    line[0],
+                    line[1]
+            ));
+        });
+
+        restaurant = new Restaurant(name, res, tables, people, products, invoices, logins);
     }
 
     private static Reservation makeReservation(String[] ResParams, String[] TableParams) {

@@ -23,8 +23,6 @@ public class Restaurant extends Yum {
     private ArrayList<Invoice> invoices;
     private ArrayList<Login> logins;
 
-
-
     public Restaurant(String name) {
         this.name = name;
         this.reservations = new ArrayList<>();
@@ -32,9 +30,11 @@ public class Restaurant extends Yum {
         this.people = new HashMap<>();
         this.products = new ArrayList<>();
         this.invoices = new ArrayList<>();
+        this.logins = new ArrayList<>();
         Utils.makeCSVFiles(name);
     }
-    public Restaurant(String name, ArrayList<Reservation> reservations, ArrayList<Table> tables, HashMap<String, Person> people, ArrayList<Product> products, ArrayList<Invoice> invoices, ArrayList<Login> logins) {
+    public Restaurant(String name, ArrayList<Reservation> reservations, ArrayList<Table> tables, HashMap<String, Person> people, 
+    ArrayList<Product> products, ArrayList<Invoice> invoices, ArrayList<Login> logins) {
         this.name = name;
         this.reservations = reservations;
         this.tables = tables;
@@ -176,6 +176,7 @@ public class Restaurant extends Yum {
         CSVReader staffFile = new CSVReader(new File("src/data/" + name + "/people.csv"), false);
         CSVReader productsFile = new CSVReader(new File("src/data/" + name + "/products.csv"), false);
         CSVReader invoiceFile = new CSVReader(new File("src/data/" + name + "/invoices.csv"), false);
+        CSVReader loginFile = new CSVReader(new File("src/data/" + name + "/login.csv"), false);
 
         reservations.forEach(res -> {
             resFile.addDataToSystem(res.toString());
@@ -192,12 +193,16 @@ public class Restaurant extends Yum {
         invoices.forEach(invoice -> {
             invoiceFile.addDataToSystem(invoice.toString());
         });
+        logins.forEach(login -> {
+            loginFile.addDataToSystem(login.toString());
+        });
 
         resFile.saveToCSV();
         tablesFile.saveToCSV();
         staffFile.saveToCSV();
         productsFile.saveToCSV();
         invoiceFile.saveToCSV();
+        loginFile.saveToCSV();
     }
 
 }
