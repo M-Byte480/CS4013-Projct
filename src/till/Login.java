@@ -3,7 +3,6 @@ package till;
 
 
 import restaurant.CSVReader;
-import restaurant.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,11 +13,8 @@ public class Login {
     private String tillPassword;
     private String ID;
     private ArrayList<String> details = new ArrayList<String>();
-    private ArrayList<Login> logins = new ArrayList<Login>();
 
-    public Login(String ID, String tillPassword) {
-        this.ID = ID;
-        this.tillPassword = tillPassword;
+    public Login() {
     }
 
     /**
@@ -26,7 +22,7 @@ public class Login {
      * @param password - Password of person
      *                 Reads the inpoutted parameters and adds them to a csv file
      */
-    public void createNewID(Utils login) {
+    public void createNewID(Util login) {
         login.getValues().forEach(l -> {
             String[] usernameAndPasswordSplitter = l.split(", ");
             details.add(usernameAndPasswordSplitter[0], usernameAndPasswordSplitter[1]);
@@ -40,34 +36,6 @@ public class Login {
         u.appendToFile(details + "\n");
 
     }
-
-    public void addLogin(Login login){
-        logins.add(login);
-    }
-
-    public String getID() {
-        return ID;
-    }
-
-    public String getTillPassword() {
-        return tillPassword;
-    }
-
-    public ArrayList<Login> getLogins() {
-        return logins;
-    }
-
-    public boolean loginExistence(Login login){
-        boolean exists = false;
-        for (int i = 0; i < logins.size(); i++){
-            if (logins.get(i).getID().equals(login.getID())
-                    && logins.get(i).getTillPassword().equals(login.getTillPassword())){
-                exists = true;
-            }
-        }
-        return exists;
-    }
-
 
     /**
      * @param path
