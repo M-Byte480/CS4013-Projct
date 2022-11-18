@@ -6,37 +6,33 @@ import people.Person;
 import people.Staff;
 import reservation.Invoice;
 import reservation.Reservation;
-import till.Menu;
 import till.Product;
 import till.Table;
 import java.io.File;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
+
+
 public class Driver {
     private Scanner in;
-    private Restaurant restaurant;
-    private Menu menu;
+    private static Restaurant restaurant;
+
+
+
 
     public void run() {
-        // Check if we have data already
-        CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
-        in = new Scanner(System.in);
+        // This updates the retaurant object
+        bootUp();
 
-        //     String name = (String) getChoice(restaurantFile.getValues().toArray());
+        boolean more = true;
 
-        System.out.println("Name your First Restaurant: ");
-        String name = in.nextLine();
-        restaurant = new Restaurant(name);
-        restaurantFile.appendToFile(name);
-        // bootUp(name);
-        
-        menu = new Menu();
-        while (true) {
+        while (more) {
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
 
@@ -68,12 +64,13 @@ public class Driver {
             }
         }
     }
-    public void bootUp(String name) {
-        CSVReader resFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/reservations.csv"), true);
-        CSVReader tablesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/tables.csv"), true);
-        CSVReader peopleFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/people.csv"), true);
-        CSVReader productsFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/products.csv"), true);
-        CSVReader invoicesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/invoices.csv"), true);
+
+    public static void bootUp() {
+        CSVReader resFile = new CSVReader(new File("src/data/reservations.csv"), true);
+        CSVReader tablesFile = new CSVReader(new File("src/data/tables.csv"), true);
+        CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
+        CSVReader productsFile = new CSVReader(new File("src/data/products.csv"), true);
+        CSVReader invoicesFile = new CSVReader(new File("src/data/invoices.csv"), true);
 
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
@@ -82,7 +79,7 @@ public class Driver {
 
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
-            res.add(makeReservation(line, tablesFile.getData(line[0], "tableNumber").split(",")));
+            res.add(makeReservation(line, tablesFile.get(line[0], "tableNumber").split(",")));
         });
 
         HashMap<String, Person> people = new HashMap<>();
@@ -105,19 +102,21 @@ public class Driver {
         invoicesFile.getValues().forEach(line -> {
             String[] resString = line[1].split(";");
             invoices.add(new Invoice(
-                    makeReservation(resString, tablesFile.getData(resString[0], "tableNumber").split(",")),
+                    makeReservation(resString, tablesFile.get(resString[0], "tableNumber").split(",")),
                     Integer.parseInt(line[4])
             ));
         });
 
-        restaurant = new Restaurant(name, res, tables, people, products, invoices);
+        restaurant = new Restaurant(res, tables, people, products, invoices);
     }
+
 
     private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
         return new Reservation(
                 new Table(Integer.parseInt(TableParams[0]), Integer.parseInt(TableParams[1])),
+
                 LocalDateTime.parse(ResParams[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
-                LocalDateTime.parse(ResParams[2], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"))
+                LocalTime.parse(ResParams[2])
         );
     }
 
@@ -136,7 +135,8 @@ public class Driver {
         }
     }
 
-    public void loginSuccessful(String id)  {
+
+    public void loginSuccessful(String id) {
         int integer = Character.getNumericValue(id.charAt(0));
         System.out.println("M)ake Booking  Q)uit");
         String command = in.nextLine().toUpperCase();
@@ -173,61 +173,55 @@ public class Driver {
             String command = in.nextLine().toUpperCase();
             if (command.equals("M")) {
                 createReservation();
-    
+
+            } else if (command.equals("A")) {
+                addProduct();
+
+            } else if (command.equals("C")) {
+                createTable();
+
+            } else if (command.equals("D")) {
+                deleteTable();
+
+            } else if (command.equals("T")) {
+                run(Menu);
+
             } else if (command.equals("Q")) {
-                break;
+                restaurant.save();
+                run();
+
             }
-    
-            if (integer > 1) { //Uses char to specify which action to do i.e create or remove(closeTable)
-    
-                System.out.println("M)ake Booking  A)dd Product  C)reate Table  D)elete Table   T)ake Order   Q)uit");
+
+            if (integer == 9) {
+                System.out.println("M)ake Booking   A)dd Product  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
                 if (command.equals("M")) {
                     createReservation();
-    
+
                 } else if (command.equals("A")) {
                     addProduct();
-    
+
                 } else if (command.equals("C")) {
                     createTable();
-    
+
                 } else if (command.equals("D")) {
                     deleteTable();
-    
+
                 } else if (command.equals("T")) {
-                    menu.run(restaurant);
-    
+                    run(Menu);
+
+                } else if (command.equals("H")) {
+                    hireStaff();
+
+
+                } else if (command.equals("P")) {
+                    checkProfit();
+
                 } else if (command.equals("Q")) {
-                    break;
+                    restaurant.save();
+                    run();
+
                 }
-    
-                if (integer == 9) {
-                    System.out.println("M)ake Booking   A)dd Product  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
-                    if (command.equals("M")) {
-                        createReservation();
-    
-                    } else if (command.equals("A")) {
-                        addProduct();
-    
-                    } else if (command.equals("C")) {
-                        createTable();
-    
-                    } else if (command.equals("D")) {
-                        deleteTable();
-    
-                    } else if (command.equals("T")) {
-                        menu.run(restaurant);
-    
-                    } else if (command.equals("H")) {
-                        hireStaff();
-    
-                    } else if (command.equals("P")) {
-                        checkProfit();
-    
-                    } else if (command.equals("Q")) {
-                        break;
-                    }
-                } else System.out.println("Invalid Command, Please Select Another");
-            }
+            } else throw new RuntimeException("Invalid Command, Please Select Another");
         }
     }
 
@@ -244,18 +238,17 @@ public class Driver {
         String password = in.nextLine();
         restaurant.getPerson(bob.getId());
         System.out.println("Sign Up Complete");
+
     }
 
     private void createReservation() {
         Table table = ((Table) getChoice(restaurant.getTables().toArray()));
-        System.out.println("Enter Date (YYYY-MM-DD) : ");
-        String date = in.nextLine();
-        System.out.println("Enter Time (HH:mm) : ");
+        System.out.println("Enter Start Date (YYYY-MM-DD'T'HH:mm) : ");
         String time = in.nextLine();
-        System.out.println("Enter Finish Time (HH:mm) : ");
-        String finish = in.nextLine();
-        LocalDateTime start = LocalDateTime.parse(String.format("%sT%s", date, time), DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
-        LocalDateTime end = LocalDateTime.parse(String.format("%sT%s", date, finish), DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
+        System.out.println("Enter Length (HH:mm) : ");
+        String length = in.nextLine();
+        LocalDateTime start = LocalDateTime.parse(time, DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
+        LocalTime end = LocalTime.parse(length);
 
         Reservation newReservaion = new Reservation(table, start, end);
         restaurant.addReservation(newReservaion);
