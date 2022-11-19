@@ -46,5 +46,9 @@ public class Table {
         }
 		return total;
 	}
+
+    public void closeTable() {
+        System.out.println("This table is now closed");
+    }
 }
 
