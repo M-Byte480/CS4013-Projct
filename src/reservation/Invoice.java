@@ -89,7 +89,7 @@ public class Invoice {
         invoice.add(customer.getName());
         invoice.add(customer.getPhoneNumber());
         invoice.add(reservation.getTime().toString());
-        invoice.add(CSVReader.getTimeNow());
+        invoice.add(Utils.getStringTime());
         invoice.add(reservation.getProducts().toString());
         String[] custDetails = new String[4];
         for (int i = 0; i < custDetails.length; i++) {

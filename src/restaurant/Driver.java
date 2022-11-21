@@ -36,6 +36,9 @@ public class Driver {
             restaurant = new Restaurant(name);
             restaurantFile.appendToFile(name);
         }
+        // We need an else statement here to create restaurant object or at least to select which restaurant to boot up when
+        // we log in. Currently, if a Restaurant exists in the CSV we never create the object, throwing a null pointer exception
+        // will occur.
         
         // bootUp(getChoice(restaurants));
 
@@ -152,9 +155,12 @@ public class Driver {
     public void loginSuccessful(String id)  {
         int integer = Character.getNumericValue(id.charAt(0));
 
+
         while (true) {
             System.out.println("M)ake Booking  Q)uit");     // error yeah also sign up makes me a staff.
             String command = in.nextLine().toUpperCase();
+            // HERE WE DO NOT CHECK IF THE PERSON HERE IS A STAFF OR NOT, WE JUST TELL THEM IF THEY WANT TO BOOK A TABLE
+
             if (command.equals("M")) {
                 createReservation();
 
