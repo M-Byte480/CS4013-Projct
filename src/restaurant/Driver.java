@@ -26,32 +26,10 @@ public class Driver {
     private Menu menu;
 
     public void run() {
-        // Check if we have data already
-        CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
-        CSVReader ownerFile = new CSVReader(new File("src/data/ownerLogin.csv"), true);
-        ArrayList<String[]> restaurants = restaurantFile.getValues();
-        ArrayList<String[]> ownerDetails = ownerFile.getValues();
         in = new Scanner(System.in);
+        bootUp();
 
-        if (ownerDetails.isEmpty()) createOwner();
-
-        if (restaurants.isEmpty()) {
-            createRestaurant();
-            System.out.println("Name your First Restaurant: ");
-            String name = in.nextLine();
-            restaurant = new Restaurant(name);
-            restaurantFile.appendToFile(name);
-        }
-
-        
-        System.out.println("Select Restaurant");
-        bootUp((String) getChoice(restaurants.toArray()));
-
-        // We need an else statement here to create restaurant object or at least to select which restaurant to boot up when
-        // we log in. Currently, if a Restaurant exists in the CSV we never create the object, throwing a null pointer exception
-        // will occur.
-        
-        // bootUp(getChoice(restaurants));
+        if (yum.getLogins())
 
         menu = new Menu();
         while (true) {
@@ -86,13 +64,12 @@ public class Driver {
             }
         }
     }
-    public void bootUp(String name) {
+    private Restaurant bootUpRestaurant(String name) {
         CSVReader resFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/reservations.csv"), true);
         CSVReader tablesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/tables.csv"), true);
         CSVReader peopleFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/people.csv"), true);
         CSVReader productsFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/products.csv"), true);
         CSVReader invoicesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/invoices.csv"), true);
-        CSVReader loginsFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/logins.csv"), true);
 
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
@@ -129,15 +106,22 @@ public class Driver {
             ));
         });
 
-        ArrayList<Login> logins = new ArrayList<>();
-        loginsFile.getValues().forEach(line -> {
-            logins.add(new Login(
-                    line[0],
-                    line[1]
-            ));
+        return new Restaurant(name, res, tables, people, products, invoices);
+    }
+    private void bootUp() {
+        CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
+        CSVReader loginFile = new CSVReader(new File("src/data/logins.csv"), true);
+        
+        ArrayList<Restaurant> restaurants = new ArrayList<>();
+        restaurantFile.getValues().forEach(line -> {
+            restaurants.add(bootUpRestaurant(line[0]));
         });
-
-        restaurant = new Restaurant(name, res, tables, people, products, invoices, logins);
+        
+        ArrayList<Login> logins = new ArrayList<>();
+        loginFile.getValues().forEach(line -> {
+            logins.add(new Login(line[0], line[1]));
+        });
+        yum = new Yum(restaurants, logins);
     }
 
     private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
