@@ -7,8 +7,8 @@ public class Owner extends Person {
      * @param phoneNumber
      * @param name
      */
-    public Owner(String name, String phoneNumber, String id){
-        super(name, phoneNumber, id);
+    public Owner(String name, String phoneNumber, String id, String password){
+        super(name, phoneNumber, id, password);
     }
 
     public void promoteStaff(Staff person) {

@@ -2,58 +2,36 @@ package restaurant;
 
 import reservation.Invoice;
 import reservation.Reservation;
-import till.Login;
 import till.Product;
 import till.Table;
-import people.Person;
 
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 
-public class Restaurant extends Yum {
+public class Restaurant {
     private String name;
     private double profit;
     private ArrayList<Reservation> reservations;
     private ArrayList<Table> tables;
-    private HashMap<String, Person> people;
     private ArrayList<Product> products;
     private ArrayList<Invoice> invoices;
-    private ArrayList<Login> logins;
 
     public Restaurant(String name) {
         this.name = name;
         this.reservations = new ArrayList<>();
         this.tables = new ArrayList<>();
-        this.people = new HashMap<>();
         this.products = new ArrayList<>();
         this.invoices = new ArrayList<>();
-        this.logins = new ArrayList<>();
         Utils.makeCSVFiles(name);
     }
-    public Restaurant(String name, ArrayList<Reservation> reservations, ArrayList<Table> tables, HashMap<String, Person> people, 
-    ArrayList<Product> products, ArrayList<Invoice> invoices, ArrayList<Login> logins) {
+    public Restaurant(String name, ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Product> products, 
+        ArrayList<Invoice> invoices) {
         this.name = name;
         this.reservations = reservations;
         this.tables = tables;
-        this.people = people;
         this.products = products;
         this.invoices = invoices;
-        this.logins = logins;
-    }
-
-    public ArrayList<Login> getLogins() {
-        return logins;
-    }
-
-    public void setLogins(ArrayList<Login> logins) {
-        this.logins = logins;
-    }
-
-    public void addLogin(String id, String password){
-        logins.add(new Login(id, password));
     }
 
     public String getName() {
@@ -99,19 +77,6 @@ public class Restaurant extends Yum {
     public void removeTable(Table table) {
         // make sure table doesnt have a reservation
         tables.remove(table);
-    }
-
-    public Collection<Person> getPeople() {
-        return people.values();
-    }
-    public void addPerson(Person person) {
-        people.put(person.getId(), person);
-    }
-    public Person getPerson(String id) {
-        return people.get(id);
-    }
-    public void removePerson(Person person) {
-        people.remove(person.getId());
     }
 
     public double getProfit() {
@@ -173,10 +138,8 @@ public class Restaurant extends Yum {
     public void save() {
         CSVReader resFile = new CSVReader(new File("src/data/" + name + "/reservations.csv"), false);
         CSVReader tablesFile = new CSVReader(new File("src/data/" + name + "/tables.csv"), false);
-        CSVReader staffFile = new CSVReader(new File("src/data/" + name + "/people.csv"), false);
         CSVReader productsFile = new CSVReader(new File("src/data/" + name + "/products.csv"), false);
         CSVReader invoiceFile = new CSVReader(new File("src/data/" + name + "/invoices.csv"), false);
-        CSVReader loginFile = new CSVReader(new File("src/data/" + name + "/login.csv"), false);
 
         reservations.forEach(res -> {
             resFile.addDataToSystem(res.toString());
@@ -184,25 +147,16 @@ public class Restaurant extends Yum {
         tables.forEach(table -> {
             tablesFile.addDataToSystem(table.toString());
         });
-        people.forEach((id, staff) -> {
-            staffFile.addDataToSystem(staff.toString());
-        });
         products.forEach(prod -> {
             productsFile.addDataToSystem(prod.toString());
         });
         invoices.forEach(invoice -> {
             invoiceFile.addDataToSystem(invoice.toString());
         });
-        logins.forEach(login -> {
-            loginFile.addDataToSystem(login.toString());
-        });
 
         resFile.saveToCSV();
         tablesFile.saveToCSV();
-        staffFile.saveToCSV();
         productsFile.saveToCSV();
         invoiceFile.saveToCSV();
-        loginFile.saveToCSV();
     }
-
 }

@@ -34,45 +34,38 @@ public class Till {
     //closing table
     //calculate price
     public void billTable(char type, double amount, Table table) {
-        switch (type) {
-            case 1:
-                type = 'C';
-                table.closeTable();
-                sendLog("Paid with Credit");
-                Invoice.sendInvoice();
-                sale(amount); //invoice amount
-
-
-                break;
-
-
-            case 2:
-                type = 'D';
-                table.closeTable();
-                sendLog("Paid with Debit");
-                Invoice.sendInvoice();
-                sale(amount); //invoice amount
-
-                break;
-
-
-            case 3:
-                type = 'X';
-                table.closeTable();
-                Invoice.sendInvoice();
-                sendLog("Paid with cash");
-                sale(amount); //invoice amount
-                cashPaid(amount, ); //invoice amount + amount paid in cash
-
-                break;
-        }
+//        switch (type) {
+//            case 1:
+//                type = 'C';
+//                table.closeTable();
+//                sendLog("Paid with Credit");
+//                Invoice.sendInvoice();
+//                sale(amount); //invoice amount
+//
+//
+//                break;
+//
+//
+//            case 2:
+//                type = 'D';
+//                table.closeTable();
+//                sendLog("Paid with Debit");
+//                Invoice.sendInvoice();
+//                sale(amount); //invoice amount
+//
+//                break;
+//
+//
+//            case 3:
+//                type = 'X';
+//                table.closeTable();
+//                Invoice.sendInvoice();
+//                sendLog("Paid with cash");
+//                sale(amount); //invoice amount
+//                cashPaid(amount, ); //invoice amount + amount paid in cash
+//
+//                break;
+//        }
     }
 
-    private void sendLog(String whatHappened) {
-        CSVReader writeToLog = new CSVReader(new File("src/data/log.csv"));
-
-        writeToLog.appendToFile(whatHappened);
-
-        writeToLog.closeReader();
-    }
 }

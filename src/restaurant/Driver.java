@@ -21,26 +21,23 @@ import java.util.Scanner;
 
 public class Driver {
     private Scanner in;
+    private Yum yum;
     private Restaurant restaurant;
     private Menu menu;
 
     public void run() {
-        // Check if we have data already
-        CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
-        ArrayList<String[]> restaurants = restaurantFile.getValues();
         in = new Scanner(System.in);
+        bootUp();
 
-        if (restaurants.isEmpty()) {
-            System.out.println("Name your First Restaurant: ");
-            String name = in.nextLine();
-            restaurant = new Restaurant(name);
-            restaurantFile.appendToFile(name);
-        }
-        
-        // bootUp(getChoice(restaurants));
+        if (yum.getOwner() == null) makeOwner();
+        if (yum.getRestaurants() == null) makeRestaurant();
+
 
         menu = new Menu();
         while (true) {
+            System.out.println("Select a Restaurant");
+            restaurant = (Restaurant) getChoice(yum.getRestaurants().toArray());
+
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
 
@@ -53,7 +50,7 @@ public class Driver {
                 System.out.println("Enter Password : ");
                 String password = in.nextLine();
 
-                if (restaurant.getPerson(id) == null) {
+                if (yum.getPerson(id) == null) {
                     System.out.println("Invalid credentials");
                 } else {
                     // Once logged in, allow the person to have a access to certain options based on their level of access
@@ -72,13 +69,12 @@ public class Driver {
             }
         }
     }
-    public void bootUp(String name) {
+
+    private Restaurant bootUpRestaurant(String name) {
         CSVReader resFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/reservations.csv"), true);
         CSVReader tablesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/tables.csv"), true);
-        CSVReader peopleFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/people.csv"), true);
         CSVReader productsFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/products.csv"), true);
         CSVReader invoicesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/invoices.csv"), true);
-        CSVReader loginsFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/logins.csv"), true);
 
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
@@ -88,16 +84,6 @@ public class Driver {
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
             res.add(makeReservation(line, tablesFile.getData(line[0], "tableNumber").split(",")));
-        });
-
-        HashMap<String, Person> people = new HashMap<>();
-        peopleFile.getValues().forEach(line -> {
-            int level = Character.getNumericValue(line[2].charAt(0));
-            if (level < 2)
-                people.put(line[2], new Customer(line[0], line[1], line[2], Double.parseDouble(line[3])));
-            else if (level < 9)
-                people.put(line[2], new Staff(line[0], line[1], line[2]));
-            else people.put(line[2], new Owner(line[0], line[1], line[2]));
         });
 
         ArrayList<Product> products = new ArrayList<>();
@@ -115,15 +101,28 @@ public class Driver {
             ));
         });
 
-        ArrayList<Login> logins = new ArrayList<>();
-        loginsFile.getValues().forEach(line -> {
-            logins.add(new Login(
-                    line[0],
-                    line[1]
-            ));
+        return new Restaurant(name, res, tables, products, invoices);
+    }
+    private void bootUp() {
+        CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
+        CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
+        
+        ArrayList<Restaurant> restaurants = new ArrayList<>();
+        restaurantFile.getValues().forEach(line -> {
+            restaurants.add(bootUpRestaurant(line[0]));
         });
 
-        restaurant = new Restaurant(name, res, tables, people, products, invoices, logins);
+        HashMap<String, Person> people = new HashMap<>();
+        Owner owner = null;
+        for (String[] line : peopleFile.getValues()) {
+            int level = Character.getNumericValue(line[2].charAt(0));
+            if (level < 2)
+                people.put(line[2], new Customer(line[0], line[1], line[2], line[3], Double.parseDouble(line[4])));
+            else if (level < 9)
+                people.put(line[2], new Staff(line[0], line[1], line[2], line[3]));
+            else owner = new Owner(line[0], line[1], line[2], line[3]);
+        }
+        yum = new Yum(restaurants, people, owner);
     }
 
     private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
@@ -152,9 +151,12 @@ public class Driver {
     public void loginSuccessful(String id)  {
         int integer = Character.getNumericValue(id.charAt(0));
 
+
         while (true) {
             System.out.println("M)ake Booking  Q)uit");     // error yeah also sign up makes me a staff.
             String command = in.nextLine().toUpperCase();
+            // HERE WE DO NOT CHECK IF THE PERSON HERE IS A STAFF OR NOT, WE JUST TELL THEM IF THEY WANT TO BOOK A TABLE
+
             if (command.equals("M")) {
                 createReservation();
 
@@ -220,13 +222,11 @@ public class Driver {
         String name = in.nextLine();
         System.out.println("Enter Phone Number");
         String phoneNumber = in.nextLine();
-        Customer bob = new Customer(name, phoneNumber, 0);
-        restaurant.addPerson(bob);
-        System.out.println("Your User ID : ");
-        System.out.println(bob.getId());
         System.out.println("Enter A New Password : ");
         String password = in.nextLine();
-        restaurant.getPerson(bob.getId());
+        Customer bob = new Customer(name, phoneNumber, password, 0);
+        yum.addPerson(bob);
+        yum.getPerson(bob.getId());
         System.out.println("Sign Up Complete");
     }
 
@@ -255,8 +255,10 @@ public class Driver {
         String name = in.nextLine();
         System.out.println("Enter phone number of new staff member");
         String phoneNumber = in.nextLine();
-        Staff newRecruit = new Staff(name, phoneNumber);
-        restaurant.addPerson(newRecruit);
+        System.out.println("Enter Owners New Password");
+        String password = in.nextLine();
+        Staff newRecruit = new Staff(name, phoneNumber, password);
+        yum.addPerson(newRecruit);
     }
 
     public double checkProfit() {
@@ -287,6 +289,24 @@ public class Driver {
         ArrayList<String> allergies = new ArrayList<>(Arrays.asList(allergy.split(";")));
         Product newProduct = new Product(nameOfProduct, description, cost, allergies);
         restaurant.addProduct(newProduct);
+    }
+    private void makeOwner() {
+        System.out.println("Enter name of  Owner");
+        String name = in.nextLine();
+        System.out.println("Enter Owners Phone Number");
+        String phoneNumber = in.nextLine();
+        System.out.println("Enter Owners New ID");
+        String id = in.nextLine();
+        System.out.println("Enter Owners New Password");
+        String password = in.nextLine();
+        Owner owner = new Owner(name, phoneNumber, id, password);
+        yum.setOwner(owner);
+    }
+
+    private void makeRestaurant() {
+        System.out.println("Enter The Name Of The New Restaurant : ");
+        String name = in.nextLine();
+       yum.addRestaurant(name);
     }
 }
 
