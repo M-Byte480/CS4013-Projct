@@ -38,7 +38,11 @@ public class Person {
         this.password = password;
     }
 
-
+    public boolean passwordValidator(String id, String password) {
+        if (this.id.equals(id) && this.password.equals(password))
+            return true;
+        else return false;
+    }
     public String toString() {
         return String.format("%s,%s,%s", name, phoneNumber, id);
     }
