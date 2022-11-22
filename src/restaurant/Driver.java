@@ -29,7 +29,10 @@ public class Driver {
         in = new Scanner(System.in);
         bootUp();
 
-        if (yum.getLogins())
+        if (yum.getOwner() == null) makeOwner();
+        if (yum.getRestaurants() == null) makeRestaurant();
+        System.out.println("Select a Restaurant");
+        restaurant = (Restaurant) getChoice(yum.getRestaurants().toArray());
 
         menu = new Menu();
         while (true) {
@@ -67,7 +70,6 @@ public class Driver {
     private Restaurant bootUpRestaurant(String name) {
         CSVReader resFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/reservations.csv"), true);
         CSVReader tablesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/tables.csv"), true);
-        CSVReader peopleFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/people.csv"), true);
         CSVReader productsFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/products.csv"), true);
         CSVReader invoicesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/invoices.csv"), true);
 
@@ -79,16 +81,6 @@ public class Driver {
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
             res.add(makeReservation(line, tablesFile.getData(line[0], "tableNumber").split(",")));
-        });
-
-        HashMap<String, Person> people = new HashMap<>();
-        peopleFile.getValues().forEach(line -> {
-            int level = Character.getNumericValue(line[2].charAt(0));
-            if (level < 2)
-                people.put(line[2], new Customer(line[0], line[1], line[2], Double.parseDouble(line[3])));
-            else if (level < 9)
-                people.put(line[2], new Staff(line[0], line[1], line[2]));
-            else people.put(line[2], new Owner(line[0], line[1], line[2]));
         });
 
         ArrayList<Product> products = new ArrayList<>();
@@ -106,22 +98,28 @@ public class Driver {
             ));
         });
 
-        return new Restaurant(name, res, tables, people, products, invoices);
+        return new Restaurant(name, res, tables, products, invoices);
     }
     private void bootUp() {
         CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
-        CSVReader loginFile = new CSVReader(new File("src/data/logins.csv"), true);
+        CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
         
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         restaurantFile.getValues().forEach(line -> {
             restaurants.add(bootUpRestaurant(line[0]));
         });
-        
-        ArrayList<Login> logins = new ArrayList<>();
-        loginFile.getValues().forEach(line -> {
-            logins.add(new Login(line[0], line[1]));
-        });
-        yum = new Yum(restaurants, logins);
+
+        HashMap<String, Person> people = new HashMap<>();
+        Owner owner = null;
+        for (String[] line : peopleFile.getValues()) {
+            int level = Character.getNumericValue(line[2].charAt(0));
+            if (level < 2)
+                people.put(line[2], new Customer(line[0], line[1], line[2], line[3], Double.parseDouble(line[4])));
+            else if (level < 9)
+                people.put(line[2], new Staff(line[0], line[1], line[2], line[3]));
+            else owner = new Owner(line[0], line[1], line[2], line[3]);
+        }
+        yum = new Yum(restaurants, people, owner);
     }
 
     private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
