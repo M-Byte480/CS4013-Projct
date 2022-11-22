@@ -2,13 +2,17 @@ package restaurant;
 
 import java.util.ArrayList;
 
+import till.Login;
+
 public class Yum {
     private double overallProfit;
     private ArrayList<Restaurant> restaurants;
+    private ArrayList<Login> logins;
 
-    public Yum() {
+    public Yum(ArrayList<Restaurant> restaurants, ArrayList<Login> logins) {
         overallProfit = 0;
-        restaurants = new ArrayList<>();
+        this.restaurants = restaurants;
+        this.logins = logins;
     }
     
     public void addRestaurant(String name) {

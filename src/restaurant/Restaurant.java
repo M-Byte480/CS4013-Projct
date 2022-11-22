@@ -21,7 +21,6 @@ public class Restaurant extends Yum {
     private HashMap<String, Person> people;
     private ArrayList<Product> products;
     private ArrayList<Invoice> invoices;
-    private ArrayList<Login> logins;
 
     public Restaurant(String name) {
         this.name = name;

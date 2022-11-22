@@ -21,21 +21,32 @@ import java.util.Scanner;
 
 public class Driver {
     private Scanner in;
+    private Yum yum;
     private Restaurant restaurant;
     private Menu menu;
 
     public void run() {
         // Check if we have data already
         CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
+        CSVReader ownerFile = new CSVReader(new File("src/data/ownerLogin.csv"), true);
         ArrayList<String[]> restaurants = restaurantFile.getValues();
+        ArrayList<String[]> ownerDetails = ownerFile.getValues();
         in = new Scanner(System.in);
 
+        if (ownerDetails.isEmpty()) createOwner();
+
         if (restaurants.isEmpty()) {
+            createRestaurant();
             System.out.println("Name your First Restaurant: ");
             String name = in.nextLine();
             restaurant = new Restaurant(name);
             restaurantFile.appendToFile(name);
         }
+
+        
+        System.out.println("Select Restaurant");
+        bootUp((String) getChoice(restaurants.toArray()));
+
         // We need an else statement here to create restaurant object or at least to select which restaurant to boot up when
         // we log in. Currently, if a Restaurant exists in the CSV we never create the object, throwing a null pointer exception
         // will occur.
