@@ -31,11 +31,13 @@ public class Driver {
 
         if (yum.getOwner() == null) makeOwner();
         if (yum.getRestaurants() == null) makeRestaurant();
-        System.out.println("Select a Restaurant");
-        restaurant = (Restaurant) getChoice(yum.getRestaurants().toArray());
+
 
         menu = new Menu();
         while (true) {
+            System.out.println("Select a Restaurant");
+            restaurant = (Restaurant) getChoice(yum.getRestaurants().toArray());
+
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
 
@@ -48,7 +50,7 @@ public class Driver {
                 System.out.println("Enter Password : ");
                 String password = in.nextLine();
 
-                if (restaurant.getPerson(id) == null) {
+                if (yum.getPerson(id) == null) {
                     System.out.println("Invalid credentials");
                 } else {
                     // Once logged in, allow the person to have a access to certain options based on their level of access
@@ -67,6 +69,7 @@ public class Driver {
             }
         }
     }
+
     private Restaurant bootUpRestaurant(String name) {
         CSVReader resFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/reservations.csv"), true);
         CSVReader tablesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/tables.csv"), true);
@@ -219,13 +222,11 @@ public class Driver {
         String name = in.nextLine();
         System.out.println("Enter Phone Number");
         String phoneNumber = in.nextLine();
-        Customer bob = new Customer(name, phoneNumber, 0);
-        restaurant.addPerson(bob);
-        System.out.println("Your User ID : ");
-        System.out.println(bob.getId());
         System.out.println("Enter A New Password : ");
         String password = in.nextLine();
-        restaurant.getPerson(bob.getId());
+        Customer bob = new Customer(name, phoneNumber, password, 0);
+        yum.addPerson(bob);
+        yum.getPerson(bob.getId());
         System.out.println("Sign Up Complete");
     }
 
@@ -254,8 +255,10 @@ public class Driver {
         String name = in.nextLine();
         System.out.println("Enter phone number of new staff member");
         String phoneNumber = in.nextLine();
-        Staff newRecruit = new Staff(name, phoneNumber);
-        restaurant.addPerson(newRecruit);
+        System.out.println("Enter Owners New Password");
+        String password = in.nextLine();
+        Staff newRecruit = new Staff(name, phoneNumber, password);
+        yum.addPerson(newRecruit);
     }
 
     public double checkProfit() {
@@ -286,6 +289,24 @@ public class Driver {
         ArrayList<String> allergies = new ArrayList<>(Arrays.asList(allergy.split(";")));
         Product newProduct = new Product(nameOfProduct, description, cost, allergies);
         restaurant.addProduct(newProduct);
+    }
+    private void makeOwner() {
+        System.out.println("Enter name of  Owner");
+        String name = in.nextLine();
+        System.out.println("Enter Owners Phone Number");
+        String phoneNumber = in.nextLine();
+        System.out.println("Enter Owners New ID");
+        String id = in.nextLine();
+        System.out.println("Enter Owners New Password");
+        String password = in.nextLine();
+        Owner owner = new Owner(name, phoneNumber, id, password);
+        yum.setOwner(owner);
+    }
+
+    private void makeRestaurant() {
+        System.out.println("Enter The Name Of The New Restaurant : ");
+        String name = in.nextLine();
+       yum.addRestaurant(name);
     }
 }
 
