@@ -64,6 +64,7 @@ public class Driver {
 
             } else if (command.equals("Q")) {
                 restaurant.save();
+                yum.save();
                 System.out.println("Shutting Down");
                 System.exit(0);
             }
