@@ -49,12 +49,12 @@ public class Driver {
                 String id = in.nextLine();
                 System.out.println("Enter Password : ");
                 String password = in.nextLine();
-
-                if (yum.getPerson(id) == null) {
-                    System.out.println("Invalid credentials");
-                } else {
-                    // Once logged in, allow the person to have a access to certain options based on their level of access
+                //test for null pointer exception
+                if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id,password) == true ) {
                     loginSuccessful(id);
+                    // Once logged in, allow the person to have  access to certain options based on their level of access
+                }  else {
+                    System.out.println("Invalid credentials");
                 }
 
 
