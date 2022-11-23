@@ -10,10 +10,9 @@ import java.util.ArrayList;
 public class Reservation {
 	private Table table;
 	private Customer cust;
-	
 	private LocalDateTime time;
 	private LocalDateTime length;
-	
+
 	/**
 	 * Makes a Reservation object.
 	 * @param table
