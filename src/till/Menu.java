@@ -1,13 +1,19 @@
 package till;
 
 import restaurant.Restaurant;
+import restaurant.Utils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import reservation.Invoice;
+import reservation.Reservation;
 
 public class Menu {
     private Scanner in;
     private Restaurant restaurant;
+    private Reservation reservation;
 
     public void run(Restaurant restaurant) {
 
@@ -15,10 +21,11 @@ public class Menu {
 
             // Add Option to Quit or Select table
             System.out.println("Select A Table : ");
-            Table t = (Table) getChoice(restaurant.getTables().toArray());
+            Table table = Utils.getChoice(restaurant.getFreeTablesBetweenTime(LocalDateTime.now(), LocalDateTime.now().plusHours(1)));
+            reservation = new Reservation(table, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
 
             while (true) {
-                System.out.println("S)how Products, O)rder Details  A)dd A Product To Order  C)onfrim Order   R)emove A Product From Order, F)inish, Q)uit");
+                System.out.println("S)how Products  O)rder Details  A)dd A Product To Order  R)emove A Product From Order  F)inish  Q)uit");
                 String command = in.nextLine().toUpperCase();
 
                 if (command.equals("S")) {
@@ -27,65 +34,47 @@ public class Menu {
 
                 } else if (command.equals("O")) {
                     System.out.printf("Products In Order : ");
-                    showProductsOnTable(t);
+                    showProductsOnTable(table);
 
                 } else if (command.equals("A")) {
                     System.out.printf("Add A Product To Order : ");
-                    addProduct(t);
-
-                } else if (command.equals("C")) {
-                    System.out.printf("Order Confirmed");
-                    restaurant.addToOrder(t.getProducts());
-
+                    addProduct(table);
 
                 } else if (command.equals("R")) {
                     System.out.printf("Remove A Product From Order : ");
-                    removeProduct(t);
+                    removeProduct(table);
 
                 } else if (command.equals("F")) {
-                    removeAllProducts(t);
+                    restaurant.addInvoice(new Invoice(reservation));
+                    removeAllProducts(table);
 
                 } else if (command.equals("Q")) {
+                    restaurant.addToOrder(table.getProducts());
                     break;
                 }
             }
         }
     }
 
-    private ArrayList<Product> showProductsOnTable(Table t) {
-        return t.getProducts();
+    private ArrayList<Product> showProductsOnTable(Table table) {
+        return table.getProducts();
     }
 
     private String showProducts() {
         return restaurant.getProducts().toString();
     }
 
-    private void addProduct(Table t) {
-        Product p = (Product) getChoice(t.getProducts().toArray());
-        t.addProducts(p);
+    private void addProduct(Table table) {
+        Product p = Utils.getChoice(table.getProducts());
+        table.addProducts(p);
     }
 
-    private void removeProduct(Table t) {
-        Product p = (Product) getChoice(t.getProducts().toArray());
-        t.removeProduct(p);
+    private void removeProduct(Table table) {
+        Product p = Utils.getChoice(table.getProducts());
+        table.removeProduct(p);
     }
 
-    private void removeAllProducts(Table t) {
-        t.clearFood();
-    }
-
-    private Object getChoice(Object[] choices) {
-        if (choices.length == 0) return null;
-        while (true) {
-            char c = 'A';
-            for (Object choice : choices) {
-                System.out.println(c + ") " + choice);
-                c++;
-            }
-            String input = in.nextLine();
-            int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.length)
-                return choices[n];
-        }
+    private void removeAllProducts(Table table) {
+        table.clearFood();
     }
 }

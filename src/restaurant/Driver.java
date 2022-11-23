@@ -20,26 +20,25 @@ public class Driver {
     private Yum yum;
     private Restaurant restaurant;
     private Menu menu;
-
+    
     public void run() {
         in = new Scanner(System.in);
         bootUp();
-
+        
         if (yum.getOwner() == null) makeOwner();
         if (yum.getRestaurants().size() == 0) makeRestaurant();
-
-
+        
+        
         menu = new Menu();
         while (true) {
             System.out.println("Select a Restaurant");
-            restaurant = getChoice(yum.getRestaurants());
-
+            restaurant = Utils.getChoice(yum.getRestaurants());
+            
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
 
-
             //If login
-
+            
             switch (command) {
                 case "L" -> {
                     System.out.println("Enter User ID");
@@ -54,69 +53,70 @@ public class Driver {
                     }
                 }
                 case "S" ->
-                    // Signs up the person, create new person object and add it to the arraylist of people.
-                        signUp();
+                // Signs up the person, create new person object and add it to the arraylist of people.
+                signUp();
                 case "Q" -> {
                     restaurant.save();
+                    yum.save();
                     System.out.println("Shutting Down");
                     System.exit(0);
                 }
             }
         }
     }
-
-
+    
+    
     private Restaurant bootUpRestaurant(String name) {
         CSVReader resFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\reservations.csv"), true);
         CSVReader tablesFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\tables.csv"), true);
         CSVReader productsFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\products.csv"), true);
         CSVReader invoicesFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\invoices.csv"), true);
-
+        
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
             tables.add(new Table(Integer.parseInt(line[0]), Integer.parseInt(line[1])));
         });
-
+        
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
             res.add(makeReservation(line, tablesFile.getData(line[0], "tableNumber").split(",")));
         });
-
+        
         ArrayList<Product> products = new ArrayList<>();
         productsFile.getValues().forEach(line -> {
             ArrayList<String> alergies = new ArrayList<>(Arrays.asList(line[3].split(";")));
             products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
         });
-
+        
         ArrayList<Invoice> invoices = new ArrayList<>();
         invoicesFile.getValues().forEach(line -> {
             String[] resString = line[1].split(";");
             invoices.add(new Invoice(
-                    makeReservation(resString, tablesFile.getData(resString[0], "tableNumber").split(",")),
-                    Integer.parseInt(line[4])
+            makeReservation(resString, tablesFile.getData(resString[0], "tableNumber").split(",")),
+            Integer.parseInt(line[4])
             ));
         });
-
+        
         return new Restaurant(name, res, tables, products, invoices);
     }
-
+    
     private void bootUp() {
         CSVReader restaurantFile = new CSVReader(new File("src\\data\\restaurants.csv"), true);
         CSVReader peopleFile = new CSVReader(new File("src\\data\\people.csv"), true);
-
+        
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         restaurantFile.getValues().forEach(line -> {
             restaurants.add(bootUpRestaurant(line[0]));
         });
-
+        
         HashMap<String, Person> people = new HashMap<>();
         Owner owner = null;
         for (String[] line : peopleFile.getValues()) {
             int level = Character.getNumericValue(line[2].charAt(0));
             if (level < 2)
-                people.put(line[2], new Customer(line[0], line[1], line[2], line[3], Double.parseDouble(line[4])));
+            people.put(line[2], new Customer(line[0], line[1], line[2], line[3], Double.parseDouble(line[4])));
             else if (level < 9)
-                people.put(line[2], new Staff(line[0], line[1], line[2], line[3]));
+            people.put(line[2], new Staff(line[0], line[1], line[2], line[3]));
             else {
                 people.put(line[2], new Owner(line[0], line[1], line[2], line[3]));
                 owner = new Owner(line[0], line[1], line[2], line[3]);
@@ -124,123 +124,77 @@ public class Driver {
         }
         yum = new Yum(restaurants, people, owner);
     }
-
+    
     private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
         return new Reservation(
-                new Table(Integer.parseInt(TableParams[0]), Integer.parseInt(TableParams[1])),
-                LocalDateTime.parse(ResParams[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
-                LocalDateTime.parse(ResParams[2], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"))
+        new Table(Integer.parseInt(TableParams[0]), Integer.parseInt(TableParams[1])),
+        LocalDateTime.parse(ResParams[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
+        LocalDateTime.parse(ResParams[2], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"))
         );
     }
-
-    private <T> T getChoice(ArrayList<T> choices) {
-        if (choices.size() == 0) return null;
-        while (true) {
-            char c = 'A';
-            for (T choice : choices) {
-                System.out.println(c + ") " + choice);
-                c++;
-            }
-            String input = in.nextLine();
-            int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.size())
-                return choices.get(n);
-        }
-    }
-
-    private void chefLoginSuccesful() {
-        String command = in.nextLine().toUpperCase();
-
-    }
-
-
+    
     public void loginSuccessful(String id) {
         int integer = Character.getNumericValue(id.charAt(0));
         String command = null;
         while (true) {
             if (integer == 8) {
-                while (true) {
-                    System.out.println("F)ood ready   Q)uit");
-                    command = in.nextLine().toUpperCase();
-                    if (command.equals("F")) {
-                        foodReady();
-
-                    } else if (command.equals("Q")) {
-                        restaurant.save();
-                        run();
-                    } else {
-                        System.out.println("Invalid Command, Please Select Another");
-                    }
+                System.out.println("F)ood ready   Q)uit");
+                command = in.nextLine().toUpperCase();
+                if (command.equals("F")) {
+                    foodReady();
+                } else if (command.equals("Q")) {
+                    break;
+                } else {
+                    System.out.println("Invalid Command, Please Select Another");
                 }
             } else {
                 StringBuilder output = new StringBuilder();
                 if (integer == 9) output.append("H)ire Staff   R)emove Staff   P)rofit  ");
-                if (integer > 1) output.append("A)dd Product  C)reate Table  D)elete Table   T)ake Order");
+                if (integer > 1) output.append("A)dd Product  C)reate Table  D)elete Table   T)ake Order  ");
                 output.append("M)ake Booking  Q)uit ");// error yeah also sign up makes me a staff.
                 System.out.println(output);
-
+                
                 command = in.nextLine().toUpperCase();
-
-                if (integer == 9) {
-                    if (command.equals("H")) {
-                        hireStaff();
-
-                    } else if (command.equals("R")) {
-                        removeStaff();
-                    }
-
-                } else if (command.equals("P")) {
-                    checkProfit();
-                }
-
-                System.out.println("M)ake Booking  A)dd Product  C)reate Table  D)elete Table   T)ake Order   Q)uit");
                 if (command.equals("M")) {
                     createReservation();
-
-                    if (integer > 1)
-                        if (command.equals("A")) {
-                            addProduct();
-
-                        } else if (command.equals("C")) {
-                            createTable();
-
-                        } else if (command.equals("D")) {
-                            deleteTable();
-
-                        } else if (command.equals("T")) {
-                            menu.run(restaurant);
-
-                        } else if (command.equals("Q")) {
-                            break;
+                } else if (command.equals("Q")) {
+                    break;
+                } else if (integer > 1) {
+                    if (command.equals("A")) {
+                        addProduct();
+                    } else if (command.equals("C")) {
+                        createTable();
+                    } else if (command.equals("D")) {
+                        deleteTable();
+                    } else if (command.equals("T")) {
+                        menu.run(restaurant);
+                    } else if (integer == 9) {
+                        if (command.equals("H")) {
+                            hireStaff();
+                        } else if (command.equals("R")) {
+                            removeStaff();
+                        } else if (command.equals("P")) {
+                            checkProfit();
                         }
-
-
-                    if (command.equals("M")) {
-                        createReservation();
-
-                    } else if (command.equals("Q")) {
-                        restaurant.save();
-                        run();
-
-                    } else {
-                        System.out.println("Invalid Command, Please Select Another");
                     }
-                } else System.out.println("Invalid Command, Please Select Another");
-            }
+                } else {
+                    System.out.println("Invalid Command, Please Select Another");
+                }
+            }  
         }
     }
-
-
+    
+    
     private void removeStaff() {
         System.out.println("Enter staff ID you would like to remove");
         String id = in.nextLine();
-
+        yum.removePerson(yum.getPerson(id));
     }
-
-
+    
+    
     // HERE WE DO NOT CHECK IF THE PERSON HERE IS A STAFF OR NOT, WE JUST TELL THEM IF THEY WANT TO BOOK A TABLE
-
-
+    
+    
     public void signUp() {
         System.out.println("Enter full name");
         String name = in.nextLine();
@@ -253,9 +207,9 @@ public class Driver {
         yum.getPerson(bob.getId());
         System.out.println("Sign Up Complete");
     }
-
+    
     private void createReservation() {
-        Table table = ((Table) getChoice(restaurant.getTables()));
+        Table table = Utils.getChoice(restaurant.getTables());
         System.out.println("Enter Date (YYYY-MM-DD) : ");
         String date = in.nextLine();
         System.out.println("Enter Time (HH:mm) : ");
@@ -264,18 +218,18 @@ public class Driver {
         String finish = in.nextLine();
         LocalDateTime start = LocalDateTime.parse(String.format("%sT%s", date, time), DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
         LocalDateTime end = LocalDateTime.parse(String.format("%sT%s", date, finish), DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"));
-
+        
         Reservation newReservation = new Reservation(table, start, end);
         restaurant.addReservation(newReservation);
     }
-
+    
     private void deleteTable() {
         System.out.println("Select a table which you would like to delete :  ");
-        restaurant.removeTable((Table) getChoice(restaurant.getTables()));
+        restaurant.removeTable(Utils.getChoice(restaurant.getTables()));
     }
-
+    
     private void hireStaff() {
-
+        
         System.out.println("Enter name of new staff member");
         String name = in.nextLine();
         System.out.println("Enter phone number of new staff member");
@@ -296,11 +250,11 @@ public class Driver {
             System.out.println("Unknown Command ");
         }
     }
-
+    
     public double checkProfit() {
         return restaurant.getProfit();
     }
-
+    
     private void createTable() {
         int tableNumber, seats;
         System.out.println("Enter the table number");
@@ -310,7 +264,7 @@ public class Driver {
         Table resTable = new Table(tableNumber, seats);
         System.out.println("New table created   Table Number : " + resTable.getTableNumber() + "Number of seats : " + resTable.getSeats());
     }
-
+    
     private void addProduct() {
         System.out.println("Enter The Name Of The Product : ");
         String nameOfProduct = in.nextLine();
@@ -319,13 +273,13 @@ public class Driver {
         System.out.println("Enter The Cost Of The Product: ");
         double cost = in.nextDouble();
         in.nextLine();
-        System.out.println("Enter The Name Of The Product (Seperate using ,)  : ");
+        System.out.println("Enter The Name Of The Product (Seperate using ;)  : ");
         String allergy = in.nextLine();
         ArrayList<String> allergies = new ArrayList<>(Arrays.asList(allergy.split(";")));
         Product newProduct = new Product(nameOfProduct, description, cost, allergies);
         restaurant.addProduct(newProduct);
     }
-
+    
     private void makeOwner() {
         System.out.println("Enter name of  Owner");
         String name = in.nextLine();
@@ -338,16 +292,16 @@ public class Driver {
         yum.addPerson(owner);
         System.out.println("Owners User ID : " + owner.getId());
     }
-
+    
     private void makeRestaurant() {
         System.out.println("Enter The Name Of The New Restaurant : ");
         String name = in.nextLine();
         yum.addRestaurant(name);
     }
-
+    
     private void foodReady() {
         System.out.println("Select which order is ready : ");
-        ArrayList<Product> ready = getChoice(restaurant.getOrders());
+        ArrayList<Product> ready = Utils.getChoice(restaurant.getOrders());
         restaurant.removeFromOrder(ready);
     }
 }

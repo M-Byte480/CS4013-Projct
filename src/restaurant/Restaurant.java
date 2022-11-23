@@ -15,7 +15,6 @@ public class Restaurant {
     private ArrayList<Reservation> reservations;
     private ArrayList<Table> tables;
     private ArrayList<Product> products;
-
     private ArrayList<ArrayList<Product>> orders;
     private ArrayList<Invoice> invoices;
 
