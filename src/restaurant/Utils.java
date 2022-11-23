@@ -2,6 +2,8 @@ package restaurant;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +27,10 @@ public class Utils {
 
         }
         return id;
+    }
+
+    public static String getStringTime(){
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
     }
 
     public static boolean makeCSVFiles(String name) {

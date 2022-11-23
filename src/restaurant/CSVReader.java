@@ -161,7 +161,7 @@ public class CSVReader {
 
         for (int i = 0; i < values.size(); i++) {
             if (values.get(i)[index].equals(value)) {
-                dataLinesString.append(String.join(",", values.get(i))).append('\n');
+                    dataLinesString.append(String.join(",", values.get(i))).append('\n');
             }
         }
 

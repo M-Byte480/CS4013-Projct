@@ -1,78 +1,31 @@
 package till;
 
-
-import restaurant.CSVReader;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-
 public class Login {
-    private String tillPassword;
+    private String password;
     private String ID;
-    private ArrayList<String> details = new ArrayList<String>();
 
-    public Login() {
-    }
-
-    /**
-     * @param id - ID of person
-     * @param password - Password of person
-     *                 Reads the inpoutted parameters and adds them to a csv file
-     */
-    public void createNewID(Util login) {
-            login.getValues().forEach(l -> {
-            String[] usernameAndPasswordSplitter = l.split(", ");
-            details.put(usernameAndPasswordSplitter[0], usernameAndPasswordSplitter[1]);
-        });
-    public void createNewID(String id, String password) {
+    public Login(String ID, String password){
         this.ID = ID;
-        this.tillPassword = tillPassword;
-
-        CSVReader u = new CSVReader(new File("login.csv"));
-        u.appendToFile(details + "\n");
-
+        this.password = password;
     }
 
-    /**
-     * @param path
-     * @return
-     */
-    public List<String> getLines(String path) {
-        List<String> lines = new ArrayList();
-        try {
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return lines;
+    public String getID() {
+        return ID;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
-    /**
-     * @param id
-     * @param password Make Hashmap
-     *                 For each line in the csv split using regex and store in hash map
-     *                 if correct key and pass allow logine
-     *                 else
-     *                 return  false
-     * @return
-     */
-    public boolean validateLogin(String id, String password) {
-        for (int i = 0; i < details.size() ; i++) {
-            getLines("login.csv");
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 
-
-            if (login.containsKey(id)) {
-                return login.get(id).equals(password);
-            }
-            return false;
-        }
-
-    //read will read file into itself
-    //split each
-}
+    public boolean passwordValidator(String ID, String password) {
+        if (this.ID.equals(ID) && this.password.equals(password)) 
+            return true;
+        else return false;
+    }
 }
 
 

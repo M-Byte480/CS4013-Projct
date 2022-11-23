@@ -11,8 +11,8 @@ public class Customer extends Person {
      * @param phoneNumber
      * @param loyalty
      */
-    public Customer(String name, String phoneNumber, double loyalty){
-        super(name, phoneNumber, Utils.uniqueIdGenerator("2"));
+    public Customer(String name, String phoneNumber, String password, double loyalty){
+        super(name, phoneNumber, Utils.uniqueIdGenerator("2"), password);
         this.loyalty = loyalty;
     }
         /**
@@ -22,8 +22,8 @@ public class Customer extends Person {
      * @param id
      * @param loyalty
      */
-    public Customer(String name, String phoneNumber, String id, double loyalty) {
-        super(name, phoneNumber, id);
+    public Customer(String name, String phoneNumber, String id, String password, double loyalty) {
+        super(name, phoneNumber, id, password);
         this.loyalty = loyalty;
     }
 
