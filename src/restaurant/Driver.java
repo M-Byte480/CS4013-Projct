@@ -3,10 +3,12 @@ package restaurant;
 import people.*;
 import reservation.Invoice;
 import reservation.Reservation;
+import till.Login;
 import till.Menu;
 import till.Product;
 import till.Table;
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -122,7 +124,10 @@ public class Driver {
                 people.put(line[2], new Customer(line[0], line[1], line[2], line[3], Double.parseDouble(line[4])));
             else if (level < 9)
                 people.put(line[2], new Staff(line[0], line[1], line[2], line[3]));
-            else owner = new Owner(line[0], line[1], line[2], line[3]);
+            else {
+                people.put(line[2], new Owner(line[0], line[1], line[2], line[3]));
+                owner = new Owner(line[0], line[1], line[2], line[3]);
+            }
         }
         yum = new Yum(restaurants, people, owner);
     }
@@ -135,18 +140,18 @@ public class Driver {
         );
     }
 
-    private Object getChoice(Object[] choices) {
-        if (choices.length == 0) return null;
+    private <T> T getChoice(ArrayList<T> choices) {
+        if (choices.size() == 0) return null;
         while (true) {
             char c = 'A';
-            for (Object choice : choices) {
+            for (T choice : choices) {
                 System.out.println(c + ") " + choice);
                 c++;
             }
             String input = in.nextLine();
             int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.length)
-                return choices[n];
+            if (0 <= n && n < choices.size())
+                return choices.get(n);
         }
     }
 
@@ -193,6 +198,9 @@ public class Driver {
                 checkProfit();
             }
 
+                System.out.println("M)ake Booking  A)dd Product  C)reate Table  D)elete Table   T)ake Order   Q)uit");
+                if (command.equals("M")) {
+                    createReservation();
 
             if (integer > 1)
                 if (command.equals("A")) {
@@ -206,6 +214,9 @@ public class Driver {
 
                 } else if (command.equals("T")) {
                     menu.run(restaurant);
+
+                } else if (command.equals("Q")) {
+                    break;
                 }
 
 
@@ -219,6 +230,7 @@ public class Driver {
             } else {
                 System.out.println("Invalid Command, Please Select Another");
             }
+                } else System.out.println("Invalid Command, Please Select Another");
         }
     }
 
@@ -247,7 +259,7 @@ public class Driver {
     }
 
     private void createReservation() {
-        Table table = ((Table) getChoice(restaurant.getTables().toArray()));
+        Table table = ((Table) getChoice(restaurant.getTables()));
         System.out.println("Enter Date (YYYY-MM-DD) : ");
         String date = in.nextLine();
         System.out.println("Enter Time (HH:mm) : ");
@@ -263,7 +275,7 @@ public class Driver {
 
     private void deleteTable() {
         System.out.println("Select a table which you would like to delete :  ");
-        restaurant.removeTable((Table) getChoice(restaurant.getTables().toArray()));
+        restaurant.removeTable((Table) getChoice(restaurant.getTables()));
     }
 
     private void hireStaff() {
@@ -315,7 +327,6 @@ public class Driver {
         Product newProduct = new Product(nameOfProduct, description, cost, allergies);
         restaurant.addProduct(newProduct);
     }
-
     private void makeOwner() {
         System.out.println("Enter name of  Owner");
         String name = in.nextLine();
@@ -327,6 +338,7 @@ public class Driver {
         String password = in.nextLine();
         Owner owner = new Owner(name, phoneNumber, id, password);
         yum.setOwner(owner);
+        yum.addPerson(owner);
         System.out.println("Owners User ID : " + owner.getId());
     }
 

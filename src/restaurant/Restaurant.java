@@ -145,10 +145,10 @@ public void addToOrder(ArrayList<Product> p){
     }
 
     public void save() {
-        CSVReader resFile = new CSVReader(new File("src/data/" + name + "/reservations.csv"), false);
-        CSVReader tablesFile = new CSVReader(new File("src/data/" + name + "/tables.csv"), false);
-        CSVReader productsFile = new CSVReader(new File("src/data/" + name + "/products.csv"), false);
-        CSVReader invoiceFile = new CSVReader(new File("src/data/" + name + "/invoices.csv"), false);
+        CSVReader resFile = new CSVReader(new File("src\\data\\" + name + "\\reservations.csv"), false);
+        CSVReader tablesFile = new CSVReader(new File("src\\data\\" + name + "\\tables.csv"), false);
+        CSVReader productsFile = new CSVReader(new File("src\\data\\" + name + "\\products.csv"), false);
+        CSVReader invoiceFile = new CSVReader(new File("src\\data\\" + name + "\\invoices.csv"), false);
 
         reservations.forEach(res -> {
             resFile.addDataToSystem(res.toString());
