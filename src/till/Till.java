@@ -1,10 +1,5 @@
 package till;
 
-import reservation.Invoice;
-import restaurant.CSVReader;
-
-import java.io.File;
-
 public class Till {
     private  double startOfEachDay = 200;
 

@@ -1,14 +1,12 @@
 package restaurant;
 
-import people.Customer;
-import people.Owner;
-import people.Person;
-import people.Staff;
+import people.*;
 import reservation.Invoice;
 import reservation.Reservation;
 import till.Menu;
 import till.Product;
 import till.Table;
+
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +26,7 @@ public class Driver {
         bootUp();
 
         if (yum.getOwner() == null) makeOwner();
-        if (yum.getRestaurants() == null) makeRestaurant();
+        if (yum.getRestaurants().size() == 0) makeRestaurant();
 
 
         menu = new Menu();
@@ -42,31 +40,31 @@ public class Driver {
 
             //If login
 
-            if (command.equals("L")) {
-                System.out.println("Enter User ID");
-                String id = in.nextLine();
-                System.out.println("Enter Password : ");
-                String password = in.nextLine();
-                //test for null pointer exception
-                if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id, password) == true ) {
-                    loginSuccessful(id);
-                    // Once logged in, allow the person to have  access to certain options based on their level of access
-                }  else {
-                    System.out.println("Invalid credentials");
+            switch (command) {
+                case "L" -> {
+                    System.out.println("Enter User ID");
+                    String id = in.nextLine();
+                    System.out.println("Enter Password : ");
+                    String password = in.nextLine();
+                    //test for null pointer exception
+                    if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id, password)) {
+                        loginSuccessful(id);
+                    } else {
+                        System.out.println("Invalid credentials");
+                    }
                 }
-
-
-            } else if (command.equals("S")) {
-                // Signs up the person, create new person object and add it to the arraylist of people.
-                signUp();
-
-            } else if (command.equals("Q")) {
-                restaurant.save();
-                System.out.println("Shutting Down");
-                System.exit(0);
+                case "S" ->
+                    // Signs up the person, create new person object and add it to the arraylist of people.
+                        signUp();
+                case "Q" -> {
+                    restaurant.save();
+                    System.out.println("Shutting Down");
+                    System.exit(0);
+                }
             }
         }
     }
+
 
     private Restaurant bootUpRestaurant(String name) {
         CSVReader resFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\reservations.csv"), true);
@@ -101,10 +99,11 @@ public class Driver {
 
         return new Restaurant(name, res, tables, products, invoices);
     }
+
     private void bootUp() {
         CSVReader restaurantFile = new CSVReader(new File("src\\data\\restaurants.csv"), true);
         CSVReader peopleFile = new CSVReader(new File("src\\data\\people.csv"), true);
-        
+
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         restaurantFile.getValues().forEach(line -> {
             restaurants.add(bootUpRestaurant(line[0]));
@@ -149,74 +148,98 @@ public class Driver {
         }
     }
 
-    public void loginSuccessful(String id)  {
+    private void chefLoginSuccesful() {
+        String command = in.nextLine().toUpperCase();
+
+    }
+
+
+    public void loginSuccessful(String id) {
         int integer = Character.getNumericValue(id.charAt(0));
-
-
+        String command = null;
         while (true) {
-            System.out.println("M)ake Booking  Q)uit");     // error yeah also sign up makes me a staff.
-            String command = in.nextLine().toUpperCase();
-            // HERE WE DO NOT CHECK IF THE PERSON HERE IS A STAFF OR NOT, WE JUST TELL THEM IF THEY WANT TO BOOK A TABLE
+            if (integer == 8) {
+                while (true) {
+                    System.out.println("F)ood ready   Q)uit");
+                    command = in.nextLine().toUpperCase();
+                    if (command.equals("F")) {
+                        foodReady();
 
-            if (command.equals("M")) {
-                createReservation();
+                    } else if (command.equals("Q")) {
+                        restaurant.save();
+                        run();
+                    } else {
+                        System.out.println("Invalid Command, Please Select Another");
+                    }
+                }
+            } else {
+                StringBuilder output = new StringBuilder();
+                if (integer == 9) output.append("H)ire Staff   R)emove Staff   P)rofit  ");
+                if (integer > 1) output.append("A)dd Product  C)reate Table  D)elete Table   T)ake Order");
+                output.append("M)ake Booking  Q)uit ");// error yeah also sign up makes me a staff.
+                System.out.println(output);
 
-            } else if (command.equals("Q")) {
-                break;
-            }
+                command = in.nextLine().toUpperCase();
 
-            if (integer > 1) { //Uses char to specify which action to do i.e create or remove(closeTable)
+                if (integer == 9) {
+                    if (command.equals("H")) {
+                        hireStaff();
+
+                    } else if (command.equals("R")) {
+                        removeStaff();
+                    }
+
+                } else if (command.equals("P")) {
+                    checkProfit();
+                }
 
                 System.out.println("M)ake Booking  A)dd Product  C)reate Table  D)elete Table   T)ake Order   Q)uit");
                 if (command.equals("M")) {
                     createReservation();
 
-                } else if (command.equals("A")) {
-                    addProduct();
+                    if (integer > 1)
+                        if (command.equals("A")) {
+                            addProduct();
 
-                } else if (command.equals("C")) {
-                    createTable();
+                        } else if (command.equals("C")) {
+                            createTable();
 
-                } else if (command.equals("D")) {
-                    deleteTable();
+                        } else if (command.equals("D")) {
+                            deleteTable();
 
-                } else if (command.equals("T")) {
-                    menu.run(restaurant);
+                        } else if (command.equals("T")) {
+                            menu.run(restaurant);
 
-                } else if (command.equals("Q")) {
-                    break;
-                }
+                        } else if (command.equals("Q")) {
+                            break;
+                        }
 
-                if (integer == 9) {
-                    System.out.println("M)ake Booking   A)dd Product  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
+
                     if (command.equals("M")) {
                         createReservation();
 
-                    } else if (command.equals("A")) {
-                        addProduct();
-
-                    } else if (command.equals("C")) {
-                        createTable();
-
-                    } else if (command.equals("D")) {
-                        deleteTable();
-
-                    } else if (command.equals("T")) {
-                        menu.run(restaurant);
-
-                    } else if (command.equals("H")) {
-                        hireStaff();
-
-                    } else if (command.equals("P")) {
-                        checkProfit();
-
                     } else if (command.equals("Q")) {
-                        break;
+                        restaurant.save();
+                        run();
+
+                    } else {
+                        System.out.println("Invalid Command, Please Select Another");
                     }
                 } else System.out.println("Invalid Command, Please Select Another");
             }
         }
     }
+
+
+    private void removeStaff() {
+        System.out.println("Enter staff ID you would like to remove");
+        String id = in.nextLine();
+
+    }
+
+
+    // HERE WE DO NOT CHECK IF THE PERSON HERE IS A STAFF OR NOT, WE JUST TELL THEM IF THEY WANT TO BOOK A TABLE
+
 
     public void signUp() {
         System.out.println("Enter full name");
@@ -232,7 +255,7 @@ public class Driver {
     }
 
     private void createReservation() {
-        Table table = (getChoice(restaurant.getTables()));
+        Table table = ((Table) getChoice(restaurant.getTables()));
         System.out.println("Enter Date (YYYY-MM-DD) : ");
         String date = in.nextLine();
         System.out.println("Enter Time (HH:mm) : ");
@@ -248,33 +271,44 @@ public class Driver {
 
     private void deleteTable() {
         System.out.println("Select a table which you would like to delete :  ");
-        restaurant.removeTable(getChoice(restaurant.getTables()));
+        restaurant.removeTable((Table) getChoice(restaurant.getTables()));
     }
 
     private void hireStaff() {
+
         System.out.println("Enter name of new staff member");
         String name = in.nextLine();
         System.out.println("Enter phone number of new staff member");
         String phoneNumber = in.nextLine();
-        System.out.println("Enter Owners New Password");
+        System.out.println("Enter new staff Password");
         String password = in.nextLine();
-        Staff newRecruit = new Staff(name, phoneNumber, password);
-        yum.addPerson(newRecruit);
+        System.out.println("Is staff a W)aiter or C)hef : ");
+        String type = in.nextLine().toUpperCase();
+        if (type.equals("C")) {
+            Chef newRecruit = new Chef(name, phoneNumber, password);
+            yum.addPerson(newRecruit);
+            System.out.println("Chef Added");
+        } else if (type.equals("W")) {
+            Staff newRecruit = new Staff(name, phoneNumber, password);
+            yum.addPerson(newRecruit);
+            System.out.println("Waiter Added");
+        } else {
+            System.out.println("Unknown Command ");
+        }
     }
 
     public double checkProfit() {
-        double tadhgRyanShmoney = restaurant.getProfit();
-        return tadhgRyanShmoney;
+        return restaurant.getProfit();
     }
 
-    private Table createTable() {
+    private void createTable() {
         int tableNumber, seats;
         System.out.println("Enter the table number");
         tableNumber = in.nextInt();
         System.out.println("Enter in the number of seats you need");
         seats = in.nextInt();
         Table resTable = new Table(tableNumber, seats);
-        return resTable;
+        System.out.println("New table created   Table Number : " + resTable.getTableNumber() + "Number of seats : " + resTable.getSeats());
     }
 
     private void addProduct() {
@@ -291,24 +325,30 @@ public class Driver {
         Product newProduct = new Product(nameOfProduct, description, cost, allergies);
         restaurant.addProduct(newProduct);
     }
+
     private void makeOwner() {
         System.out.println("Enter name of  Owner");
         String name = in.nextLine();
         System.out.println("Enter Owners Phone Number");
         String phoneNumber = in.nextLine();
-        System.out.println("Enter Owners New ID");
-        String id = in.nextLine();
         System.out.println("Enter Owners New Password");
         String password = in.nextLine();
-        Owner owner = new Owner(name, phoneNumber, id, password);
+        Owner owner = new Owner(name, phoneNumber, password);
         yum.setOwner(owner);
         yum.addPerson(owner);
+        System.out.println("Owners User ID : " + owner.getId());
     }
 
     private void makeRestaurant() {
         System.out.println("Enter The Name Of The New Restaurant : ");
         String name = in.nextLine();
         yum.addRestaurant(name);
+    }
+
+    private void foodReady() {
+        System.out.println("Select which order is ready : ");
+        ArrayList<Product> ready = getChoice(restaurant.getOrders());
+        restaurant.removeFromOrder(ready);
     }
 }
 

@@ -15,6 +15,8 @@ public class Restaurant {
     private ArrayList<Reservation> reservations;
     private ArrayList<Table> tables;
     private ArrayList<Product> products;
+
+    private ArrayList<ArrayList<Product>> orders;
     private ArrayList<Invoice> invoices;
 
     public Restaurant(String name) {
@@ -25,6 +27,7 @@ public class Restaurant {
         this.invoices = new ArrayList<>();
         Utils.makeCSVFiles(name);
     }
+
     public Restaurant(String name, ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Product> products, 
         ArrayList<Invoice> invoices) {
         this.name = name;
@@ -32,6 +35,15 @@ public class Restaurant {
         this.tables = tables;
         this.products = products;
         this.invoices = invoices;
+    }
+public void addToOrder(ArrayList<Product> p){
+        orders.add(p);
+}
+    public void removeFromOrder(ArrayList<Product> p){
+        orders.remove(p);
+    }
+    public ArrayList<ArrayList<Product>> getOrders(){
+        return orders;
     }
 
     public String getName() {
