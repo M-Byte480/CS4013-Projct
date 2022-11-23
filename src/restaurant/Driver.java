@@ -26,7 +26,7 @@ public class Driver {
         bootUp();
 
         if (yum.getOwner() == null) makeOwner();
-        if (yum.getRestaurants() == null) makeRestaurant();
+        if (yum.getRestaurants().size() == 0) makeRestaurant();
 
 
         menu = new Menu();
@@ -48,15 +48,9 @@ public class Driver {
                     String password = in.nextLine();
                     //test for null pointer exception
                     if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id, password)) {
-                        if (yum.getPerson(id) instanceof Chef) {
-                            chefLoginSuccesful();
-                        }
-                        if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id, password) == true) {
-                            loginSuccessful(id);
-                            // Once logged in, allow the person to have  access to certain options based on their level of access
-                        } else {
-                            System.out.println("Invalid credentials");
-                        }
+                        loginSuccessful(id);
+                    } else {
+                        System.out.println("Invalid credentials");
                     }
                 }
                 case "S" ->
@@ -162,8 +156,7 @@ public class Driver {
 
     public void loginSuccessful(String id) {
         int integer = Character.getNumericValue(id.charAt(0));
-
-
+        String command = null;
         while (true) {
             if (integer == 8) {
                 while (true) {
