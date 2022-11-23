@@ -10,19 +10,14 @@ import till.Login;
 import till.Menu;
 import till.Product;
 import till.Table;
-
-
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
-import java.util.spi.LocaleServiceProvider;
-
 
 public class Driver {
     private Scanner in;
@@ -45,10 +40,10 @@ public class Driver {
 
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
-            
-            
+
+
             //If login
-            
+
             if (command.equals("L")) {
                 System.out.println("Enter User ID");
                 String id = in.nextLine();
@@ -61,12 +56,12 @@ public class Driver {
                 }  else {
                     System.out.println("Invalid credentials");
                 }
-                
-                
+
+
             } else if (command.equals("S")) {
                 // Signs up the person, create new person object and add it to the arraylist of people.
                 signUp();
-                
+
             } else if (command.equals("Q")) {
                 restaurant.save();
                 System.out.println("Shutting Down");
@@ -85,7 +80,7 @@ public class Driver {
         tablesFile.getValues().forEach(line -> {
             tables.add(new Table(Integer.parseInt(line[0]), Integer.parseInt(line[1])));
         });
-        
+
         ArrayList<Reservation> res = new ArrayList<>();
         resFile.getValues().forEach(line -> {
             res.add(makeReservation(line, tablesFile.getData(line[0], "tableNumber").split(",")));
@@ -94,11 +89,7 @@ public class Driver {
         ArrayList<Product> products = new ArrayList<>();
         productsFile.getValues().forEach(line -> {
             ArrayList<String> alergies = new ArrayList<>(Arrays.asList(line[3].split(";")));
-            try {
-                products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
-            } catch (NumberFormatException | IOException e) {
-                e.printStackTrace();
-            }
+            products.add(new Product(line[0], line[1], Double.parseDouble(line[2]), alergies));
         });
 
         ArrayList<Invoice> invoices = new ArrayList<>();
@@ -133,9 +124,17 @@ public class Driver {
         }
         yum = new Yum(restaurants, people, owner);
     }
-    
-    private Object getChoice(ArrayList<Object> choices) {
-        if (choices.size() == 0) return null;
+
+    private static Reservation makeReservation(String[] ResParams, String[] TableParams) {
+        return new Reservation(
+                new Table(Integer.parseInt(TableParams[0]), Integer.parseInt(TableParams[1])),
+                LocalDateTime.parse(ResParams[1], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
+                LocalDateTime.parse(ResParams[2], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm"))
+        );
+    }
+
+    private Object getChoice(Object[] choices) {
+        if (choices.length == 0) return null;
         while (true) {
             char c = 'A';
             for (Object choice : choices) {
@@ -144,8 +143,8 @@ public class Driver {
             }
             String input = in.nextLine();
             int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.size())
-                return choices.get(n);
+            if (0 <= n && n < choices.length)
+                return choices[n];
         }
     }
 
