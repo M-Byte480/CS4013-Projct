@@ -170,4 +170,8 @@ public void addToOrder(ArrayList<Product> p){
         productsFile.saveToCSV();
         invoiceFile.saveToCSV();
     }
+
+    public String toString() {
+        return name;
+    }
 }

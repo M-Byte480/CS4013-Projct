@@ -33,7 +33,7 @@ public class Driver {
         while (true) {
             System.out.println("Select a Restaurant");
             restaurant = Utils.getChoice(yum.getRestaurants());
-            
+
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
 
