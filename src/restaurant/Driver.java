@@ -6,12 +6,10 @@ import people.Person;
 import people.Staff;
 import reservation.Invoice;
 import reservation.Reservation;
-import till.Login;
 import till.Menu;
 import till.Product;
 import till.Table;
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -50,7 +48,7 @@ public class Driver {
                 System.out.println("Enter Password : ");
                 String password = in.nextLine();
                 //test for null pointer exception
-                if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id,password) == true ) {
+                if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id, password) == true ) {
                     loginSuccessful(id);
                     // Once logged in, allow the person to have  access to certain options based on their level of access
                 }  else {
