@@ -102,7 +102,7 @@ public class Driver {
         return new Restaurant(name, res, tables, products, invoices);
     }
     private void bootUp() {
-        CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
+        CSVReader restaurantFile = new CSVReader(new File("//src//data//restaurants.csv"), true);
         CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
         
         ArrayList<Restaurant> restaurants = new ArrayList<>();
