@@ -42,6 +42,9 @@ public void addToOrder(ArrayList<Product> p){
     public void removeFromOrder(ArrayList<Product> p){
         orders.remove(p);
     }
+    public ArrayList<ArrayList<Product>> getOrders(){
+        return orders;
+    }
 
     public String getName() {
         return name;
