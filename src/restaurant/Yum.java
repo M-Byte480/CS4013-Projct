@@ -58,8 +58,8 @@ public class Yum {
     }
 
     public void save() {
-        CSVReader resFile = new CSVReader(new File("src/data/restaurants.csv"), false);
-        CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), false);
+        CSVReader resFile = new CSVReader(new File("src\\data\\restaurants.csv"), false);
+        CSVReader peopleFile = new CSVReader(new File("src\\data\\people.csv"), false);
 
         restaurants.forEach(res -> {
             resFile.addDataToSystem(res.toString());

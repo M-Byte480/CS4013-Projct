@@ -69,10 +69,10 @@ public class Driver {
     }
 
     private Restaurant bootUpRestaurant(String name) {
-        CSVReader resFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/reservations.csv"), true);
-        CSVReader tablesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/tables.csv"), true);
-        CSVReader productsFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/products.csv"), true);
-        CSVReader invoicesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/invoices.csv"), true);
+        CSVReader resFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\reservations.csv"), true);
+        CSVReader tablesFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\tables.csv"), true);
+        CSVReader productsFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\products.csv"), true);
+        CSVReader invoicesFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\invoices.csv"), true);
 
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
@@ -102,8 +102,8 @@ public class Driver {
         return new Restaurant(name, res, tables, products, invoices);
     }
     private void bootUp() {
-        CSVReader restaurantFile = new CSVReader(new File("//src//data//restaurants.csv"), true);
-        CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
+        CSVReader restaurantFile = new CSVReader(new File("src\\data\\restaurants.csv"), true);
+        CSVReader peopleFile = new CSVReader(new File("src\\data\\people.csv"), true);
         
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         restaurantFile.getValues().forEach(line -> {
