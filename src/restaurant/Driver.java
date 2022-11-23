@@ -3,13 +3,11 @@ package restaurant;
 import people.*;
 import reservation.Invoice;
 import reservation.Reservation;
-import till.Login;
 import till.Menu;
 import till.Product;
 import till.Table;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -42,31 +40,31 @@ public class Driver {
 
             //If login
 
-            if (command.equals("L")) {
-                System.out.println("Enter User ID");
-                String id = in.nextLine();
-                System.out.println("Enter Password : ");
-                String password = in.nextLine();
-                //test for null pointer exception
-                if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id, password) == true) {
-                    if (yum.getPerson(id) instanceof Chef) {
-                        chefLoginSuccesful();
+            switch (command) {
+                case "L" -> {
+                    System.out.println("Enter User ID");
+                    String id = in.nextLine();
+                    System.out.println("Enter Password : ");
+                    String password = in.nextLine();
+                    //test for null pointer exception
+                    if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id, password)) {
+                        if (yum.getPerson(id) instanceof Chef) {
+                            chefLoginSuccesful();
+                        }
+                        loginSuccessful(id);
+                        // Once logged in, allow the person to have  access to certain options based on their level of access
+                    } else {
+                        System.out.println("Invalid credentials");
                     }
-                    loginSuccessful(id);
-                    // Once logged in, allow the person to have  access to certain options based on their level of access
-                } else {
-                    System.out.println("Invalid credentials");
                 }
-
-
-            } else if (command.equals("S")) {
-                // Signs up the person, create new person object and add it to the arraylist of people.
-                signUp();
-
-            } else if (command.equals("Q")) {
-                restaurant.save();
-                System.out.println("Shutting Down");
-                System.exit(0);
+                case "S" ->
+                    // Signs up the person, create new person object and add it to the arraylist of people.
+                        signUp();
+                case "Q" -> {
+                    restaurant.save();
+                    System.out.println("Shutting Down");
+                    System.exit(0);
+                }
             }
         }
     }
@@ -193,9 +191,8 @@ public class Driver {
             }
 
 
-            if (integer > 1) {
-
-            } else if (command.equals("A")) {
+            if (integer > 1)
+                if (command.equals("A")) {
                 addProduct();
 
             } else if (command.equals("C")) {
@@ -274,10 +271,7 @@ public class Driver {
         System.out.println("Enter new staff Password");
         String password = in.nextLine();
         System.out.println("Is staff a W)aiter or C)hef : ");
-        boolean chef = true;
-        if (type.equals("W")) {
-            chef = false;
-        }
+        boolean chef = !type.equals("W");
         if (chef) {
             Chef newRecruit = new Chef(name, phoneNumber, password);
             yum.addPerson(newRecruit);
@@ -289,18 +283,17 @@ public class Driver {
     }
 
     public double checkProfit() {
-        double tadhgRyanShmoney = restaurant.getProfit();
-        return tadhgRyanShmoney;
+        return restaurant.getProfit();
     }
 
-    private Table createTable() {
+    private void createTable() {
         int tableNumber, seats;
         System.out.println("Enter the table number");
         tableNumber = in.nextInt();
         System.out.println("Enter in the number of seats you need");
         seats = in.nextInt();
         Table resTable = new Table(tableNumber, seats);
-        return resTable;
+        System.out.println("New table created   Table Number : " + resTable.getTableNumber() + "Number of seats : " + resTable.getSeats());
     }
 
     private void addProduct() {
