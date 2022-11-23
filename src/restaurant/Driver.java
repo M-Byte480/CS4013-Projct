@@ -118,7 +118,10 @@ public class Driver {
                 people.put(line[2], new Customer(line[0], line[1], line[2], line[3], Double.parseDouble(line[4])));
             else if (level < 9)
                 people.put(line[2], new Staff(line[0], line[1], line[2], line[3]));
-            else owner = new Owner(line[0], line[1], line[2], line[3]);
+            else {
+                people.put(line[2], new Owner(line[0], line[1], line[2], line[3]));
+                owner = new Owner(line[0], line[1], line[2], line[3]);
+            }
         }
         yum = new Yum(restaurants, people, owner);
     }
@@ -299,12 +302,13 @@ public class Driver {
         String password = in.nextLine();
         Owner owner = new Owner(name, phoneNumber, id, password);
         yum.setOwner(owner);
+        yum.addPerson(owner);
     }
 
     private void makeRestaurant() {
         System.out.println("Enter The Name Of The New Restaurant : ");
         String name = in.nextLine();
-       yum.addRestaurant(name);
+        yum.addRestaurant(name);
     }
 }
 
