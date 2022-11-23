@@ -10,6 +10,7 @@ import till.Login;
 import till.Menu;
 import till.Product;
 import till.Table;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -50,10 +51,13 @@ public class Driver {
                 System.out.println("Enter Password : ");
                 String password = in.nextLine();
                 //test for null pointer exception
-                if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id,password) == true ) {
+                if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id, password) == true) {
+                    if (yum.getPerson(id) instanceof Chef) {
+                        chefLoginSuccesful(id);
+                    }
                     loginSuccessful(id);
                     // Once logged in, allow the person to have  access to certain options based on their level of access
-                }  else {
+                } else {
                     System.out.println("Invalid credentials");
                 }
 
@@ -69,6 +73,8 @@ public class Driver {
             }
         }
     }
+
+
 
     private Restaurant bootUpRestaurant(String name) {
         CSVReader resFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/reservations.csv"), true);
@@ -103,10 +109,11 @@ public class Driver {
 
         return new Restaurant(name, res, tables, products, invoices);
     }
+
     private void bootUp() {
         CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
         CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
-        
+
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         restaurantFile.getValues().forEach(line -> {
             restaurants.add(bootUpRestaurant(line[0]));
@@ -147,47 +154,37 @@ public class Driver {
                 return choices[n];
         }
     }
+    private void chefLoginSuccesful(String id) {
+        int chef = 8;
+        chef = Character.getNumericValue(id.charAt(0));
 
-    public void loginSuccessful(String id)  {
+        while (true) {
+        }
+    }
+
+    public void loginSuccessful(String id) {
         int integer = Character.getNumericValue(id.charAt(0));
 
 
         while (true) {
-            System.out.println("M)ake Booking  Q)uit");     // error yeah also sign up makes me a staff.
+            StringBuilder output = new StringBuilder();
+            if (integer == 9) output.append("H)ire Staff   P)rofit ");
+            if (integer > 1) output.append("A)dd Product  C)reate Table  D)elete Table   T)ake Order");
+            output.append("M)ake Booking  Q)uit ");// error yeah also sign up makes me a staff.
+            System.out.println(output);
+
             String command = in.nextLine().toUpperCase();
-            // HERE WE DO NOT CHECK IF THE PERSON HERE IS A STAFF OR NOT, WE JUST TELL THEM IF THEY WANT TO BOOK A TABLE
 
-            if (command.equals("M")) {
-                createReservation();
+            if (integer == 9) {
+                if (command.equals("H")) {
+                    hireStaff();
 
-            } else if (command.equals("Q")) {
-                break;
-            }
-
-            if (integer > 1) { //Uses char to specify which action to do i.e create or remove(closeTable)
-
-                System.out.println("M)ake Booking  A)dd Product  C)reate Table  D)elete Table   T)ake Order   Q)uit");
-                if (command.equals("M")) {
-                    createReservation();
-
-                } else if (command.equals("A")) {
-                    addProduct();
-
-                } else if (command.equals("C")) {
-                    createTable();
-
-                } else if (command.equals("D")) {
-                    deleteTable();
-
-                } else if (command.equals("T")) {
-                    menu.run(restaurant);
-
-                } else if (command.equals("Q")) {
-                    break;
+                } else if (command.equals("P")) {
+                    checkProfit();
                 }
 
-                if (integer == 9) {
-                    System.out.println("M)ake Booking   A)dd Product  C)reate Table  D)elete Table   T)ake Order   H)ire Staff   P)rofit  Q)uit");
+                if (integer > 1) {
+
                     if (command.equals("M")) {
                         createReservation();
 
@@ -202,20 +199,16 @@ public class Driver {
 
                     } else if (command.equals("T")) {
                         menu.run(restaurant);
-
-                    } else if (command.equals("H")) {
-                        hireStaff();
-
-                    } else if (command.equals("P")) {
-                        checkProfit();
-
-                    } else if (command.equals("Q")) {
-                        break;
                     }
-                } else System.out.println("Invalid Command, Please Select Another");
+                }
+            } else {
+                System.out.println("Invalid Command, Please Select Another");
             }
         }
     }
+
+    // HERE WE DO NOT CHECK IF THE PERSON HERE IS A STAFF OR NOT, WE JUST TELL THEM IF THEY WANT TO BOOK A TABLE
+
 
     public void signUp() {
         System.out.println("Enter full name");
@@ -251,6 +244,7 @@ public class Driver {
     }
 
     private void hireStaff() {
+
         System.out.println("Enter name of new staff member");
         String name = in.nextLine();
         System.out.println("Enter phone number of new staff member");
@@ -290,6 +284,7 @@ public class Driver {
         Product newProduct = new Product(nameOfProduct, description, cost, allergies);
         restaurant.addProduct(newProduct);
     }
+
     private void makeOwner() {
         System.out.println("Enter name of  Owner");
         String name = in.nextLine();
@@ -306,7 +301,7 @@ public class Driver {
     private void makeRestaurant() {
         System.out.println("Enter The Name Of The New Restaurant : ");
         String name = in.nextLine();
-       yum.addRestaurant(name);
+        yum.addRestaurant(name);
     }
 }
 
