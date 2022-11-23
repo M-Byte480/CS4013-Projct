@@ -30,11 +30,12 @@ public class Utils {
         }
         return id;
     }
-    
     public static <T> T getChoice(ArrayList<T> choices) {
-        Scanner in = new Scanner(System.in);
+        return getChoice(choices, new Scanner(System.in));
+    }
+    
+    public static <T> T getChoice(ArrayList<T> choices, Scanner in) {
         if (choices.size() == 0) {
-            in.close();
             return null;
         }
         while (true) {
@@ -46,7 +47,6 @@ public class Utils {
             String input = in.nextLine();
             int n = input.toUpperCase().charAt(0) - 'A';
             if (0 <= n && n < choices.size())
-            in.close();
             return choices.get(n);
         }
     }
@@ -61,8 +61,6 @@ public class Utils {
 
         HashMap<String, String> csvNames = new HashMap<>(Map.ofEntries(
             Map.entry("invoices", "name;number;id;loyalty,tableID;time;length,productName,total,id\n"),
-            Map.entry("login", "ID,Password\n"),
-            Map.entry("people", "name,phoneNumber,id,loyalty/loyalty\n"),
             Map.entry("products","name,description,cost,allergies\n"),
             Map.entry("reservations", "tableID,time,length\n"),
             Map.entry("tables", "tableNumber,seats\n")

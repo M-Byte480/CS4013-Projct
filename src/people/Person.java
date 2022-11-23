@@ -44,6 +44,6 @@ public class Person {
         else return false;
     }
     public String toString() {
-        return String.format("%s,%s,%s", name, phoneNumber, id);
+        return String.format("%s,%s,%s,%s", name, phoneNumber, id, password);
     }
 }

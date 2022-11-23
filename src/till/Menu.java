@@ -15,13 +15,18 @@ public class Menu {
     private Restaurant restaurant;
     private Reservation reservation;
 
-    public void run(Restaurant restaurant) {
-
+    public void run(Restaurant restaurant, Scanner in) {
+        this.restaurant = restaurant;
+        this.in = in;
         while (true) {
 
             // Add Option to Quit or Select table
             System.out.println("Select A Table : ");
             Table table = Utils.getChoice(restaurant.getFreeTablesBetweenTime(LocalDateTime.now(), LocalDateTime.now().plusHours(1)));
+            if (table == null) {
+                System.out.println("No tables available!");
+                break;
+            }
             reservation = new Reservation(table, LocalDateTime.now(), LocalDateTime.now().plusHours(1));
 
             while (true) {
@@ -65,12 +70,12 @@ public class Menu {
     }
 
     private void addProduct(Table table) {
-        Product p = Utils.getChoice(table.getProducts());
+        Product p = Utils.getChoice(restaurant.getProducts(), in);
         table.addProducts(p);
     }
 
     private void removeProduct(Table table) {
-        Product p = Utils.getChoice(table.getProducts());
+        Product p = Utils.getChoice(table.getProducts(), in);
         table.removeProduct(p);
     }
 

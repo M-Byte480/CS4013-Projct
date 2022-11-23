@@ -24,6 +24,7 @@ public class Restaurant {
         this.tables = new ArrayList<>();
         this.products = new ArrayList<>();
         this.invoices = new ArrayList<>();
+        this.orders = new ArrayList<>();
         Utils.makeCSVFiles(name);
     }
 
@@ -35,9 +36,9 @@ public class Restaurant {
         this.products = products;
         this.invoices = invoices;
     }
-public void addToOrder(ArrayList<Product> p){
-        orders.add(p);
-}
+    public void addToOrder(ArrayList<Product> p){
+            orders.add(p);
+    }
     public void removeFromOrder(ArrayList<Product> p){
         orders.remove(p);
     }

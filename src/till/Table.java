@@ -10,6 +10,7 @@ public class Table {
     public Table(int tableNumber, int seats) {
         this.tableNumber = tableNumber;
         this.seats = seats;
+        this.products = new ArrayList<>();
     }
 
     public int getTableNumber() {
@@ -46,5 +47,9 @@ public class Table {
         }
 		return total;
 	}
+
+    public String toString() {
+        return String.format("%s,%s", tableNumber, seats);
+    }
 }
 

@@ -65,7 +65,6 @@ public class Yum {
             resFile.addDataToSystem(res.toString());
         });
 
-        peopleFile.addDataToSystem(owner.toString());
         people.forEach((id, person) -> {
             peopleFile.addDataToSystem(person.toString());
         });
