@@ -1,9 +1,6 @@
 package restaurant;
 
-import people.Customer;
-import people.Owner;
-import people.Person;
-import people.Staff;
+import people.*;
 import reservation.Invoice;
 import reservation.Reservation;
 import till.Login;
@@ -53,7 +50,7 @@ public class Driver {
                 //test for null pointer exception
                 if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id, password) == true) {
                     if (yum.getPerson(id) instanceof Chef) {
-                        chefLoginSuccesful(id);
+                        chefLoginSuccesful();
                     }
                     loginSuccessful(id);
                     // Once logged in, allow the person to have  access to certain options based on their level of access
@@ -73,7 +70,6 @@ public class Driver {
             }
         }
     }
-
 
 
     private Restaurant bootUpRestaurant(String name) {
@@ -154,11 +150,20 @@ public class Driver {
                 return choices[n];
         }
     }
-    private void chefLoginSuccesful(String id) {
-        int chef = 8;
-        chef = Character.getNumericValue(id.charAt(0));
 
+    private void chefLoginSuccesful() {
+        String command = in.nextLine().toUpperCase();
         while (true) {
+            System.out.println("F)ood ready   Q)uit");
+            if (command.equals("F")) {
+                hireStaff();
+
+            } else if (command.equals("Q")) {
+                restaurant.save();
+                run();
+            } else {
+                System.out.println("Invalid Command, Please Select Another");
+            }
         }
     }
 
@@ -168,7 +173,7 @@ public class Driver {
 
         while (true) {
             StringBuilder output = new StringBuilder();
-            if (integer == 9) output.append("H)ire Staff   P)rofit ");
+            if (integer == 9) output.append("H)ire Staff   R)emove Staff   P)rofit  ");
             if (integer > 1) output.append("A)dd Product  C)reate Table  D)elete Table   T)ake Order");
             output.append("M)ake Booking  Q)uit ");// error yeah also sign up makes me a staff.
             System.out.println(output);
@@ -179,33 +184,50 @@ public class Driver {
                 if (command.equals("H")) {
                     hireStaff();
 
-                } else if (command.equals("P")) {
-                    checkProfit();
+                } else if (command.equals("R")) {
+                    removeStaff();
                 }
 
-                if (integer > 1) {
+            } else if (command.equals("P")) {
+                checkProfit();
+            }
 
-                    if (command.equals("M")) {
-                        createReservation();
 
-                    } else if (command.equals("A")) {
-                        addProduct();
+            if (integer > 1) {
 
-                    } else if (command.equals("C")) {
-                        createTable();
+            } else if (command.equals("A")) {
+                addProduct();
 
-                    } else if (command.equals("D")) {
-                        deleteTable();
+            } else if (command.equals("C")) {
+                createTable();
 
-                    } else if (command.equals("T")) {
-                        menu.run(restaurant);
-                    }
-                }
+            } else if (command.equals("D")) {
+                deleteTable();
+
+            } else if (command.equals("T")) {
+                menu.run(restaurant);
+            }
+
+
+            if (command.equals("M")) {
+                createReservation();
+
+            } else if (command.equals("Q")) {
+                restaurant.save();
+                run();
+
             } else {
                 System.out.println("Invalid Command, Please Select Another");
             }
         }
     }
+
+    private void removeStaff() {
+        System.out.println("Enter staff ID you would like to remove");
+        String id = in.nextLine();
+
+    }
+
 
     // HERE WE DO NOT CHECK IF THE PERSON HERE IS A STAFF OR NOT, WE JUST TELL THEM IF THEY WANT TO BOOK A TABLE
 
@@ -244,15 +266,26 @@ public class Driver {
     }
 
     private void hireStaff() {
-
+        String type = in.nextLine();
         System.out.println("Enter name of new staff member");
         String name = in.nextLine();
         System.out.println("Enter phone number of new staff member");
         String phoneNumber = in.nextLine();
-        System.out.println("Enter Owners New Password");
+        System.out.println("Enter new staff Password");
         String password = in.nextLine();
-        Staff newRecruit = new Staff(name, phoneNumber, password);
-        yum.addPerson(newRecruit);
+        System.out.println("Is staff a W)aiter or C)hef : ");
+        boolean chef = true;
+        if (type.equals("W")) {
+            chef = false;
+        }
+        if (chef) {
+            Chef newRecruit = new Chef(name, phoneNumber, password);
+            yum.addPerson(newRecruit);
+        } else {
+            Staff newRecruit = new Staff(name, phoneNumber, password);
+            yum.addPerson(newRecruit);
+        }
+
     }
 
     public double checkProfit() {
@@ -296,6 +329,7 @@ public class Driver {
         String password = in.nextLine();
         Owner owner = new Owner(name, phoneNumber, id, password);
         yum.setOwner(owner);
+        System.out.println("Owners User ID : " + owner.getId());
     }
 
     private void makeRestaurant() {
