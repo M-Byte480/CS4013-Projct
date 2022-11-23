@@ -34,7 +34,7 @@ public class Driver {
         menu = new Menu();
         while (true) {
             System.out.println("Select a Restaurant");
-            restaurant = (Restaurant) getChoice(yum.getRestaurants().toArray());
+            restaurant = (Restaurant) getChoice(yum.getRestaurants());
 
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
@@ -118,7 +118,10 @@ public class Driver {
                 people.put(line[2], new Customer(line[0], line[1], line[2], line[3], Double.parseDouble(line[4])));
             else if (level < 9)
                 people.put(line[2], new Staff(line[0], line[1], line[2], line[3]));
-            else owner = new Owner(line[0], line[1], line[2], line[3]);
+            else {
+                people.put(line[2], new Owner(line[0], line[1], line[2], line[3]));
+                owner = new Owner(line[0], line[1], line[2], line[3]);
+            }
         }
         yum = new Yum(restaurants, people, owner);
     }
@@ -131,18 +134,18 @@ public class Driver {
         );
     }
 
-    private Object getChoice(Object[] choices) {
-        if (choices.length == 0) return null;
+    private <T> T getChoice(ArrayList<T> choices) {
+        if (choices.size() == 0) return null;
         while (true) {
             char c = 'A';
-            for (Object choice : choices) {
+            for (T choice : choices) {
                 System.out.println(c + ") " + choice);
                 c++;
             }
             String input = in.nextLine();
             int n = input.toUpperCase().charAt(0) - 'A';
-            if (0 <= n && n < choices.length)
-                return choices[n];
+            if (0 <= n && n < choices.size())
+                return choices.get(n);
         }
     }
 
@@ -229,7 +232,7 @@ public class Driver {
     }
 
     private void createReservation() {
-        Table table = ((Table) getChoice(restaurant.getTables().toArray()));
+        Table table = ((Table) getChoice(restaurant.getTables()));
         System.out.println("Enter Date (YYYY-MM-DD) : ");
         String date = in.nextLine();
         System.out.println("Enter Time (HH:mm) : ");
@@ -245,7 +248,7 @@ public class Driver {
 
     private void deleteTable() {
         System.out.println("Select a table which you would like to delete :  ");
-        restaurant.removeTable((Table) getChoice(restaurant.getTables().toArray()));
+        restaurant.removeTable((Table) getChoice(restaurant.getTables()));
     }
 
     private void hireStaff() {
@@ -299,12 +302,13 @@ public class Driver {
         String password = in.nextLine();
         Owner owner = new Owner(name, phoneNumber, id, password);
         yum.setOwner(owner);
+        yum.addPerson(owner);
     }
 
     private void makeRestaurant() {
         System.out.println("Enter The Name Of The New Restaurant : ");
         String name = in.nextLine();
-       yum.addRestaurant(name);
+        yum.addRestaurant(name);
     }
 }
 
