@@ -154,7 +154,7 @@ public class Driver {
         while (true) {
             System.out.println("F)ood ready   Q)uit");
             if (command.equals("F")) {
-                hireStaff();
+                foodReady();
 
             } else if (command.equals("Q")) {
                 restaurant.save();
@@ -163,6 +163,11 @@ public class Driver {
                 System.out.println("Invalid Command, Please Select Another");
             }
         }
+    }
+
+    private void foodReady() {
+        restaurant.get
+        restaurant.removeFromOrder(p);
     }
 
     public void loginSuccessful(String id) {
@@ -193,17 +198,17 @@ public class Driver {
 
             if (integer > 1)
                 if (command.equals("A")) {
-                addProduct();
+                    addProduct();
 
-            } else if (command.equals("C")) {
-                createTable();
+                } else if (command.equals("C")) {
+                    createTable();
 
-            } else if (command.equals("D")) {
-                deleteTable();
+                } else if (command.equals("D")) {
+                    deleteTable();
 
-            } else if (command.equals("T")) {
-                menu.run(restaurant);
-            }
+                } else if (command.equals("T")) {
+                    menu.run(restaurant);
+                }
 
 
             if (command.equals("M")) {

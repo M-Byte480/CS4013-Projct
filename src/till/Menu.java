@@ -18,7 +18,7 @@ public class Menu {
             Table t = (Table) getChoice(restaurant.getTables().toArray());
 
             while (true) {
-                System.out.println("S)how Products, O)rder Details A)dd A Product To Order, R)emove A Product From Order, F)inish, Q)uit");
+                System.out.println("S)how Products, O)rder Details  A)dd A Product To Order  C)onfrim Order   R)emove A Product From Order, F)inish, Q)uit");
                 String command = in.nextLine().toUpperCase();
 
                 if (command.equals("S")) {
@@ -32,6 +32,11 @@ public class Menu {
                 } else if (command.equals("A")) {
                     System.out.printf("Add A Product To Order : ");
                     addProduct(t);
+
+                } else if (command.equals("C")) {
+                    System.out.printf("Order Confirmed");
+                    restaurant.addToOrder(t.getProducts());
+
 
                 } else if (command.equals("R")) {
                     System.out.printf("Remove A Product From Order : ");
