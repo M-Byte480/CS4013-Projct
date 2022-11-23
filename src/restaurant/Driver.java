@@ -34,7 +34,7 @@ public class Driver {
         menu = new Menu();
         while (true) {
             System.out.println("Select a Restaurant");
-            restaurant = (Restaurant) getChoice(yum.getRestaurants());
+            restaurant = getChoice(yum.getRestaurants());
 
             System.out.println("L)ogin  S)ign up  Q)uit");
             String command = in.nextLine().toUpperCase();
@@ -232,7 +232,7 @@ public class Driver {
     }
 
     private void createReservation() {
-        Table table = ((Table) getChoice(restaurant.getTables()));
+        Table table = (getChoice(restaurant.getTables()));
         System.out.println("Enter Date (YYYY-MM-DD) : ");
         String date = in.nextLine();
         System.out.println("Enter Time (HH:mm) : ");
@@ -248,7 +248,7 @@ public class Driver {
 
     private void deleteTable() {
         System.out.println("Select a table which you would like to delete :  ");
-        restaurant.removeTable((Table) getChoice(restaurant.getTables()));
+        restaurant.removeTable(getChoice(restaurant.getTables()));
     }
 
     private void hireStaff() {
