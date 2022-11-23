@@ -6,7 +6,6 @@ import reservation.Reservation;
 import till.Menu;
 import till.Product;
 import till.Table;
-
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -51,10 +50,12 @@ public class Driver {
                         if (yum.getPerson(id) instanceof Chef) {
                             chefLoginSuccesful();
                         }
-                        loginSuccessful(id);
-                        // Once logged in, allow the person to have  access to certain options based on their level of access
-                    } else {
-                        System.out.println("Invalid credentials");
+                        if (yum.getPerson(id) != null && yum.getPerson(id).passwordValidator(id, password) == true) {
+                            loginSuccessful(id);
+                            // Once logged in, allow the person to have  access to certain options based on their level of access
+                        } else {
+                            System.out.println("Invalid credentials");
+                        }
                     }
                 }
                 case "S" ->
@@ -71,10 +72,10 @@ public class Driver {
 
 
     private Restaurant bootUpRestaurant(String name) {
-        CSVReader resFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/reservations.csv"), true);
-        CSVReader tablesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/tables.csv"), true);
-        CSVReader productsFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/products.csv"), true);
-        CSVReader invoicesFile = new CSVReader(new File("src/data/" + restaurant.getName() + "/invoices.csv"), true);
+        CSVReader resFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\reservations.csv"), true);
+        CSVReader tablesFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\tables.csv"), true);
+        CSVReader productsFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\products.csv"), true);
+        CSVReader invoicesFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\invoices.csv"), true);
 
         ArrayList<Table> tables = new ArrayList<>();
         tablesFile.getValues().forEach(line -> {
@@ -105,8 +106,8 @@ public class Driver {
     }
 
     private void bootUp() {
-        CSVReader restaurantFile = new CSVReader(new File("src/data/restaurants.csv"), true);
-        CSVReader peopleFile = new CSVReader(new File("src/data/people.csv"), true);
+        CSVReader restaurantFile = new CSVReader(new File("src\\data\\restaurants.csv"), true);
+        CSVReader peopleFile = new CSVReader(new File("src\\data\\people.csv"), true);
 
         ArrayList<Restaurant> restaurants = new ArrayList<>();
         restaurantFile.getValues().forEach(line -> {
@@ -165,10 +166,7 @@ public class Driver {
         }
     }
 
-    private void foodReady() {
-        restaurant.get
-        restaurant.removeFromOrder(p);
-    }
+
 
     public void loginSuccessful(String id) {
         int integer = Character.getNumericValue(id.charAt(0));
@@ -224,6 +222,7 @@ public class Driver {
         }
     }
 
+
     private void removeStaff() {
         System.out.println("Enter staff ID you would like to remove");
         String id = in.nextLine();
@@ -268,7 +267,7 @@ public class Driver {
     }
 
     private void hireStaff() {
-        String type = in.nextLine();
+
         System.out.println("Enter name of new staff member");
         String name = in.nextLine();
         System.out.println("Enter phone number of new staff member");
@@ -276,6 +275,7 @@ public class Driver {
         System.out.println("Enter new staff Password");
         String password = in.nextLine();
         System.out.println("Is staff a W)aiter or C)hef : ");
+        String type = in.nextLine();
         boolean chef = !type.equals("W");
         if (chef) {
             Chef newRecruit = new Chef(name, phoneNumber, password);
@@ -334,6 +334,11 @@ public class Driver {
         System.out.println("Enter The Name Of The New Restaurant : ");
         String name = in.nextLine();
         yum.addRestaurant(name);
+    }
+    private void foodReady() {
+        System.out.println("Select which order is ready : ");
+         Object ready = getChoice(restaurant.getOrders().toArray());
+        restaurant.removeFromOrder(ready);
     }
 }
 
