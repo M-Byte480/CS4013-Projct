@@ -18,6 +18,9 @@ public class Utils {
         id = id + String.format("%07d", uniqueID);
         return id;
     }
+    public static void setUniqueID(int id) {
+        uniqueID = id;
+    }
 
     public static int getInvoiceLatestID(){
         int id = 0;
@@ -26,7 +29,7 @@ public class Utils {
             CSVReader s = new CSVReader(new File("src/data/invoices.csv"), true);
             id = Integer.parseInt(s.getValues().get(s.getValues().size() - 1)[s.getValues().get(0).length - 1]);
         }catch(Exception ignored){
-
+// you aint doing anything here @milan
         }
         return id;
     }
@@ -44,10 +47,12 @@ public class Utils {
                 System.out.println(c + ") " + choice);
                 c++;
             }
+            System.out.println(c + ") Cancel");
             String input = in.nextLine();
             int n = input.toUpperCase().charAt(0) - 'A';
             if (0 <= n && n < choices.size())
-            return choices.get(n);
+                return choices.get(n);
+            return null;
         }
     }
 
@@ -60,10 +65,10 @@ public class Utils {
         if (!dir.mkdir()) return false;
 
         HashMap<String, String> csvNames = new HashMap<>(Map.ofEntries(
-            Map.entry("invoices", "name;number;id;loyalty,tableID;time;length,productName,total,id\n"),
-            Map.entry("products","name,description,cost,allergies\n"),
-            Map.entry("reservations", "tableID,time,length\n"),
-            Map.entry("tables", "tableNumber,seats\n")
+            Map.entry("invoices", "name;number;id;loyalty,tableID;time;length,productName,total,id"),
+            Map.entry("products","name,description,cost,allergies"),
+            Map.entry("reservations", "tableID,time,length,customerID"),
+            Map.entry("tables", "tableNumber,seats")
         ));
 
         for (String CSVname : csvNames.keySet()) {

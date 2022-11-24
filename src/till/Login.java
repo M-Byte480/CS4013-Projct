@@ -4,6 +4,11 @@ public class Login {
     private String password;
     private String ID;
 
+    /**
+     * Creates a Login object with a specified ID and password
+     * @param ID
+     * @param password
+     */
     public Login(String ID, String password){
         this.ID = ID;
         this.password = password;

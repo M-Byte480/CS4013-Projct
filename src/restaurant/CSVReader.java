@@ -31,6 +31,7 @@ public class CSVReader {
         this.values = new ArrayList<>();
         if (toRead) readIntoSystem();
     }
+
     public CSVReader(File file, String datafields) {
         this.file = file;
         this.values = new ArrayList<>();
@@ -161,7 +162,7 @@ public class CSVReader {
 
         for (int i = 0; i < values.size(); i++) {
             if (values.get(i)[index].equals(value)) {
-                    dataLinesString.append(String.join(",", values.get(i))).append('\n');
+                    dataLinesString.append(String.join(",", values.get(i)));
             }
         }
 

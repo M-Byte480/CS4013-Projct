@@ -4,35 +4,51 @@ import people.*;
 import till.*;
 import restaurant.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Invoice {
-    private final Reservation reservation;
-    private final Customer customer;
-    private final ArrayList<Product> products;
-    private final double total;
-    private final int id;
+    private Reservation reservation = null;
+    private String customerID = null;
+    private ArrayList<Product> products = null;
+    private double total;
+    private int id;
     private static int uniqueID;
-
+    private LocalDateTime date = null;
     /**
-     * Creates an invoice Object
-     *
+     * Creates an Invoice object with a specified reservation
+     * @param reservation
      */
     public Invoice(Reservation reservation) {
         this.reservation = reservation;                         // collects details of reservation
-        this.customer = reservation.getCust();                  // contains details of the person who booked
+        this.customerID = reservation.getCustomerID();                  // contains details of the person who booked
         this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
         this.total = reservation.getTable().getTotal();
         this.id = uniqueID++;
     }
 
+    /**
+     * Created an Invoice object with a specified reservation and id number
+     * @param reservation
+     * @param id
+     */
     public Invoice(Reservation reservation, int id) {
         this.reservation = reservation;                         // collects details of reservation
-        this.customer = reservation.getCust();                  // contains details of the person who booked
+        this.customerID = reservation.getCustomerID();                  // contains details of the person who booked
         this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
         this.total = reservation.getTable().getTotal();
         this.id = id;
+    }
+
+    public Invoice(LocalDateTime date, double total){
+        this.total = total;
+        this.date = date;
+    }
+    public LocalDateTime getDate() {
+        return date;
     }
 
     /**
@@ -51,22 +67,31 @@ public class Invoice {
         return uniqueID;
     }
 
+    /**
+     * Gets the total price associated with an Invoice object
+     * @return invoice total as a double
+     */
     public double getTotal() {
         return total;
     }
 
+    /**
+     * Gets the instance of Reservation created using the constructors above
+     * @return instance of Reservation
+     */
     public Reservation getReservation() {
         return reservation;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
 
     public ArrayList<Product> getProducts() {
         return products;
     }
 
+    /**
+     * Gets the id contained in a Reservation object
+     * @return id
+     */
     public int getId() {
         return id;
     }
@@ -83,21 +108,11 @@ public class Invoice {
         setUniqueID(Utils.getInvoiceLatestID());
     }
 
-    public String[] customerDetailsToStringArr () {
-        // name, phoneNumber, timeOfBooking, TimeOfSending, products
-        ArrayList<String> invoice = new ArrayList<>();
-        invoice.add(customer.getName());
-        invoice.add(customer.getPhoneNumber());
-        invoice.add(reservation.getTime().toString());
-        invoice.add(Utils.getStringTime());
-        invoice.add(reservation.getProducts().toString());
-        String[] custDetails = new String[4];
-        for (int i = 0; i < custDetails.length; i++) {
-            custDetails[i] = invoice.get(i);
-        }
-        return custDetails;
-    }
-
+    /**
+     * Prints out a string of all the products, adds a ";" after each one and
+     * removes the ";" from the last product
+     * @return a string with the time, duration, the customer's id and their total order
+     */
     public String toString() {
         StringBuilder prodString = new StringBuilder();
         for (Product product : products) {
@@ -105,14 +120,16 @@ public class Invoice {
         }
         prodString.deleteCharAt(prodString.length()-1);
 
-        return String.format("%s,%s,%s,%s,%s",
-            customer.toString().replace(",", ";"),
-            reservation.toString().replace(",", ";"),
+        return String.format("%s,%s,%s,%s,%.2f,%s",
+            reservation.getTime().format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
+            reservation.getLength().format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
+            reservation.getCustomerID(),
             prodString,
             total,
             id
         );
     }
+
 
     public String toFormat() {
         HashMap<Product, Integer> occurrences = new HashMap<>();
@@ -135,15 +152,15 @@ public class Invoice {
         double total = 0;
         for (HashMap.Entry<Product, Integer> item :
                 occurrences.entrySet()) {
-            formattedInvoice.append(Invoice.toLineItem(item.getKey().getName(), item.getValue(), item.getKey().getCost(), item.getValue() * item.getKey().getCost()));
+            formattedInvoice.append(Invoice.toLineItem( item.getValue(), item.getKey().getCost(), item.getValue() * item.getKey().getCost()));
             total += item.getValue() * item.getKey().getCost();
         }
 
         formattedInvoice.append(String.format("%26f\n", total));
-        return String.format(formattedInvoice.toString(), this.id, this.customer.getName());
+        return String.format(formattedInvoice.toString(), this.id, this.customerID);
     }
 
-    public static String toLineItem(String name, int quantity, double unitPrice, double total){
-        return String.format("%7S%7S%7S€%5S\n" + "=".repeat(26), name, quantity, unitPrice, total);
+    public static String toLineItem(int quantity, double unitPrice, double total){
+        return String.format("%7S%7S€%5S\n" + "=".repeat(26), quantity, unitPrice, total);
     }
 }

@@ -5,24 +5,33 @@ import till.Product;
 import till.Table;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Reservation {
 	private Table table;
-	private Customer cust;
+	private String customerID;
 	private LocalDateTime time;
 	private LocalDateTime length;
 
 	/**
 	 * Makes a Reservation object.
-	 * @param table
-	 * @param time
-	 * @param length
+	 * @param table which a resrvation will be made for
+	 * @param time which the reservation will start
+	 * @param length of the reservation
+	 * @param customerID of the person at the table
 	 */
-	public Reservation(Table table, LocalDateTime time, LocalDateTime length) {
+	public Reservation(Table table, LocalDateTime time, LocalDateTime length, String customerID) {
 		this.table = table;
 		this.time = time;
 		this.length = length;
+		this.customerID = customerID;
+	}
+
+	public Reservation(LocalDateTime time, LocalDateTime length, String customerID){
+		this.time = time;
+		this.length = length;
+		this.customerID = customerID;
 	}
 
 	/**
@@ -31,13 +40,6 @@ public class Reservation {
 	 */
 	public Table getTable() {
 		return table;
-	}
-	/** 
-	 * Returns the customer.
-	 * @return Customer
-	 */
-	public Customer getCust() {
-		return cust;
 	}
 	/**
 	 * Gets the time the reservation is made for.
@@ -75,12 +77,8 @@ public class Reservation {
 	public void setLength(LocalDateTime length) {
 		this.length = length;
 	}
-	/**
-	 * Sets the customer.
-	 * @param cust
-	 */
-	public void setCust(Customer cust) {
-		this.cust = cust;
+	public String getCustomerID() {
+		return customerID;
 	}
 
 	/**
@@ -108,8 +106,12 @@ public class Reservation {
 		return reservationProducts;
 	}
 
+
+	/**
+	 * @return table number, time, length and customer ID formatted to string
+	 */
 	@Override
 	public String toString() {
-		return String.format("%s,%s,%s", table.getTableNumber(), time.toString(), length);
+		return String.format("%s,%s,%s,%s", table.getTableNumber(), time.format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")), length, customerID);
 	}
 }

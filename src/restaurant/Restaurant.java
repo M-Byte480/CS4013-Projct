@@ -1,5 +1,6 @@
 package restaurant;
 
+import people.Customer;
 import reservation.Invoice;
 import reservation.Reservation;
 import till.Product;
@@ -18,6 +19,10 @@ public class Restaurant {
     private ArrayList<ArrayList<Product>> orders;
     private ArrayList<Invoice> invoices;
 
+    /**
+     * Constructor to create a new Restaurant Object
+     * @param name of the restaurant
+     */
     public Restaurant(String name) {
         this.name = name;
         this.reservations = new ArrayList<>();
@@ -28,54 +33,108 @@ public class Restaurant {
         Utils.makeCSVFiles(name);
     }
 
-    public Restaurant(String name, ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Product> products, 
+    /**
+     * Constructor to create a new Restaurant Object
+     * @param name of restaurant
+     * @param reservations within the restaurant
+     * @param tables within the restaurant
+     * @param products within the restaurant
+     * @param invoices within the restaurant
+     */
+    public Restaurant(String name, ArrayList<Reservation> reservations, ArrayList<Table> tables, ArrayList<Product> products,
         ArrayList<Invoice> invoices) {
         this.name = name;
         this.reservations = reservations;
         this.tables = tables;
         this.products = products;
         this.invoices = invoices;
+        this.orders = new ArrayList<>();
     }
+
+    /**
+     * @param p added to orders
+     */
     public void addToOrder(ArrayList<Product> p){
             orders.add(p);
     }
+
+    /**
+     * @param p removed from orders
+     */
     public void removeFromOrder(ArrayList<Product> p){
         orders.remove(p);
     }
+
+    /**
+     * @return orders (VArrayList<ArrayList<Product>>) which is each order in the restaurant
+     */
     public ArrayList<ArrayList<Product>> getOrders(){
         return orders;
     }
 
+
+    /**
+     * @return  nameof Restaurant
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return reservations (Each reservation within the Restaurant)
+     */
     public ArrayList<Reservation> getReservations() {
         return reservations;
     }
+
+    /**
+     * @param reservation which is trying to be added to reservations(ArrayList<Reservation>)
+     * If reservation is before this exact moment
+     * @return false
+     * If reservation overlaps with another reservation
+     * @return false;
+     *
+     * If neither of these criterias are met
+     * @return true;
+     */
     public boolean addReservation(Reservation reservation) {
-        boolean isBooked = false;
+        if (reservation.getTime().isBefore(LocalDateTime.now())) return false;
         for (Reservation res : reservations) {
-            if (res.overlaps(reservation)) isBooked = true;
+            if (res.overlaps(reservation)) return false;
         }
-        
-        if (isBooked) return false;
-        this.reservations.add(reservation);
+
+        reservations.add(reservation);
         return true;
     }
+
+    /**
+     * @param reservation which is being removed.
+     * Removes selected Reservation from reservations(ArrayLIst<Reservation>)
+     */
     public void removeReservation(Reservation reservation) {
         reservations.remove(reservation);
     }
 
+    /**
+     * @return proudcts (ArrayList<Product>)
+     */
     public ArrayList<Product> getProducts() {
         return products;
     }
     public void setProducts(ArrayList<Product> products) {
         this.products = products;
     }
+
+    /**
+     * @param prod
+     */
     public void addProduct(Product prod) {
         products.add(prod);
     }
+
+    /**
+     * @param prod
+     */
     public void removeProduct(Product prod) {
         products.remove(prod);
     }
@@ -112,7 +171,7 @@ public class Restaurant {
     }
 
     public ArrayList<Table> getFreeTablesOfSizeBetweenTime(int size, LocalDateTime timeStart, LocalDateTime timeEnd) {
-        ArrayList<Table> freeTables = getTablesBookedBetweenTime(timeStart, timeEnd);
+        ArrayList<Table> freeTables = getFreeTablesBetweenTime(timeStart, timeEnd);
         ArrayList<Table> freeTablesOfSize = new ArrayList<>();
         for (Table table : freeTables) {
             if (table.getSeats() >= size) freeTablesOfSize.add(table);
@@ -132,6 +191,7 @@ public class Restaurant {
         for (Reservation res : reservations) {
             if ((res.getTime().isAfter(timeStart)) && (res.getTime().isBefore(timeEnd))) continue;
             else if ((res.getLength().isAfter(timeStart)) && (res.getLength().isBefore(timeEnd))) continue;
+            else if ((res.getTime().isBefore(timeStart)) && (res.getLength().isAfter(timeEnd))) continue;
             tempTables.add(res.getTable());
         }
         return tempTables;
@@ -140,18 +200,26 @@ public class Restaurant {
     public double getProfitBetweenTime(LocalDateTime timeStart, LocalDateTime timeEnd) {
         double profit = 0;
         for (Invoice invoice : invoices) {
-            if ((invoice.getReservation().getTime().isAfter(timeStart)) && (invoice.getReservation().getTime().isBefore(timeEnd))) continue;
-            else if ((invoice.getReservation().getLength().isAfter(timeStart)) && (invoice.getReservation().getLength().isBefore(timeEnd))) continue;
+            if ((invoice.getDate().isAfter(timeStart)) && (invoice.getDate().isBefore(timeEnd))) continue;
             profit += invoice.getTotal();
         }
         return profit;
+    }
+    
+    public ArrayList<Reservation> getReservationsForCustomer(Customer cust) {
+        ArrayList<Reservation> tempRes = new ArrayList<>();
+        for (Reservation reservation : reservations) {
+            if (reservation.getCustomerID().equals(cust.getId()))
+                tempRes.add(reservation);
+        }
+        return tempRes;
     }
 
     public void save() {
         CSVReader resFile = new CSVReader(new File("src\\data\\" + name + "\\reservations.csv"), false);
         CSVReader tablesFile = new CSVReader(new File("src\\data\\" + name + "\\tables.csv"), false);
         CSVReader productsFile = new CSVReader(new File("src\\data\\" + name + "\\products.csv"), false);
-        CSVReader invoiceFile = new CSVReader(new File("src\\data\\" + name + "\\invoices.csv"), false);
+
 
         reservations.forEach(res -> {
             resFile.addDataToSystem(res.toString());
@@ -162,14 +230,12 @@ public class Restaurant {
         products.forEach(prod -> {
             productsFile.addDataToSystem(prod.toString());
         });
-        invoices.forEach(invoice -> {
-            invoiceFile.addDataToSystem(invoice.toString());
-        });
+
 
         resFile.saveToCSV();
         tablesFile.saveToCSV();
         productsFile.saveToCSV();
-        invoiceFile.saveToCSV();
+
     }
 
     public String toString() {
