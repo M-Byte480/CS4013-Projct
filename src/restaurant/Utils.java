@@ -22,6 +22,10 @@ public class Utils {
         uniqueID = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public static int getInvoiceLatestID(){
         int id = 0;
 
@@ -29,7 +33,6 @@ public class Utils {
             CSVReader s = new CSVReader(new File("src/data/invoices.csv"), true);
             id = Integer.parseInt(s.getValues().get(s.getValues().size() - 1)[s.getValues().get(0).length - 1]);
         }catch(Exception ignored){
-// you aint doing anything here @milan
         }
         return id;
     }

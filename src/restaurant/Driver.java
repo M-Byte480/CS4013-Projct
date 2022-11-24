@@ -78,7 +78,8 @@ public class Driver {
         invoicesFile.getValues().forEach(line -> invoices.add(new Invoice(
                 LocalDateTime.parse(line[0], DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm")),
                 Double.parseDouble(line[4]))));
-        
+
+        Invoice.getLatestID();
         return new Restaurant(name, res, tables, products, invoices);
     }
     
@@ -428,17 +429,6 @@ public class Driver {
             // Cant resolve method, method exists?
         }
         // intellij bad
-    }
-
-    public void order(Table table) {
-        while (true) {
-            Product product = Utils.getChoice(restaurant.getProducts());
-            if (product == null) {
-                break;
-            }
-            table.addProducts(product);
-        }
-        // i love you <3
     }
 
     /**

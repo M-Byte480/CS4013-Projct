@@ -1,10 +1,8 @@
 package reservation;
 
-import people.*;
 import till.*;
 import restaurant.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,35 +16,34 @@ public class Invoice {
     private int id;
     private static int uniqueID;
     private LocalDateTime date = null;
+
     /**
      * Creates an Invoice object with a specified reservation
-     * @param reservation
+     * This objects key details will be stored in the CSV file
+     * @param reservation of type Reservation
      */
     public Invoice(Reservation reservation) {
-        this.reservation = reservation;                         // collects details of reservation
-        this.customerID = reservation.getCustomerID();                  // contains details of the person who booked
-        this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
+        this.reservation = reservation;
+        this.customerID = reservation.getCustomerID();
+        this.products = reservation.getTable().getProducts();
         this.total = reservation.getTable().getTotal();
         this.id = uniqueID++;
     }
 
     /**
-     * Created an Invoice object with a specified reservation and id number
-     * @param reservation
-     * @param id
+     * Construct an invoice from the CSV files, according to the necessary fields
+     * @param date
+     * @param total
      */
-    public Invoice(Reservation reservation, int id) {
-        this.reservation = reservation;                         // collects details of reservation
-        this.customerID = reservation.getCustomerID();                  // contains details of the person who booked
-        this.products = reservation.getTable().getProducts();   // gets an arrayList of all the products on the table
-        this.total = reservation.getTable().getTotal();
-        this.id = id;
-    }
-
     public Invoice(LocalDateTime date, double total){
         this.total = total;
         this.date = date;
     }
+
+    /**
+     * Returns the date and time the invoice was created.
+     * @return LocalDateTime
+     */
     public LocalDateTime getDate() {
         return date;
     }
@@ -60,7 +57,7 @@ public class Invoice {
     }
 
     /**
-     * Gets the ID state
+     * Gets the unique ID state
      * @return uniqueID current state
      */
     public static int getUniqueID() {
