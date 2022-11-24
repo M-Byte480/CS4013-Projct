@@ -59,10 +59,6 @@ public class Utils {
         }
     }
 
-    public static String getStringTime(){
-        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
-    }
-
     public static boolean makeCSVFiles(String name) {
 		File dir = new File("src/data/" + name + "/");
         if (!dir.mkdir()) return false;

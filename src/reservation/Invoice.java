@@ -73,19 +73,6 @@ public class Invoice {
     }
 
     /**
-     * Gets the instance of Reservation created using the constructors above
-     * @return instance of Reservation
-     */
-    public Reservation getReservation() {
-        return reservation;
-    }
-
-
-    public ArrayList<Product> getProducts() {
-        return products;
-    }
-
-    /**
      * Gets the id contained in a Reservation object
      * @return id
      */

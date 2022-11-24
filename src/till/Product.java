@@ -2,9 +2,6 @@ package till;
 
 import java.util.ArrayList;
 
-/**
- *
- */
 public class Product {
     private String name;
     private String description;
@@ -22,26 +19,13 @@ public class Product {
         this.allergies = allergies;
         this.cost = cost;
         this.name = name;
-
-
-
-        // CSVReader readProducts = new CSVReader(new File("src/data/products.csv"));
-        // readProducts.addDataToFile(new String[] {name, description, cost + "", String.join( "-", allergies)});
-    }
+     }
 
     /**
      * @return name of specified product
      */
     public String getName(){
         return this.name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public ArrayList<String> getAllergies() {
-        return allergies;
     }
 
     /**

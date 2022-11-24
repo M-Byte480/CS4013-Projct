@@ -121,9 +121,7 @@ public class Restaurant {
     public ArrayList<Product> getProducts() {
         return products;
     }
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
-    }
+
 
     /**
      * @param prod
@@ -150,24 +148,12 @@ public class Restaurant {
         tables.remove(table);
     }
 
-    public double getProfit() {
-        return profit;
-    }
-    public void addProfit(double profit) {
-        this.profit += profit;
-    }
-    
-    public ArrayList<Invoice> getInvoices() {
-        return invoices;
-    }
-    public void setInvoices(ArrayList<Invoice> invoices) {
-        this.invoices = invoices;
-    }
+    /**
+     * Adds an invoice to the existing list of invoices
+     * @param invoice
+     */
     public void addInvoice(Invoice invoice) {
         invoices.add(invoice);
-    }
-    public void removeInvoice(Invoice invoice) {
-        invoices.remove(invoice);
     }
 
     public ArrayList<Table> getFreeTablesOfSizeBetweenTime(int size, LocalDateTime timeStart, LocalDateTime timeEnd) {

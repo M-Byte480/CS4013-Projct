@@ -43,13 +43,6 @@ public class Yum {
         restaurants.remove(new Restaurant(name));
     }
 
-    public double getOverallProfit() {
-        return overallProfit;
-    }
-    public void addOverallProfit(double overallProfit) {
-        this.overallProfit += overallProfit;
-    }
-
     /**
      * @return people (arraylist of Person objects)
      */

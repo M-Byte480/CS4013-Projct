@@ -27,17 +27,6 @@ public class Customer extends Person {
         super(name, phoneNumber, id, password);
         this.loyalty = loyalty;
     }
-
-    public double getLoyalty() {
-        return loyalty;
-    }
-    public void setLoyalty(double loyalty) {
-        this.loyalty = loyalty;
-    }
-    public void increaseLoyalty() {
-        loyalty++;
-    }
-
     /**
      * @return name, phone number, id, password and loyalty as a string
      */

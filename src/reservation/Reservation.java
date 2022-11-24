@@ -28,12 +28,6 @@ public class Reservation {
 		this.customerID = customerID;
 	}
 
-	public Reservation(LocalDateTime time, LocalDateTime length, String customerID){
-		this.time = time;
-		this.length = length;
-		this.customerID = customerID;
-	}
-
 	/**
 	 * Gets the table that the reservation is made for.
 	 * @return table
@@ -57,13 +51,6 @@ public class Reservation {
 	}
 
 	/**
-	 * Changes the table to a new table.
-	 * @param table
-	 */
-	public void setTable(Table table) {
-		this.table = table;
-	}
-	/**
 	 * Changes the time the reservation is for.
 	 * @param time
 	 */
@@ -77,6 +64,11 @@ public class Reservation {
 	public void setLength(LocalDateTime length) {
 		this.length = length;
 	}
+
+	/**
+	 * Gets the id of the customer object
+	 * @return id
+	 */
 	public String getCustomerID() {
 		return customerID;
 	}
@@ -93,19 +85,6 @@ public class Reservation {
 		else if (res.time.isAfter(time) && res.time.isBefore(length)) return true;
 		else return false;
 	}
-	
-	/** 
-	 * Gets the products arraylist.
-	 * @return ArrayList<Product>
-	 */
-	public ArrayList<Product> getProducts() {
-		ArrayList<Product> reservationProducts = new ArrayList<Product>();
-		for (Product p : table.getProducts()) {
-			reservationProducts.add(p);
-		}
-		return reservationProducts;
-	}
-
 
 	/**
 	 * @return table number, time, length and customer ID formatted to string

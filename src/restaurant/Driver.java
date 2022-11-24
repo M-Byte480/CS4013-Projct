@@ -421,14 +421,18 @@ public class Driver {
         yum.addRestaurant(name);
     }
 
+    /**
+     * User chooses from a list of the restaurants which they would like
+     * to delete and when they choose one from the list, it gets
+     * removed from the restaurant ArrayList
+     */
     private void deleteRestaurant() {
         System.out.println("Delete Restaurant: ");
         Restaurant rest = Utils.getChoice(yum.getRestaurants());
         if (rest != null) {
             yum.removeRestaurant(rest.getName());
-            // Cant resolve method, method exists?
         }
-        // intellij bad
+
     }
 
     /**

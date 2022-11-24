@@ -45,13 +45,6 @@ public class Person {
     }
 
     /**
-     * @return phone number of person
-     */
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
      * @param id of person which is verifying login (must match password)
      * @param password of person which is verifying login (must match id)
      *

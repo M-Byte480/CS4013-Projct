@@ -26,7 +26,4 @@ public class Owner extends Person {
         super(name, phoneNumber, Utils.uniqueIdGenerator("9"), password);
     }
 
-    public void promoteStaff(Staff person) {
-        
-    }
 }

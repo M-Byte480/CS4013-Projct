@@ -108,40 +108,6 @@ public class CSVReader {
     }
 
     /**
-     * Close scanner
-     */
-    public void closeReader() {
-        this.scanner.close();
-    }
-
-    /**
-     * It requires to read in the file before you can edit it.
-     *
-     * @param dataField
-     * @param value
-     */
-    public void removeDataSet(String dataField, String value) {
-        String[] dataFieldValues = values.get(0).clone();
-        int index = -1;
-        for (int i = 0; i < dataFieldValues.length; i++) {
-            if (dataField.equals(dataFieldValues[i])) {
-                index = i;
-            }
-        }
-        if (index == -1) {
-            System.out.println("There was no dataField found");
-            return;
-        }
-
-        for (String[] line :
-                values) {
-            if (line[index].equals(value)) {
-                values.remove(line);
-            }
-        }
-    }
-
-    /**
      * Get line where dataField = value
      *
      * @param value
@@ -167,90 +133,6 @@ public class CSVReader {
         }
 
         return dataLinesString.toString();
-    }
-
-    /**
-     * Returns a combination of corresponding parallel arrays of Values to DataFieldName
-     *
-     * @param fields
-     * @param dataFields
-     * @return
-     */
-    public String getCombinationSet(String[] fields, String[] dataFields) {
-        int size = dataFields.length;
-
-        if (size != fields.length) {
-            return null;
-        }
-
-        String[] dataFieldValues = values.get(0).clone();
-        int[] indexes = new int[size];
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < values.get(0).length; j++) {
-                if (dataFields[i].equals(dataFieldValues[j])) {
-                    indexes[i] = j;
-                }
-            }
-        }
-        StringBuilder everything = new StringBuilder();
-        boolean incorrect = true;
-        for (int line = 1; line < values.size(); line++) {
-            String[] temp = values.get(line);
-
-            for (int element : indexes) {
-                if (!temp[element].equals(fields[element])) {
-                    incorrect = false;
-                }
-            }
-
-
-            if (incorrect) {
-                everything.append(line).append(") ");
-                everything.append(String.join(", ", values.get(line)));
-                everything.append("\n");
-            }
-            incorrect = true;
-        }
-
-        return everything.toString();
-    }
-
-    /**
-     * Returns a string of every line of the data Field with its corresponding line number
-     *
-     * @param dataField
-     * @return
-     */
-    public String[] getColumnOfData(String dataField) {
-        ArrayList<String> everything = new ArrayList<>();
-        String[] dataFieldValues = values.get(0).clone();
-        int index = -1;
-        for (int i = 0; i < dataFieldValues.length; i++) {
-            if (dataFieldValues[i].equals(dataField)) {
-                index = i;
-            }
-        }
-        if (index == -1) {
-            System.out.println("Failed to find the Data Field");
-            return null;
-        }
-        for (int i = 1; i < values.size() - 1; i++) {
-            everything.add(values.get(i)[index]);
-        }
-
-        return everything.toArray(new String[0]);
-    }
-
-    /**
-     * Counts the number of Instances of the value existing in certain datafield in the csv
-     *
-     * @param value     to check
-     * @param datafield where the value exists
-     * @return int with respect to the number of values existing in the dataset
-     */
-    public int countInstancesOfData(String value, String datafield) {
-        return getData(value, datafield).split(value).length - 1;
     }
 
     public ArrayList<String[]> getValues() {
