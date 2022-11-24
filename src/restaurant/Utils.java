@@ -11,15 +11,29 @@ public class Utils {
 	private static int uniqueID;
 	// initiate unique id on boot up
 
+    /**
+     * Generates a unique id from a specified starting number.
+     * @param id
+     * @return
+     */
 	public static String uniqueIdGenerator(String id){
         uniqueID++;
         id = id + String.format("%07d", uniqueID);
         return id;
     }
+
+    /**
+     * Sets the state of the UniqueID
+     * @param id
+     */
     public static void setUniqueID(int id) {
         uniqueID = id;
     }
 
+    /**
+     * Sets the invoice's uniqueID state based on the latest invoice in the CSV
+     * @return The value of the latest ID
+     */
     public static int getInvoiceLatestID(){
         int id = 0;
 
@@ -30,10 +44,26 @@ public class Utils {
         }
         return id;
     }
+
+    /**
+     * Gets choice from an array list, using generics to allow any type to be passing in and returned.
+     * Makes its own scanner.
+     * @param choices
+     * @return
+     * @param <T>
+     */
     public static <T> T getChoice(ArrayList<T> choices) {
         return getChoice(choices, new Scanner(System.in));
     }
-    
+
+    /**
+     * Gets choice from an array list, using generics to allow any type to be passing in and returned.
+     * Allows a scanner to be passed in.
+     * @param choices
+     * @param in
+     * @return
+     * @param <T>
+     */
     public static <T> T getChoice(ArrayList<T> choices, Scanner in) {
         if (choices.size() == 0) {
             return null;
@@ -52,6 +82,12 @@ public class Utils {
             return null;
         }
     }
+
+    /**
+     * Makes the CSV Files using the name of the restaurant as a directory.
+     * @param name
+     * @return
+     */
 
     public static boolean makeCSVFiles(String name) {
 		File dir = new File("src/data/" + name + "/");

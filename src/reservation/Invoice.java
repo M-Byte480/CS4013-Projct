@@ -26,13 +26,18 @@ public class Invoice {
         this.id = uniqueID++;
     }
 
+    /**
+     * Creates an Invoice object with a specified date and total
+     * @param date
+     * @param total
+     */
     public Invoice(LocalDateTime date, double total){
         this.total = total;
         this.date = date;
     }
 
     /**
-     * 
+     * Gets the date set to the variable date
      * @return
      */
     public LocalDateTime getDate() {
