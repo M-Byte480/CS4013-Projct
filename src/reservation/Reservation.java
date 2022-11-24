@@ -47,6 +47,10 @@ public class Reservation {
 		return length;
 	}
 
+	/**
+	 * Gets the id of the customer object
+	 * @return id
+	 */
 	public String getCustomerID() {
 		return customerID;
 	}

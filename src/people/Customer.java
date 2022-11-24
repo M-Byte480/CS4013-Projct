@@ -28,12 +28,6 @@ public class Customer extends Person {
         this.loyalty = loyalty;
     }
 
-    public double getLoyalty() {
-        return loyalty;
-    }
-    public void setLoyalty(double loyalty) {
-        this.loyalty = loyalty;
-    }
     public void increaseLoyalty() {
         loyalty++;
     }

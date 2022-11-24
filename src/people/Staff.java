@@ -30,7 +30,4 @@ public class Staff extends Person {
         discount = 0.95;
     }
 
-    public double getDiscount(){
-        return this.discount;
-    }
-}
+   }

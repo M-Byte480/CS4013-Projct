@@ -30,6 +30,11 @@ public class Invoice {
         this.total = total;
         this.date = date;
     }
+
+    /**
+     * 
+     * @return
+     */
     public LocalDateTime getDate() {
         return date;
     }
