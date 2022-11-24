@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Invoice {
     private Reservation reservation = null;
-    private String customerID = null;
+    private String customerID= null; 
     private ArrayList<Product> products = null;
     private double total;
     private int id;
