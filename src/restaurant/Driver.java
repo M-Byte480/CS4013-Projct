@@ -427,18 +427,6 @@ public class Driver {
             yum.removeRestaurant(rest.getName());
             // Cant resolve method, method exists?
         }
-        // intellij bad
-    }
-
-    public void order(Table table) {
-        while (true) {
-            Product product = Utils.getChoice(restaurant.getProducts());
-            if (product == null) {
-                break;
-            }
-            table.addProducts(product);
-        }
-        // i love you <3
     }
 
     /**

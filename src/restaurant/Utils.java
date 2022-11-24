@@ -29,7 +29,6 @@ public class Utils {
             CSVReader s = new CSVReader(new File("src/data/invoices.csv"), true);
             id = Integer.parseInt(s.getValues().get(s.getValues().size() - 1)[s.getValues().get(0).length - 1]);
         }catch(Exception ignored){
-// you aint doing anything here @milan
         }
         return id;
     }
@@ -54,10 +53,6 @@ public class Utils {
                 return choices.get(n);
             return null;
         }
-    }
-
-    public static String getStringTime(){
-        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date());
     }
 
     public static boolean makeCSVFiles(String name) {

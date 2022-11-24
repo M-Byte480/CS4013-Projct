@@ -11,8 +11,8 @@ public class Person {
      *
      * @param name the name of the person
      * @param phoneNumber the phone number of the person
-     * @param id the personal ID the person will use to login
-     * @param password the password the person uses to login
+     * @param id the personal ID the person will use to log in
+     * @param password the password the person uses to log in
      *
      */
     public Person(String name, String phoneNumber, String id, String password){
@@ -45,25 +45,16 @@ public class Person {
     }
 
     /**
-     * @return phone number of person
-     */
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
      * @param id of person which is verifying login (must match password)
      * @param password of person which is verifying login (must match id)
      *
      * if the persons id matched with the passed id and persons password matched with the passed password
      *
      * @return true if id matches with its specific password (stored in people csv)
-     * @return false if id doesn't match with its specific password (stored in people csv)
+     * false if id doesn't match with its specific password (stored in people csv)
      */
     public boolean passwordValidator(String id, String password) {
-        if (this.id.equals(id) && this.password.equals(password))
-            return true;
-        else return false;
+        return this.id.equals(id) && this.password.equals(password);
     }
 
     /**
@@ -71,11 +62,5 @@ public class Person {
      */
     public String toString() {
         return String.format("%s,%s,%s,%s", name, phoneNumber, id, password);
-    }
-
-    public boolean equals(Person person) {
-        if (this.id.equals(person.id))
-            return true;
-        return false;
     }
 }

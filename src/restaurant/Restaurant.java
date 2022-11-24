@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class Restaurant {
     private String name;
-    private double profit;
     private ArrayList<Reservation> reservations;
     private ArrayList<Table> tables;
     private ArrayList<Product> products;
@@ -74,7 +73,7 @@ public class Restaurant {
 
 
     /**
-     * @return  nameof Restaurant
+     * @return  name of Restaurant
      */
     public String getName() {
         return name;
@@ -94,8 +93,8 @@ public class Restaurant {
      * If reservation overlaps with another reservation
      * @return false;
      *
-     * If neither of these criterias are met
-     * @return true;
+     * If neither of these criteria are met
+     * true;
      */
     public boolean addReservation(Reservation reservation) {
         if (reservation.getTime().isBefore(LocalDateTime.now())) return false;
@@ -116,13 +115,10 @@ public class Restaurant {
     }
 
     /**
-     * @return proudcts (ArrayList<Product>)
+     * @return products (ArrayList<Product>)
      */
     public ArrayList<Product> getProducts() {
         return products;
-    }
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
     }
 
     /**
@@ -146,28 +142,11 @@ public class Restaurant {
         tables.add(table);
     }
     public void removeTable(Table table) {
-        // make sure table doesnt have a reservation
+        // make sure table doesn't have a reservation
         tables.remove(table);
-    }
-
-    public double getProfit() {
-        return profit;
-    }
-    public void addProfit(double profit) {
-        this.profit += profit;
-    }
-    
-    public ArrayList<Invoice> getInvoices() {
-        return invoices;
-    }
-    public void setInvoices(ArrayList<Invoice> invoices) {
-        this.invoices = invoices;
     }
     public void addInvoice(Invoice invoice) {
         invoices.add(invoice);
-    }
-    public void removeInvoice(Invoice invoice) {
-        invoices.remove(invoice);
     }
 
     public ArrayList<Table> getFreeTablesOfSizeBetweenTime(int size, LocalDateTime timeStart, LocalDateTime timeEnd) {
@@ -221,15 +200,9 @@ public class Restaurant {
         CSVReader productsFile = new CSVReader(new File("src\\data\\" + name + "\\products.csv"), false);
 
 
-        reservations.forEach(res -> {
-            resFile.addDataToSystem(res.toString());
-        });
-        tables.forEach(table -> {
-            tablesFile.addDataToSystem(table.toString());
-        });
-        products.forEach(prod -> {
-            productsFile.addDataToSystem(prod.toString());
-        });
+        reservations.forEach(res -> resFile.addDataToSystem(res.toString()));
+        tables.forEach(table -> tablesFile.addDataToSystem(table.toString()));
+        products.forEach(prod -> productsFile.addDataToSystem(prod.toString()));
 
 
         resFile.saveToCSV();

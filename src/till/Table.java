@@ -35,14 +35,6 @@ public class Table {
     }
 
     /**
-     * Method sets the number of seats available for a specified table
-     * @param seats
-     */
-    public void setSeats(int seats) {
-        this.seats = seats;
-    }
-
-    /**
      * Gets a list of all the products currently added to the products ArrayList
      * @return Returns the current status of products as an ArrayList of object type Product
      */
@@ -87,7 +79,7 @@ public class Table {
 
     /**
      * Prints out a string with the corresponding table number and seats associated with a certain table
-     * @return Formatted String of a table's number and it's amount of seats
+     * @return Formatted String of a table's number, and it's amount of seats
      */
     public String toString() {
         return String.format("%s,%s", tableNumber, seats);

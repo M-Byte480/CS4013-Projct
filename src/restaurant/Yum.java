@@ -8,7 +8,6 @@ import people.Owner;
 import people.Person;
 
 public class Yum {
-    private double overallProfit;
     private ArrayList<Restaurant> restaurants;
     private HashMap<String, Person> people;
     private Owner owner;
@@ -20,7 +19,6 @@ public class Yum {
      * Profit set to 0 as Yum object has no sales
      */
     public Yum(ArrayList<Restaurant> restaurants, HashMap<String, Person> people, Owner owner) {
-        overallProfit = 0;
         this.restaurants = restaurants;
         this.people = people;
         this.owner = owner;
@@ -43,18 +41,11 @@ public class Yum {
         restaurants.remove(new Restaurant(name));
     }
 
-    public double getOverallProfit() {
-        return overallProfit;
-    }
-    public void addOverallProfit(double overallProfit) {
-        this.overallProfit += overallProfit;
-    }
-
     /**
      * @return people (arraylist of Person objects)
      */
     public ArrayList<Person> getPeople() {
-        return new ArrayList<Person>(people.values());
+        return new ArrayList<>(people.values());
     }
 
     /**
@@ -100,13 +91,9 @@ public class Yum {
         CSVReader resFile = new CSVReader(new File("src\\data\\restaurants.csv"), false);
         CSVReader peopleFile = new CSVReader(new File("src\\data\\people.csv"), false);
 
-        restaurants.forEach(res -> {
-            resFile.addDataToSystem(res.toString());
-        });
+        restaurants.forEach(res -> resFile.addDataToSystem(res.toString()));
 
-        people.forEach((id, person) -> {
-            peopleFile.addDataToSystem(person.toString());
-        });
+        people.forEach((id, person) -> peopleFile.addDataToSystem(person.toString()));
 
         resFile.saveToCSV();
         peopleFile.saveToCSV();

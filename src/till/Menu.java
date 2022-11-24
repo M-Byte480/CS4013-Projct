@@ -1,5 +1,6 @@
 package till;
 
+import people.Customer;
 import restaurant.CSVReader;
 import restaurant.Restaurant;
 import restaurant.Utils;
@@ -57,6 +58,7 @@ public class Menu {
                     removeProduct(table);
 
                 } else if (command.equals("F")) {
+                    ((Customer) yum.getPerson(custID)).increaseLoyalty();
                     restaurant.addInvoice(new Invoice(reservation));
                     finishPayment(table);
                     notFinished = false;

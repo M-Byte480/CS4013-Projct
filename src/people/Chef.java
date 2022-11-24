@@ -11,7 +11,7 @@ public class Chef extends Person {
      *
      * @param name the name of the chef
      * @param phoneNumber the phone number of the chef
-     * @param password the password the chef uses to login
+     * @param password the password the chef uses to log in
      * Unique ID generated using "Utils.uniqueIdGenerator" which starts with 8
      * 5% discount for staff
      */
@@ -25,7 +25,7 @@ public class Chef extends Person {
      *
      * @param name the name of the chef
      * @param phoneNumber the phone number of the chef
-     * @param password the password the chef uses to login
+     * @param password the password the chef uses to log in
      * Unique ID generated using "Utils.uniqueIdGenerator" which starts with 9
      * 5% discount for staff
      */

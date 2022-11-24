@@ -1,12 +1,9 @@
 package reservation;
 
-import people.Customer;
-import till.Product;
 import till.Table;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public class Reservation {
 	private Table table;
@@ -16,19 +13,13 @@ public class Reservation {
 
 	/**
 	 * Makes a Reservation object.
-	 * @param table which a resrvation will be made for
+	 * @param table which a reservation will be made for
 	 * @param time which the reservation will start
 	 * @param length of the reservation
 	 * @param customerID of the person at the table
 	 */
 	public Reservation(Table table, LocalDateTime time, LocalDateTime length, String customerID) {
 		this.table = table;
-		this.time = time;
-		this.length = length;
-		this.customerID = customerID;
-	}
-
-	public Reservation(LocalDateTime time, LocalDateTime length, String customerID){
 		this.time = time;
 		this.length = length;
 		this.customerID = customerID;
@@ -56,27 +47,6 @@ public class Reservation {
 		return length;
 	}
 
-	/**
-	 * Changes the table to a new table.
-	 * @param table
-	 */
-	public void setTable(Table table) {
-		this.table = table;
-	}
-	/**
-	 * Changes the time the reservation is for.
-	 * @param time
-	 */
-	public void setTime(LocalDateTime time) {
-		this.time = time;
-	}
-	/**
-	 * Changes the length of the reservation.
-	 * @param length
-	 */
-	public void setLength(LocalDateTime length) {
-		this.length = length;
-	}
 	public String getCustomerID() {
 		return customerID;
 	}
@@ -90,20 +60,7 @@ public class Reservation {
 	public boolean overlaps(Reservation res) {
 		if (!table.equals(res.table)) return false;
 		else if (time.isAfter(res.time) && time.isBefore(res.length)) return true;
-		else if (res.time.isAfter(time) && res.time.isBefore(length)) return true;
-		else return false;
-	}
-	
-	/** 
-	 * Gets the products arraylist.
-	 * @return ArrayList<Product>
-	 */
-	public ArrayList<Product> getProducts() {
-		ArrayList<Product> reservationProducts = new ArrayList<Product>();
-		for (Product p : table.getProducts()) {
-			reservationProducts.add(p);
-		}
-		return reservationProducts;
+		else return res.time.isAfter(time) && res.time.isBefore(length);
 	}
 
 

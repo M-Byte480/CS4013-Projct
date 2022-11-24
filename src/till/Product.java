@@ -22,11 +22,6 @@ public class Product {
         this.allergies = allergies;
         this.cost = cost;
         this.name = name;
-
-
-
-        // CSVReader readProducts = new CSVReader(new File("src/data/products.csv"));
-        // readProducts.addDataToFile(new String[] {name, description, cost + "", String.join( "-", allergies)});
     }
 
     /**
@@ -34,14 +29,6 @@ public class Product {
      */
     public String getName(){
         return this.name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public ArrayList<String> getAllergies() {
-        return allergies;
     }
 
     /**
@@ -52,13 +39,11 @@ public class Product {
     }
 
     /**
-     * @return name, despriction cost and allergies as a formatted string
+     * @return name, description cost and allergies as a formatted string
      */
     public String toString() {
         StringBuilder retString = new StringBuilder(String.format("%s,%s,%.2f,", name, description, cost));
-        allergies.forEach(s -> {
-            retString.append(s).append(";");
-        });
+        allergies.forEach(s -> retString.append(s).append(";"));
         return retString.deleteCharAt(retString.length()-1).toString();
     }
 }
