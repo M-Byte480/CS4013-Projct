@@ -17,7 +17,7 @@ public class CSVReader {
 
     /**
      * Create a Utility object, by passing the File name or path
-     *
+     * toRead asks for a boolean to read the data into the Parameters
      * @param file File you want to read from
      */
     public CSVReader(File file, boolean toRead) {
@@ -32,19 +32,26 @@ public class CSVReader {
         if (toRead) readIntoSystem();
     }
 
+    /**
+     * Creates a CSVReader with specified String (CSV) to be appended to the file
+     * It will have the datafields created, and you can add values to it which will be saved
+     * to the File (which is possibly newly created and passed)
+     * @param file
+     * @param datafields
+     */
     public CSVReader(File file, String datafields) {
         this.file = file;
         this.values = new ArrayList<>();
         try {
             scanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException ignored) {
+
         }
         appendToFile(datafields);
     }
 
     /**
-     * Reads CSV file into the system
+     * Reads CSV file into the system (the datafields)
      */
     private void readIntoSystem() {
         while (scanner.hasNextLine()) {
@@ -76,6 +83,7 @@ public class CSVReader {
     /**
      * Add a String array, where each element matches the data fields
      * to the system
+     * @param data String of comma seperated files
      */
     public void addDataToSystem(String[] data) {
         this.values.add(data);
@@ -90,6 +98,10 @@ public class CSVReader {
         addDataToSystem(data.split(","));
     }
 
+    /**
+     * Appends the comma seperated data to the end of the file
+     * @param data String of comma seperated files
+     */
     public void appendToFile(String data) {
         try {
             FileWriter fileWriter = new FileWriter(file, true);
@@ -101,11 +113,12 @@ public class CSVReader {
     }
 
     /**
-     * Get line where dataField = value
+     * Get a line of data from the CSV where the
+     * the datafield (column) matches the value passed
      *
-     * @param value
-     * @param dataField
-     * @return String
+     * @param value String
+     * @param dataField String
+     * @return String of line
      */
     public String getData(String value, String dataField) {
         StringBuilder dataLinesString = new StringBuilder();
@@ -128,6 +141,10 @@ public class CSVReader {
         return dataLinesString.toString();
     }
 
+    /**
+     * Returns each line of the CSV as a String[] in the collection of an ArrayList
+     * @return
+     */
     public ArrayList<String[]> getValues() {
         return values;
     }

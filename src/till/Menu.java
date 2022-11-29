@@ -1,23 +1,29 @@
 package till;
 
 import people.Customer;
+import reservation.Invoice;
+import reservation.Reservation;
 import restaurant.CSVReader;
 import restaurant.Restaurant;
 import restaurant.Utils;
+import restaurant.Yum;
 
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.Scanner;
-
-import reservation.Invoice;
-import reservation.Reservation;
-import restaurant.Yum;
 
 public class Menu {
     private Scanner in;
     private Restaurant restaurant;
     private Reservation reservation;
 
+    /**
+     * It runs the menu system for the staff for to interact with, including;
+     * Taking orders of a customer and storing it on the table.
+     * @param yum Yum
+     * @param restaurant Restaurant we take the order in
+     * @param in the System.in()
+     */
     public void run(Yum yum, Restaurant restaurant, Scanner in) {
         this.restaurant = restaurant;
         this.in = in;
@@ -72,24 +78,44 @@ public class Menu {
         }
     }
 
+    /**
+     * Prints out the products that are on the table passed in as a parameter
+     * @param table
+     */
     private void showProductsOnTable(Table table) {
         System.out.println(table.getProducts());
     }
 
+    /**
+     * Shows products that are available in the restaurant.
+     */
     private void showProducts() {
         System.out.println(restaurant.getProducts().toString());
     }
 
+    /**
+     * Adds a chosen product from a list to the table of the user
+     * @param table
+     */
     private void addProduct(Table table) {
         Product p = Utils.getChoice(restaurant.getProducts(), in);
         table.addProducts(p);
     }
 
+    /**
+     * Removes a chosen product from a list to the table of the user
+     * @param table
+     */
     private void removeProduct(Table table) {
         Product p = Utils.getChoice(table.getProducts(), in);
         table.removeProduct(p);
     }
 
+    /**
+     * When payment is finished, a new File is created of the restaurants name and adds the invoice created
+     * into the CSV.
+     * @param table
+     */
     private void finishPayment(Table table){
         CSVReader invoiceFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\invoices.csv"), false);
         invoiceFile.appendToFile(new Invoice(reservation).toString());

@@ -129,26 +129,53 @@ public class Restaurant {
     }
 
     /**
+     * Removes the product passed in as a parameter from the ArrayList products
      * @param prod
      */
     public void removeProduct(Product prod) {
         products.remove(prod);
     }
 
+    /**
+     * Returns a list of the current tables in the tables ArrayList
+     * @return An ArrayList of object type Table
+     */
     public ArrayList<Table> getTables() {
         return tables;
     }
+
+    /**
+     * Adds a table to restaurant array.
+     * @param table
+     */
     public void addTable(Table table) {
         tables.add(table);
     }
+
+    /**
+     * Removes the table passed in as an argument from the tables ArrayList
+     * @param table
+     */
     public void removeTable(Table table) {
         // make sure table doesn't have a reservation
         tables.remove(table);
     }
+
+    /**
+     * Adds an invoice to the invoice ArrayList within the Restaurant class
+     * @param invoice
+     */
     public void addInvoice(Invoice invoice) {
         invoices.add(invoice);
     }
 
+    /**
+     * Returns an arrayList of tables that are within the time fram and of atleast a certain size.
+     * @param size
+     * @param timeStart
+     * @param timeEnd
+     * @return
+     */
     public ArrayList<Table> getFreeTablesOfSizeBetweenTime(int size, LocalDateTime timeStart, LocalDateTime timeEnd) {
         ArrayList<Table> freeTables = getFreeTablesBetweenTime(timeStart, timeEnd);
         ArrayList<Table> freeTablesOfSize = new ArrayList<>();
@@ -158,6 +185,12 @@ public class Restaurant {
         return freeTablesOfSize;
     }
 
+    /**
+     * Returns an arrayList of tables that are free between a time frame.
+     * @param timeStart
+     * @param timeEnd
+     * @return
+     */
     public ArrayList<Table> getFreeTablesBetweenTime(LocalDateTime timeStart, LocalDateTime timeEnd) {
         ArrayList<Table> bookedTables = getTablesBookedBetweenTime(timeStart, timeEnd);
         ArrayList<Table> allTables = new ArrayList<>(tables);
@@ -165,6 +198,12 @@ public class Restaurant {
         return allTables;
     }
 
+    /**
+     * Returns an arrayList of tables that are booked between the time frame.
+     * @param timeStart
+     * @param timeEnd
+     * @return
+     */
     public ArrayList<Table> getTablesBookedBetweenTime(LocalDateTime timeStart, LocalDateTime timeEnd) {
         ArrayList<Table> tempTables = new ArrayList<>();
         for (Reservation res : reservations) {
@@ -176,6 +215,12 @@ public class Restaurant {
         return tempTables;
     }
 
+    /**
+     * Gets the profit made between the time frame.
+     * @param timeStart
+     * @param timeEnd
+     * @return
+     */
     public double getProfitBetweenTime(LocalDateTime timeStart, LocalDateTime timeEnd) {
         double profit = 0;
         for (Invoice invoice : invoices) {
@@ -184,7 +229,12 @@ public class Restaurant {
         }
         return profit;
     }
-    
+
+    /**
+     * Gets all the reservations booked for the given Customer
+     * @param cust Customer
+     * @return  ArrayList<Reservation>
+     */
     public ArrayList<Reservation> getReservationsForCustomer(Customer cust) {
         ArrayList<Reservation> tempRes = new ArrayList<>();
         for (Reservation reservation : reservations) {
@@ -194,6 +244,9 @@ public class Restaurant {
         return tempRes;
     }
 
+    /**
+     * Saves the state of the Restaurant to its folder of CSVs
+     */
     public void save() {
         CSVReader resFile = new CSVReader(new File("src\\data\\" + name + "\\reservations.csv"), false);
         CSVReader tablesFile = new CSVReader(new File("src\\data\\" + name + "\\tables.csv"), false);
@@ -211,6 +264,10 @@ public class Restaurant {
 
     }
 
+    /**
+     * Returns the name of the Restaurant
+     * @return name of the Restaurant
+     */
     public String toString() {
         return name;
     }

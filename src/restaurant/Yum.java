@@ -1,11 +1,11 @@
 package restaurant;
 
+import people.Owner;
+import people.Person;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import people.Owner;
-import people.Person;
 
 public class Yum {
     private ArrayList<Restaurant> restaurants;
@@ -37,6 +37,10 @@ public class Yum {
     public void addRestaurant(String name) {
         restaurants.add(new Restaurant(name));
     }
+    /**
+     * Removes a restaurant from the restaurants list
+     * @param name
+     */
     public void removeRestaurant(String name) {
         restaurants.remove(new Restaurant(name));
     }
@@ -85,7 +89,7 @@ public class Yum {
     }
 
     /**
-     *
+     * Saves the data in yum to csv files.
      */
     public void save() {
         CSVReader resFile = new CSVReader(new File("src\\data\\restaurants.csv"), false);

@@ -24,6 +24,11 @@ public class Driver {
     private Restaurant restaurant;
     private final Menu menu = new Menu();
 
+    /**
+     * The first running driver of the Text-Based Interface.
+     * It controls the upper layers, such as login and entering
+     * IDs and Password.
+     */
     public void run() {
         bootUp();
         
@@ -54,7 +59,12 @@ public class Driver {
             }
         }
     }
-    
+
+    /**
+     * Loads the csv files from the restaurants directory and puts them into the restaurants arraylists.
+     * @param name
+     * @return
+     */
     private Restaurant bootUpRestaurant(String name) {
         CSVReader resFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\reservations.csv"), true);
         CSVReader tablesFile = new CSVReader(new File("src\\data\\" + restaurant.getName() + "\\tables.csv"), true);
@@ -81,7 +91,10 @@ public class Driver {
         
         return new Restaurant(name, res, tables, products, invoices);
     }
-    
+
+    /**
+     * Loads the csv files for Yum into the arraylists in yum. Also sets uniqueID counter for persons.
+     */
     private void bootUp() {
         CSVReader restaurantFile = new CSVReader(new File("src\\data\\restaurants.csv"), true);
         CSVReader peopleFile = new CSVReader(new File("src\\data\\people.csv"), true);
@@ -108,6 +121,12 @@ public class Driver {
         yum = new Yum(restaurants, people, owner);
     }
 
+    /**
+     * Makes a Reservation object using the parameters passed.
+     * @param ResParams
+     * @param tableParam
+     * @return
+     */
     private static Reservation makeReservation(String[] ResParams, String[] tableParam) {
         return new Reservation(
                 new Table(Integer.parseInt(tableParam[0]), Integer.parseInt(tableParam[1])),
@@ -117,6 +136,10 @@ public class Driver {
                 );
     }
 
+    /**
+     * Options for after a person has been logged in.
+     * @param personLogged
+     */
     private void loginSuccessful(Person personLogged) {
         System.out.printf("Welcome %s\n", personLogged.getName());
         System.out.println("Select a Restaurant: ");
@@ -259,7 +282,10 @@ public class Driver {
         System.out.println("Sign Up Complete\tYour ID is: " + bob.getId());
         loginSuccessful(bob);
     }
-    
+
+    /**
+     * Creates a reservation and adds it to restaurant with error checking.
+     */
      private void createReservation() {
          System.out.println("Enter Date (YYYY-MM-DD): ");
          String date = in.nextLine();
@@ -420,6 +446,10 @@ public class Driver {
         yum.addRestaurant(name);
     }
 
+    /**
+     * uses the get choice method to list all restaurants, this allows user to select a restaurant
+     * and removes restaurant from yum
+     */
     private void deleteRestaurant() {
         System.out.println("Delete Restaurant: ");
         Restaurant rest = Utils.getChoice(yum.getRestaurants());

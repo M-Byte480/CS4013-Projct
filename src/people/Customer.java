@@ -28,6 +28,9 @@ public class Customer extends Person {
         this.loyalty = loyalty;
     }
 
+    /**
+     * Increases the loyalty of the customer.
+     */
     public void increaseLoyalty() {
         loyalty++;
     }
